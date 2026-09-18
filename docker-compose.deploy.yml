@@ -1,3 +1,7 @@
 # Host binding is selected through HOST_BIND_IP in .env. The override file is
 # intentionally kept as a stable production compose entrypoint for the deploy script.
-services: {}
+services:
+  vv-postgres:
+    # PostgreSQL is consumed through the internal Docker network only.
+    # Compose !reset removes the development port mapping in host mode.
+    ports: !reset []
