@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>04_Notifications</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .bg-dot-pattern {
+                background-image: radial-gradient(black 1px, transparent 1px);
+                background-size: 20px 20px;
+            }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#ffb4a2",
+                      "surface-container-highest": "#e2e2e2",
+                      "surface": "#f9f9f9",
+                      "primary-container": "#2d5bff",
+                      "inverse-primary": "#b8c3ff",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#eaea00",
+                      "surface-container-lowest": "#ffffff",
+                      "primary": "#0040df",
+                      "on-primary-fixed-variant": "#0035bd",
+                      "surface-tint": "#104af0",
+                      "on-tertiary-fixed-variant": "#8a1d00",
+                      "inverse-surface": "#303030",
+                      "inverse-on-surface": "#f1f1f1",
+                      "background": "#f9f9f9",
+                      "on-secondary-fixed": "#1d1d00",
+                      "tertiary-container": "#ce3000",
+                      "on-primary": "#ffffff",
+                      "outline-variant": "#c4c5d9",
+                      "surface-container-high": "#e8e8e8",
+                      "secondary-container": "#e7e700",
+                      "surface-container": "#eeeeee",
+                      "surface-variant": "#e2e2e2",
+                      "error-container": "#ffdad6",
+                      "secondary": "#626200",
+                      "primary-fixed": "#dde1ff",
+                      "on-tertiary-container": "#ffece8",
+                      "surface-dim": "#dadada",
+                      "on-background": "#1b1b1b",
+                      "on-surface": "#1b1b1b",
+                      "outline": "#747688",
+                      "surface-container-low": "#f3f3f3",
+                      "on-primary-fixed": "#001355",
+                      "on-surface-variant": "#434656",
+                      "primary-fixed-dim": "#b8c3ff",
+                      "secondary-fixed-dim": "#cdcd00",
+                      "tertiary-fixed": "#ffdad2",
+                      "on-tertiary-fixed": "#3c0700",
+                      "surface-bright": "#f9f9f9",
+                      "on-secondary-fixed-variant": "#494900",
+                      "error": "#ba1a1a",
+                      "on-primary-container": "#efefff",
+                      "on-secondary": "#ffffff",
+                      "tertiary": "#a32400",
+                      "on-error": "#ffffff",
+                      "on-secondary-container": "#666600"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-desktop": "40px",
+                      "border-width": "3px",
+                      "shadow-offset": "4px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "display-xl": [
+                              "Anton"
+                      ],
+                      "body-md": [
+                              "Archivo Narrow"
+                      ],
+                      "label-mono": [
+                              "Space Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Anton"
+                      ],
+                      "headline-lg": [
+                              "Anton"
+                      ],
+                      "body-lg": [
+                              "Archivo Narrow"
+                      ],
+                      "metadata": [
+                              "Archivo Narrow"
+                      ],
+                      "headline-md": [
+                              "Anton"
+                      ]
+              },
+              "fontSize": {
+                      "display-xl": [
+                              "80px",
+                              {
+                                      "lineHeight": "80px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "20px",
+                              {
+                                      "lineHeight": "30px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "metadata": [
+                              "14px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface dark:bg-surface-container-high border-b-3 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="flex items-center gap-8">
+<a class="font-display-xl text-headline-md uppercase text-primary tracking-tighter" href="#">VIVIORA</a>
+<div class="hidden md:flex gap-6 items-center h-full pt-1">
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:bg-secondary-fixed transition-colors px-2 py-1 h-full flex items-center" href="#">Home</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:bg-secondary-fixed transition-colors px-2 py-1 h-full flex items-center" href="#">Reading</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:bg-secondary-fixed transition-colors px-2 py-1 h-full flex items-center" href="#">Game</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:bg-secondary-fixed transition-colors px-2 py-1 h-full flex items-center" href="#">Library</a>
+<a class="font-label-mono text-label-mono text-primary border-b-3 border-primary pb-1 hover:bg-secondary-fixed transition-colors px-2 h-full flex items-center" href="#">Profile</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block border-3 border-on-background focus-within:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="font-body-md text-body-md bg-surface pl-10 pr-4 py-1 outline-none w-64 border-none placeholder:text-outline placeholder:opacity-60" placeholder="Search Viviora..." type="text"/>
+</div>
+<button aria-label="notifications" class="w-10 h-10 border-3 border-on-background bg-surface flex items-center justify-center hover:bg-secondary-fixed hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="settings" class="w-10 h-10 border-3 border-on-background bg-surface flex items-center justify-center hover:bg-secondary-fixed hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="hidden md:flex fixed left-0 top-20 h-[calc(100vh-80px)] w-64 flex-col p-4 bg-surface border-r-3 border-on-background no-shadow z-40">
+<div class="flex items-center gap-3 mb-8 p-2 border-3 border-on-background bg-surface-container-low shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="w-12 h-12 bg-tertiary border-3 border-on-background flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A stylized, low-poly 3D avatar of a futuristic reader wearing neon goggles, set against a bright yellow background. Neo-brutalist Y2K aesthetic, high contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnPyrWQbeKGKFYRa4G17rSV6-trIDziK8UZcHuCR2cz3aGBuYJdOwNf5yEUiH0uIONHgquacEi2yqL91TqDHm53DZP3TW1xHs19q1jeHyGdAsM-AOyjVBUK9mSC0-sL0kLOGdEHToa-eNditaTrQsi-nozmRCS0iMYrZyVuDfI_KXP38AFus4_8kIIvKMgQbpRhMZZJxDUzeh1EJZCHzkKWz7HlL40MsqnnSnkxBVpwJR-_99QJLMYbw"/>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-background">Tên Học Sinh</h3>
+<p class="font-metadata text-metadata text-primary">Độc giả Cấp 14</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-4 p-4 font-label-mono text-label-mono text-on-surface-variant hover:bg-tertiary-fixed active:translate-x-[2px] active:translate-y-[2px] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+                Trang chủ
+            </a>
+<a class="flex items-center gap-4 p-4 font-label-mono text-label-mono text-on-surface-variant hover:bg-tertiary-fixed active:translate-x-[2px] active:translate-y-[2px] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+                Tủ sách của tôi
+            </a>
+<a class="flex items-center gap-4 p-4 font-label-mono text-label-mono bg-primary-container text-on-primary-container border-3 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+                Lớp học
+            </a>
+<a class="flex items-center gap-4 p-4 font-label-mono text-label-mono text-on-surface-variant hover:bg-tertiary-fixed active:translate-x-[2px] active:translate-y-[2px] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="emoji_events">emoji_events</span>
+                Thử thách
+            </a>
+<a class="flex items-center gap-4 p-4 font-label-mono text-label-mono text-on-surface-variant hover:bg-tertiary-fixed active:translate-x-[2px] active:translate-y-[2px] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+                Thành tích
+            </a>
+<a class="flex items-center gap-4 p-4 font-label-mono text-label-mono text-on-surface-variant hover:bg-tertiary-fixed active:translate-x-[2px] active:translate-y-[2px] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Cài đặt
+            </a>
+</nav>
+<button class="mt-auto bg-primary text-on-primary font-display-xl text-headline-md uppercase px-4 py-3 border-3 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#CCFF00] hover:text-on-background active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all">
+            BẮT ĐẦU ĐỌC
+        </button>
+</aside>
+<!-- Main Content -->
+<main class="pt-20 md:ml-64 p-margin-mobile md:p-margin-desktop bg-dot-pattern min-h-screen">
+<header class="mb-12 border-b-3 border-on-background pb-6 bg-surface p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+<h1 class="font-display-xl text-display-xl text-on-background uppercase tracking-tighter">BẢNG ĐIỀU KHIỂN</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl">Manage your classroom activity, review student submissions, and stay updated on latest alerts.</p>
+</header>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-start">
+<!-- Left: Notifications Center -->
+<section class="xl:col-span-4 flex flex-col gap-6">
+<div class="bg-surface border-3 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="bg-secondary-fixed border-b-3 border-on-background p-4 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md uppercase text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+                            THÔNG BÁO
+                        </h2>
+<span class="font-label-mono text-label-mono bg-on-background text-surface px-2 py-1">4 Chưa đọc</span>
+</div>
+<div class="flex flex-col">
+<!-- Notification Item 1 -->
+<div class="p-4 border-b-3 border-on-background hover:bg-surface-container-high transition-colors cursor-pointer flex gap-4 items-start relative group">
+<div class="w-3 h-3 bg-primary rounded-none border-2 border-on-background mt-1 shrink-0 group-hover:scale-125 transition-transform"></div>
+<div>
+<p class="font-body-md text-body-md text-on-background">Ai đó đã thích bài viết của bạn</p>
+<span class="font-metadata text-metadata text-outline">2m ago</span>
+</div>
+</div>
+<!-- Notification Item 2 -->
+<div class="p-4 border-b-3 border-on-background hover:bg-surface-container-high transition-colors cursor-pointer flex gap-4 items-start relative group">
+<div class="w-3 h-3 bg-[#CCFF00] rounded-none border-2 border-on-background mt-1 shrink-0 group-hover:scale-125 transition-transform"></div>
+<div>
+<p class="font-body-md text-body-md text-on-background font-bold">Đã mở khóa thành tích</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 text-sm">You earned the 'Speed Reader' badge.</p>
+<span class="font-metadata text-metadata text-outline mt-2 block">1hr ago</span>
+</div>
+</div>
+<!-- Notification Item 3 -->
+<div class="p-4 border-b-3 border-on-background hover:bg-surface-container-high transition-colors cursor-pointer flex gap-4 items-start relative group">
+<div class="w-3 h-3 bg-transparent rounded-none border-2 border-on-background mt-1 shrink-0"></div>
+<div>
+<p class="font-body-md text-body-md text-on-background">Post approved</p>
+<span class="font-metadata text-metadata text-outline">Yesterday</span>
+</div>
+</div>
+<!-- Notification Item 4 -->
+<div class="p-4 hover:bg-surface-container-high transition-colors cursor-pointer flex gap-4 items-start relative group">
+<div class="w-3 h-3 bg-transparent rounded-none border-2 border-on-background mt-1 shrink-0"></div>
+<div>
+<p class="font-body-md text-body-md text-on-background">Teacher review posted</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 text-sm">Mr. Smith left feedback on your essay.</p>
+<span class="font-metadata text-metadata text-outline mt-2 block">2 days ago</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right: Moderation Queue -->
+<section class="xl:col-span-8 flex flex-col gap-6">
+<div class="bg-surface border-3 border-on-background shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+<div class="bg-primary border-b-3 border-on-background p-4 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md uppercase text-on-primary flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+                            HÀNG ĐỢI KIỂM DUYỆT
+                        </h2>
+<span class="font-label-mono text-label-mono bg-on-background text-surface px-2 py-1">Đang chờ: 3</span>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- Queue Item 1 -->
+<div class="border-3 border-on-background bg-surface-container-lowest p-4 relative group">
+<div class="absolute -top-3 -left-3 bg-secondary-fixed border-3 border-on-background px-2 py-1 font-label-mono text-label-mono text-on-background font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                ĐÁNH GIÁ SÁCH
+                            </div>
+<div class="mt-4 flex flex-col md:flex-row gap-6 justify-between items-start">
+<div class="flex-1">
+<h3 class="font-headline-md text-headline-md text-on-background">The Great Gatsby Analysis</h3>
+<p class="font-metadata text-metadata text-primary mt-1">Người gửi: Alex J. (Level 12)</p>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-3 border-l-4 border-primary pl-4">
+                                        "I found the green light symbolism to be a stark reflection of modern capitalist desires..."
+                                    </p>
+</div>
+<div class="flex gap-2 w-full md:w-auto shrink-0 mt-4 md:mt-0">
+<button class="flex-1 md:flex-none bg-[#CCFF00] text-on-background font-display-xl text-headline-md uppercase px-4 py-2 border-3 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-secondary active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="check">check</span> DUYỆT
+                                    </button>
+<button class="flex-1 md:flex-none bg-error text-on-error font-display-xl text-headline-md uppercase px-4 py-2 border-3 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-on-error-container active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="close">close</span> TỪ CHỐI
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Queue Item 2 -->
+<div class="border-3 border-on-background bg-surface-container-lowest p-4 relative group">
+<div class="absolute -top-3 -left-3 bg-[#9D00FF] text-surface border-3 border-on-background px-2 py-1 font-label-mono text-label-mono font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                BÀI THẢO LUẬN
+                            </div>
+<div class="mt-4 flex flex-col md:flex-row gap-6 justify-between items-start">
+<div class="flex-1">
+<h3 class="font-headline-md text-headline-md text-on-background">Chapter 4 Questions</h3>
+<p class="font-metadata text-metadata text-primary mt-1">Người gửi: Sarah M. (Level 8)</p>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-3 border-l-4 border-[#9D00FF] pl-4">
+                                        "Why did the author choose to skip ahead 10 years in this chapter? It feels rushed."
+                                    </p>
+</div>
+<div class="flex gap-2 w-full md:w-auto shrink-0 mt-4 md:mt-0">
+<button class="flex-1 md:flex-none bg-[#CCFF00] text-on-background font-display-xl text-headline-md uppercase px-4 py-2 border-3 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-secondary active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="check">check</span> DUYỆT
+                                    </button>
+<button class="flex-1 md:flex-none bg-error text-on-error font-display-xl text-headline-md uppercase px-4 py-2 border-3 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-on-error-container active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="close">close</span> TỪ CHỐI
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

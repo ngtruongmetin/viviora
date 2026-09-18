@@ -1,0 +1,587 @@
+<!DOCTYPE html><html lang="vi" style=""><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viviora - Quản lý Trò chơi (Admin/Teacher)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&amp;family=Plus+Jakarta+Sans:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+<style>
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #f9f9f9;
+    color: #000000;
+  }
+  .font-anton { font-family: 'Anton', sans-serif; letter-spacing: -0.02em; }
+  .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+  .brutal-border { border: 3px solid #000000; }
+  .brutal-border-b { border-bottom: 3px solid #000000; }
+  .brutal-border-r { border-right: 3px solid #000000; }
+  .brutal-shadow { box-shadow: 4px 4px 0px 0px #000000; }
+  .brutal-shadow-sm { box-shadow: 2px 2px 0px 0px #000000; }
+  .brutal-shadow-lg { box-shadow: 6px 6px 0px 0px #000000; }
+  .brutal-btn {
+    transition: all 0.1s ease;
+  }
+  .brutal-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px #000000;
+  }
+  .brutal-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px 0px #000000;
+  }
+  .dot-bg {
+    background-image: radial-gradient(#d1d5db 1.5px, transparent 1.5px);
+    background-size: 20px 20px;
+  }
+</style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#F9F9F9]">
+
+  <!-- TOP APP BAR / HEADER (Khớp chuẩn hệ thống Admin Panel Viviora) -->
+  <header class="h-20 bg-white brutal-border-b flex items-center justify-between px-6 md:px-10 sticky top-0 z-40">
+    <div class="flex items-center gap-8">
+      <div class="flex items-center gap-3">
+        <span class="font-anton text-3xl tracking-tight text-black">READ_CORE</span>
+        <span class="bg-[#2D5BFF] text-white text-[11px] font-mono-code px-2 py-0.5 font-bold uppercase brutal-border">v2.0.4-game</span>
+      </div>
+      <div class="hidden md:flex items-center text-xs font-mono-code text-gray-500 font-bold uppercase tracking-wider">
+        <span class="">VIVIORA</span>
+        <span class="mx-2">/</span>
+        <span class="text-black">QUẢN TRỊ TRÒ CHƠI</span>
+      </div>
+    </div>
+
+    <!-- Search bar & Right Actions -->
+    <div class="flex items-center gap-4">
+      <div class="hidden lg:flex items-center bg-[#F3F3F3] brutal-border px-3 py-1.5 w-80 brutal-shadow-sm">
+        <span class="material-symbols-outlined text-gray-600 text-lg mr-2">search</span>
+        <input type="text" placeholder="Tìm kiếm hệ thống..." class="bg-transparent border-none p-0 text-xs font-mono-code focus:ring-0 w-full placeholder-gray-500">
+      </div>
+
+      <button class="w-10 h-10 bg-white brutal-border brutal-shadow-sm flex items-center justify-center hover:bg-[#FFE500] transition-colors">
+        <span class="material-symbols-outlined text-black text-xl">notifications</span>
+      </button>
+
+      <button class="w-10 h-10 bg-white brutal-border brutal-shadow-sm flex items-center justify-center hover:bg-[#FFE500] transition-colors">
+        <span class="material-symbols-outlined text-black text-xl">settings</span>
+      </button>
+
+      <!-- Admin Profile Badge -->
+      <div class="flex items-center gap-3 pl-3 border-l-2 border-black">
+        <div class="w-10 h-10 bg-[#FFE500] brutal-border flex items-center justify-center font-anton text-lg">
+          AD
+        </div>
+        <div class="hidden xl:block text-left">
+          <p class="text-xs font-bold font-mono-code uppercase leading-tight">Admin Master</p>
+          <span class="text-[10px] bg-black text-white px-1.5 py-0.2 font-mono-code font-bold">GIÁO VIÊN/ADMIN</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1">
+    <!-- SIDE NAV BAR (Khớp chuẩn SideNavBar của Viviora) -->
+    <aside class="w-64 bg-white brutal-border-r hidden md:flex flex-col justify-between py-6 px-4 shrink-0">
+      <div class="space-y-6">
+        <div class="px-2">
+          <p class="text-[11px] font-mono-code font-bold text-gray-400 uppercase tracking-widest">HỆ THỐNG NỘI BỘ</p>
+        </div>
+
+        <nav class="space-y-2">
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-xs font-mono-code font-bold uppercase text-gray-700 hover:bg-gray-100 hover:text-black brutal-border border-transparent">
+            <span class="material-symbols-outlined text-lg">dashboard</span>
+            <span class="">Tổng quan</span>
+          </a>
+
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-xs font-mono-code font-bold uppercase text-gray-700 hover:bg-gray-100 hover:text-black brutal-border border-transparent">
+            <span class="material-symbols-outlined text-lg">group</span>
+            <span class="">Thành viên</span>
+          </a>
+
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-xs font-mono-code font-bold uppercase text-gray-700 hover:bg-gray-100 hover:text-black brutal-border border-transparent">
+            <span class="material-symbols-outlined text-lg">menu_book</span>
+            <span class="">Kho Sách (Archive)</span>
+          </a>
+
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-xs font-mono-code font-bold uppercase text-gray-700 hover:bg-gray-100 hover:text-black brutal-border border-transparent">
+            <span class="material-symbols-outlined text-lg">quiz</span>
+            <span class="">Kho Câu Hỏi</span>
+          </a>
+
+          <!-- ACTIVE NAVIGATION: TRÒ CHƠI -->
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-xs font-mono-code font-bold uppercase bg-[#2D5BFF] text-white brutal-border brutal-shadow">
+            <span class="material-symbols-outlined text-lg">sports_esports</span>
+            <span class="">Quản Lý Trò Chơi</span>
+          </a>
+
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-xs font-mono-code font-bold uppercase text-gray-700 hover:bg-gray-100 hover:text-black brutal-border border-transparent">
+            <span class="material-symbols-outlined text-lg">verified_user</span>
+            <span class="">Duyệt Bài Nộp</span>
+          </a>
+
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-xs font-mono-code font-bold uppercase text-gray-700 hover:bg-gray-100 hover:text-black brutal-border border-transparent">
+            <span class="material-symbols-outlined text-lg">analytics</span>
+            <span class="">Báo Cáo &amp; Thống Kê</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Footer Side Bar -->
+      <div class="space-y-4 pt-4 border-t-2 border-black">
+        <div class="p-3 bg-[#FFE500] brutal-border brutal-shadow-sm">
+          <p class="text-[10px] font-mono-code font-bold uppercase text-black leading-tight">QUY TẮC CÂU HỎI</p>
+          <p class="text-[11px] text-black mt-1 font-medium leading-normal">Mỗi game chỉ liên kết 1 sách &amp; 1 loại câu hỏi (MC hoặc TF). Game bốc ngẫu nhiên khi vào chơi.</p>
+        </div>
+        <div class="flex items-center justify-between text-xs font-mono-code text-gray-500 font-bold px-2">
+          <span class="">Trợ giúp</span>
+          <span class="text-black hover:underline cursor-pointer">Đăng xuất</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 p-6 md:p-10 dot-bg">
+      <div class="max-w-7xl mx-auto space-y-8">
+
+        <!-- TITLE & PRIMARY ACTION BAR -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 bg-white p-6 md:p-8 brutal-border brutal-shadow-lg">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#FFE500] text-black text-[11px] font-mono-code font-bold px-2 py-0.5 brutal-border">GAME ENGINE MODULE</span>
+              <span class="text-xs font-mono-code text-gray-600 font-bold">VIVIORA LEARNING &amp; INTERACTION</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-anton uppercase text-black tracking-tight">QUẢN LÝ TRÒ CHƠI</h1>
+            <p class="text-sm text-gray-700 mt-2 max-w-2xl font-medium">
+              Tạo và quản lý các minigame tương tác cho từng đầu sách. Mỗi trò chơi tự động bốc câu hỏi ngẫu nhiên từ Question Bank tương ứng. <span class="font-bold text-black">(Không giới hạn thời gian/timer)</span>.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <button class="brutal-btn bg-[#2D5BFF] text-white px-6 py-3.5 brutal-border brutal-shadow font-anton text-lg tracking-wide uppercase flex items-center gap-2">
+              <span class="material-symbols-outlined text-2xl">add_circle</span>
+              <span class="">+ TẠO TRÒ CHƠI</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STATS COUNTER STRIP -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-white p-4 brutal-border brutal-shadow"><div class="h-2 w-full bg-black -mt-4 -mx-4 mb-3 brutal-border-b" style="width: calc(100% + 2rem);"></div>
+            <p class="text-[11px] font-mono-code text-gray-500 font-bold uppercase">TỔNG SỐ TRÒ CHƠI</p>
+            <p class="text-3xl font-anton mt-1 text-black">18</p>
+            <p class="text-[10px] font-mono-code text-green-700 font-bold mt-1">Đang sẵn sàng phục vụ học sinh</p>
+          </div>
+
+          <div class="bg-white p-4 brutal-border brutal-shadow"><div class="h-2 w-full bg-[#2D5BFF] -mt-4 -mx-4 mb-3 brutal-border-b" style="width: calc(100% + 2rem);"></div>
+            <p class="text-[11px] font-mono-code text-gray-500 font-bold uppercase">GAME MINESWEEPER (MC)</p>
+            <p class="text-3xl font-anton mt-1 text-[#2D5BFF]">11</p>
+            <p class="text-[10px] font-mono-code text-gray-600 font-bold mt-1">Chuyên câu hỏi Trắc nghiệm A/B/C/D</p>
+          </div>
+
+          <div class="bg-white p-4 brutal-border brutal-shadow"><div class="h-2 w-full bg-[#00A86B] -mt-4 -mx-4 mb-3 brutal-border-b" style="width: calc(100% + 2rem);"></div>
+            <p class="text-[11px] font-mono-code text-gray-500 font-bold uppercase">GAME TREASURE HUNT (TF)</p>
+            <p class="text-3xl font-anton mt-1 text-[#00A86B]">07</p>
+            <p class="text-[10px] font-mono-code text-gray-600 font-bold mt-1">Chuyên câu hỏi Đúng / Sai</p>
+          </div>
+
+          <div class="bg-[#FFE500] p-4 brutal-border brutal-shadow"><div class="h-2 w-full bg-black -mt-4 -mx-4 mb-3 brutal-border-b" style="width: calc(100% + 2rem);"></div>
+            <p class="text-[11px] font-mono-code text-black font-bold uppercase">CHẾ ĐỘ CHƠI</p>
+            <p class="text-xl font-anton mt-2 text-black uppercase leading-tight">NGẪU NHIÊN &amp; KHÔNG TIMER</p>
+            <p class="text-[10px] font-mono-code text-black font-bold mt-1">Học sinh thư thả tư duy sâu</p>
+          </div>
+        </div>
+
+        <!-- FILTER & SEARCH CONTROL BAR -->
+        <div class="bg-white p-5 brutal-border brutal-shadow flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div class="flex-1 flex flex-col md:flex-row items-center gap-3">
+            <!-- Search input -->
+            <div class="w-full md:w-80 flex items-center bg-[#F3F3F3] brutal-border px-3 py-2">
+              <span class="material-symbols-outlined text-gray-500 text-lg mr-2">search</span>
+              <input type="text" placeholder="Tìm theo tên trò chơi hoặc tên sách..." class="bg-transparent border-none p-0 text-xs font-mono-code focus:ring-0 w-full placeholder-gray-500">
+            </div>
+
+            <!-- Filter Theo Theme Game -->
+            <div class="w-full md:w-auto flex items-center gap-2">
+              <span class="text-[11px] font-mono-code font-bold text-gray-500 uppercase">THEME:</span>
+              <select class="bg-white brutal-border text-xs font-mono-code font-bold py-1.5 px-3 focus:ring-0">
+                <option value="all">Tất cả theme (Minesweeper, Treasure)</option>
+                <option value="minesweeper">Minesweeper (Dò mìn)</option>
+                <option value="treasure">Treasure Hunt (Kho báu)</option>
+              </select>
+            </div>
+
+            <!-- Filter Theo Loại Câu Hỏi -->
+            <div class="w-full md:w-auto flex items-center gap-2">
+              <span class="text-[11px] font-mono-code font-bold text-gray-500 uppercase">TYPE:</span>
+              <select class="bg-white brutal-border text-xs font-mono-code font-bold py-1.5 px-3 focus:ring-0">
+                <option value="all">Tất cả loại (MC &amp; TF)</option>
+                <option value="MC">MC - Trắc nghiệm (4 lựa chọn)</option>
+                <option value="TF">TF - Đúng / Sai</option>
+              </select>
+            </div>
+
+            <!-- Filter Theo Sách -->
+            <div class="w-full md:w-auto flex items-center gap-2">
+              <span class="text-[11px] font-mono-code font-bold text-gray-500 uppercase">SÁCH:</span>
+              <select class="bg-white brutal-border text-xs font-mono-code font-bold py-1.5 px-3 focus:ring-0 max-w-[180px]">
+                <option value="all">Tất cả đầu sách</option>
+                <option value="b1">Toán 9 Tập 1</option>
+                <option value="b2">Lịch sử Việt Nam</option>
+                <option value="b3">Dế Mèn Phiêu Lưu Ký</option>
+                <option value="b4">Vật Lý 8 Nâng Cao</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- View Switcher or Counter -->
+          <div class="text-xs font-mono-code text-gray-600 font-bold self-end lg:self-center">
+            Hiển thị <span class="text-black bg-[#FFE500] px-1.5 py-0.5 font-bold">6 / 18</span> trò chơi
+          </div>
+        </div>
+
+        <!-- GAME CARD GRID (Danh sách Game) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- CARD 1: MINESWEEPER - TOÁN 9 -->
+          <div class="bg-white brutal-border brutal-shadow-lg flex flex-col justify-between hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+            <div>
+              <!-- Card Header Strip -->
+              <div class="h-2.5 bg-[#2D5BFF] brutal-border-b w-full"></div><div class="bg-[#F9F9F9] text-black p-3.5 flex items-center justify-between brutal-border-b"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-[#2D5BFF] brutal-border"></span><span class="font-mono-code text-xs font-bold tracking-wider uppercase text-black">THEME: MINESWEEPER</span></div><span class="bg-[#2D5BFF] text-white text-[10px] font-mono-code font-bold px-2 py-0.5 brutal-border brutal-shadow-sm">MC (TRẮC NGHIỆM)</span></div>
+
+              <!-- Card Body -->
+              <div class="p-5 space-y-4">
+                <div>
+                  <h3 class="font-anton text-2xl uppercase tracking-tight text-black line-clamp-2">CHIẾN DỊCH PHÁ MÌN ĐẠI SỐ</h3>
+                  <div class="mt-2 flex items-center gap-2 text-xs font-mono-code text-gray-600">
+                    <span class="material-symbols-outlined text-base text-gray-500">book_2</span>
+                    <span class="font-bold text-black truncate">Sách: Toán 9 Tập 1</span>
+                  </div>
+                </div>
+
+                <!-- Game Configuration Metrics Block -->
+                <div class="bg-[#F3F3F3] brutal-border p-3 space-y-2">
+                  <div class="flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-gray-600 font-bold">Số câu hỏi game:</span>
+                    <span class="bg-[#2D5BFF] text-white px-2.5 py-0.5 font-bold brutal-border brutal-shadow-sm">10 CÂU</span>
+                  </div>
+                  <div class="flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-gray-600 font-bold">Khả dụng trong Bank:</span>
+                    <span class="font-bold text-blue-700">10 / 24 MC</span>
+                  </div>
+                  <!-- Progress meter -->
+                  <div class="w-full bg-gray-300 h-2 brutal-border">
+                    <div class="bg-[#2D5BFF] h-full" style="width: 41.6%;"></div>
+                  </div>
+                  <p class="text-[10px] font-mono-code text-gray-500 italic">Lấy ngẫu nhiên 10 câu trong 24 câu MC khi chơi</p>
+                </div>
+
+                <!-- Meta Info -->
+                <div class="pt-2 border-t border-gray-200 text-[11px] font-mono-code text-gray-600 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="">Người tạo: <strong class="text-black">Thầy Tuấn (Toán)</strong></span>
+                    <span class="text-gray-400">14/10/2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="p-4 bg-gray-50 brutal-border-t grid grid-cols-3 gap-2">
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-black hover:bg-[#FFE500] flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">visibility</span>
+                <span class="">XEM</span>
+              </button>
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-black hover:bg-[#2D5BFF] hover:text-white flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">edit</span>
+                <span class="">SỬA</span>
+              </button>
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-red-600 hover:bg-red-600 hover:text-white flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">delete</span>
+                <span class="">XÓA</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 2: TREASURE HUNT - LỊCH SỬ VIỆT NAM -->
+          <div class="bg-white brutal-border brutal-shadow-lg flex flex-col justify-between hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+            <div>
+              <!-- Card Header Strip -->
+              <div class="h-2.5 bg-[#FFE500] brutal-border-b w-full"></div><div class="bg-[#F9F9F9] text-black p-3.5 flex items-center justify-between brutal-border-b"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-[#00A86B] brutal-border"></span><span class="font-mono-code text-xs font-bold tracking-wider uppercase text-black">THEME: TREASURE HUNT</span></div><span class="bg-[#FFE500] text-black text-[10px] font-mono-code font-bold px-2 py-0.5 brutal-border brutal-shadow-sm">TF (ĐÚNG / SAI)</span></div>
+
+              <!-- Card Body -->
+              <div class="p-5 space-y-4">
+                <div>
+                  <h3 class="font-anton text-2xl uppercase tracking-tight text-black line-clamp-2">TRUY TÌM KHO BÁU BẠCH ĐẰNG</h3>
+                  <div class="mt-2 flex items-center gap-2 text-xs font-mono-code text-gray-600">
+                    <span class="material-symbols-outlined text-base text-gray-500">book_2</span>
+                    <span class="font-bold text-black truncate">Sách: Lịch sử Việt Nam</span>
+                  </div>
+                </div>
+
+                <!-- Game Configuration Metrics Block -->
+                <div class="bg-[#F3F3F3] brutal-border p-3 space-y-2">
+                  <div class="flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-gray-600 font-bold">Số câu hỏi game:</span>
+                    <span class="bg-[#FFE500] text-black px-2.5 py-0.5 font-bold brutal-border brutal-shadow-sm">8 CÂU</span>
+                  </div>
+                  <div class="flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-gray-600 font-bold">Khả dụng trong Bank:</span>
+                    <span class="font-bold text-green-700">8 / 12 TF</span>
+                  </div>
+                  <!-- Progress meter -->
+                  <div class="w-full bg-gray-300 h-2 brutal-border">
+                    <div class="bg-[#00A86B] h-full" style="width: 66.6%;"></div>
+                  </div>
+                  <p class="text-[10px] font-mono-code text-gray-500 italic">Lấy ngẫu nhiên 8 câu trong 12 câu TF khi chơi</p>
+                </div>
+
+                <!-- Meta Info -->
+                <div class="pt-2 border-t border-gray-200 text-[11px] font-mono-code text-gray-600 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="">Người tạo: <strong class="text-black">Cô Lan (Sử)</strong></span>
+                    <span class="text-gray-400">12/10/2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="p-4 bg-gray-50 brutal-border-t grid grid-cols-3 gap-2">
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-black hover:bg-[#FFE500] flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">visibility</span>
+                <span class="">XEM</span>
+              </button>
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-black hover:bg-[#2D5BFF] hover:text-white flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">edit</span>
+                <span class="">SỬA</span>
+              </button>
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-red-600 hover:bg-red-600 hover:text-white flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">delete</span>
+                <span class="">XÓA</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 3: MINESWEEPER - DẾ MÈN PHIÊU LƯU KÝ -->
+          <div class="bg-white brutal-border brutal-shadow-lg flex flex-col justify-between hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+            <div>
+              <!-- Card Header Strip -->
+              <div class="h-2.5 bg-[#2D5BFF] brutal-border-b w-full"></div><div class="bg-[#F9F9F9] text-black p-3.5 flex items-center justify-between brutal-border-b"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-[#2D5BFF] brutal-border"></span><span class="font-mono-code text-xs font-bold tracking-wider uppercase text-black">THEME: MINESWEEPER</span></div><span class="bg-[#2D5BFF] text-white text-[10px] font-mono-code font-bold px-2 py-0.5 brutal-border">MC (TRẮC NGHIỆM)</span></div>
+
+              <!-- Card Body -->
+              <div class="p-5 space-y-4">
+                <div>
+                  <h3 class="font-anton text-2xl uppercase tracking-tight text-black line-clamp-2">VƯỢT ĐẦM LẦY DẾ MÈN</h3>
+                  <div class="mt-2 flex items-center gap-2 text-xs font-mono-code text-gray-600">
+                    <span class="material-symbols-outlined text-base text-gray-500">book_2</span>
+                    <span class="font-bold text-black truncate">Sách: Dế Mèn Phiêu Lưu Ký</span>
+                  </div>
+                </div>
+
+                <!-- Game Configuration Metrics Block -->
+                <div class="bg-[#F3F3F3] brutal-border p-3 space-y-2">
+                  <div class="flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-gray-600 font-bold">Số câu hỏi game:</span>
+                    <span class="bg-[#2D5BFF] text-white px-2.5 py-0.5 font-bold brutal-border brutal-shadow-sm">15 CÂU</span>
+                  </div>
+                  <div class="flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-gray-600 font-bold">Khả dụng trong Bank:</span>
+                    <span class="font-bold text-blue-700">15 / 30 MC</span>
+                  </div>
+                  <!-- Progress meter -->
+                  <div class="w-full bg-gray-300 h-2 brutal-border">
+                    <div class="bg-[#2D5BFF] h-full" style="width: 50%;"></div>
+                  </div>
+                  <p class="text-[10px] font-mono-code text-gray-500 italic">Lấy ngẫu nhiên 15 câu trong 30 câu MC khi chơi</p>
+                </div>
+
+                <!-- Meta Info -->
+                <div class="pt-2 border-t border-gray-200 text-[11px] font-mono-code text-gray-600 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="">Người tạo: <strong class="text-black">Cô Mai (Văn)</strong></span>
+                    <span class="text-gray-400">08/10/2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="p-4 bg-gray-50 brutal-border-t grid grid-cols-3 gap-2">
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-black hover:bg-[#FFE500] flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">visibility</span>
+                <span class="">XEM</span>
+              </button>
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-black hover:bg-[#2D5BFF] hover:text-white flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">edit</span>
+                <span class="">SỬA</span>
+              </button>
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-red-600 hover:bg-red-600 hover:text-white flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">delete</span>
+                <span class="">XÓA</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 4: TREASURE HUNT - VẬT LÝ 8 -->
+          <div class="bg-white brutal-border brutal-shadow-lg flex flex-col justify-between hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+            <div>
+              <!-- Card Header Strip -->
+              <div class="h-2.5 bg-[#FFE500] brutal-border-b w-full"></div><div class="bg-[#F9F9F9] text-black p-3.5 flex items-center justify-between brutal-border-b"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-[#00A86B] brutal-border"></span><span class="font-mono-code text-xs font-bold tracking-wider uppercase text-black">THEME: TREASURE HUNT</span></div><span class="bg-[#FFE500] text-black text-[10px] font-mono-code font-bold px-2 py-0.5 brutal-border">TF (ĐÚNG / SAI)</span></div>
+
+              <!-- Card Body -->
+              <div class="p-5 space-y-4">
+                <div>
+                  <h3 class="font-anton text-2xl uppercase tracking-tight text-black line-clamp-2">MẬT MÃ CƠ HỌC VẬT LÝ</h3>
+                  <div class="mt-2 flex items-center gap-2 text-xs font-mono-code text-gray-600">
+                    <span class="material-symbols-outlined text-base text-gray-500">book_2</span>
+                    <span class="font-bold text-black truncate">Sách: Vật Lý 8 Nâng Cao</span>
+                  </div>
+                </div>
+
+                <!-- Game Configuration Metrics Block -->
+                <div class="bg-[#F3F3F3] brutal-border p-3 space-y-2">
+                  <div class="flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-gray-600 font-bold">Số câu hỏi game:</span>
+                    <span class="bg-[#FFE500] text-black px-2.5 py-0.5 font-bold brutal-border brutal-shadow-sm">12 CÂU</span>
+                  </div>
+                  <div class="flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-gray-600 font-bold">Khả dụng trong Bank:</span>
+                    <span class="font-bold text-green-700">12 / 12 TF (TỐI ĐA)</span>
+                  </div>
+                  <!-- Progress meter -->
+                  <div class="w-full bg-gray-300 h-2 brutal-border">
+                    <div class="bg-[#00A86B] h-full" style="width: 100%;"></div>
+                  </div>
+                  <p class="text-[10px] font-mono-code text-gray-500 italic">Chọn toàn bộ 12 câu TF hiện có của sách</p>
+                </div>
+
+                <!-- Meta Info -->
+                <div class="pt-2 border-t border-gray-200 text-[11px] font-mono-code text-gray-600 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="">Người tạo: <strong class="text-black">Thầy Hải (Lý)</strong></span>
+                    <span class="text-gray-400">01/10/2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="p-4 bg-gray-50 brutal-border-t grid grid-cols-3 gap-2">
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-black hover:bg-[#FFE500] flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">visibility</span>
+                <span class="">XEM</span>
+              </button>
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-black hover:bg-[#2D5BFF] hover:text-white flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">edit</span>
+                <span class="">SỬA</span>
+              </button>
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-red-600 hover:bg-red-600 hover:text-white flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">delete</span>
+                <span class="">XÓA</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 5: MINESWEEPER - HOÁ HỌC 9 -->
+          <div class="bg-white brutal-border brutal-shadow-lg flex flex-col justify-between hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+            <div>
+              <!-- Card Header Strip -->
+              <div class="h-2.5 bg-[#2D5BFF] brutal-border-b w-full"></div><div class="bg-[#F9F9F9] text-black p-3.5 flex items-center justify-between brutal-border-b"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-[#2D5BFF] brutal-border"></span><span class="font-mono-code text-xs font-bold tracking-wider uppercase text-black">THEME: MINESWEEPER</span></div><span class="bg-[#2D5BFF] text-white text-[10px] font-mono-code font-bold px-2 py-0.5 brutal-border">MC (TRẮC NGHIỆM)</span></div>
+
+              <!-- Card Body -->
+              <div class="p-5 space-y-4">
+                <div>
+                  <h3 class="font-anton text-2xl uppercase tracking-tight text-black line-clamp-2">BẢNG TUẦN HOÀN MINESWEEPER</h3>
+                  <div class="mt-2 flex items-center gap-2 text-xs font-mono-code text-gray-600">
+                    <span class="material-symbols-outlined text-base text-gray-500">book_2</span>
+                    <span class="font-bold text-black truncate">Sách: Hoá Học Cơ Bản 9</span>
+                  </div>
+                </div>
+
+                <!-- Game Configuration Metrics Block -->
+                <div class="bg-[#F3F3F3] brutal-border p-3 space-y-2">
+                  <div class="flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-gray-600 font-bold">Số câu hỏi game:</span>
+                    <span class="bg-[#2D5BFF] text-white px-2.5 py-0.5 font-bold brutal-border brutal-shadow-sm">20 CÂU</span>
+                  </div>
+                  <div class="flex items-center justify-between text-xs font-mono-code">
+                    <span class="text-gray-600 font-bold">Khả dụng trong Bank:</span>
+                    <span class="font-bold text-blue-700">20 / 45 MC</span>
+                  </div>
+                  <!-- Progress meter -->
+                  <div class="w-full bg-gray-300 h-2 brutal-border">
+                    <div class="bg-[#2D5BFF] h-full" style="width: 44.4%;"></div>
+                  </div>
+                  <p class="text-[10px] font-mono-code text-gray-500 italic">Lấy ngẫu nhiên 20 câu trong 45 câu MC khi chơi</p>
+                </div>
+
+                <!-- Meta Info -->
+                <div class="pt-2 border-t border-gray-200 text-[11px] font-mono-code text-gray-600 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="">Người tạo: <strong class="text-black">Cô Thùy (Hoá)</strong></span>
+                    <span class="text-gray-400">28/09/2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="p-4 bg-gray-50 brutal-border-t grid grid-cols-3 gap-2">
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-black hover:bg-[#FFE500] flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">visibility</span>
+                <span class="">XEM</span>
+              </button>
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-black hover:bg-[#2D5BFF] hover:text-white flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">edit</span>
+                <span class="">SỬA</span>
+              </button>
+              <button class="brutal-btn bg-white brutal-border py-2 text-xs font-anton uppercase text-red-600 hover:bg-red-600 hover:text-white flex items-center justify-center gap-1">
+                <span class="material-symbols-outlined text-sm">delete</span>
+                <span class="">XÓA</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 6: NEW CREATION QUICK CARD / PLACEHOLDER -->
+          <div class="bg-[#FFFEE6] brutal-border border-dashed brutal-shadow p-6 flex flex-col items-center justify-center text-center space-y-4 min-h-[360px]">
+            <div class="w-16 h-16 bg-[#FFE500] brutal-border flex items-center justify-center">
+              <span class="material-symbols-outlined text-3xl text-black">sports_esports</span>
+            </div>
+            <div>
+              <h4 class="font-anton text-2xl uppercase tracking-tight text-black">TẠO THÊM MINIGAME MỚI</h4>
+              <p class="text-xs font-mono-code text-gray-600 mt-2 max-w-xs">
+                Ghép nối các bộ câu hỏi MC hoặc TF có sẵn trong Question Bank thành minigame cho học sinh.
+              </p>
+            </div>
+            <button class="brutal-btn bg-black text-white px-5 py-2.5 brutal-border font-anton text-sm uppercase tracking-wider flex items-center gap-2">
+              <span class="material-symbols-outlined text-base">add</span>
+              <span class="">BẮT ĐẦU TẠO</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- PAGINATION STRIP -->
+        <div class="flex items-center justify-between bg-white p-4 brutal-border brutal-shadow">
+          <p class="text-xs font-mono-code text-gray-600 font-bold">Hiển thị <span class="text-black">1 - 6</span> trên tổng số <span class="text-black">18</span> trò chơi</p>
+          <div class="flex items-center gap-1">
+            <button class="px-3 py-1.5 bg-gray-200 brutal-border font-mono-code text-xs font-bold text-gray-400 cursor-not-allowed">TRƯỚC</button>
+            <button class="px-3 py-1.5 bg-[#2D5BFF] text-white brutal-border font-mono-code text-xs font-bold">1</button>
+            <button class="px-3 py-1.5 bg-white brutal-border font-mono-code text-xs font-bold hover:bg-gray-100">2</button>
+            <button class="px-3 py-1.5 bg-white brutal-border font-mono-code text-xs font-bold hover:bg-gray-100">3</button>
+            <button class="px-3 py-1.5 bg-white brutal-border font-mono-code text-xs font-bold hover:bg-gray-100">SAU</button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+
+
+
+
+</body></html>

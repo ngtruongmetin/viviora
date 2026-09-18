@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>03_User_Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap&amp;subset=vietnamese" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb4a2",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface": "#f9f9f9",
+                        "primary-container": "#2d5bff",
+                        "inverse-primary": "#b8c3ff",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#eaea00",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#0040df",
+                        "on-primary-fixed-variant": "#0035bd",
+                        "surface-tint": "#104af0",
+                        "on-tertiary-fixed-variant": "#8a1d00",
+                        "inverse-surface": "#303030",
+                        "inverse-on-surface": "#f1f1f1",
+                        "background": "#f9f9f9",
+                        "on-secondary-fixed": "#1d1d00",
+                        "tertiary-container": "#ce3000",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c4c5d9",
+                        "surface-container-high": "#e8e8e8",
+                        "secondary-container": "#e7e700",
+                        "surface-container": "#eeeeee",
+                        "surface-variant": "#e2e2e2",
+                        "error-container": "#ffdad6",
+                        "secondary": "#626200",
+                        "primary-fixed": "#dde1ff",
+                        "on-tertiary-container": "#ffece8",
+                        "surface-dim": "#dadada",
+                        "on-background": "#1b1b1b",
+                        "on-surface": "#1b1b1b",
+                        "outline": "#747688",
+                        "surface-container-low": "#f3f3f3",
+                        "on-primary-fixed": "#001355",
+                        "on-surface-variant": "#434656",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "secondary-fixed-dim": "#cdcd00",
+                        "tertiary-fixed": "#ffdad2",
+                        "on-tertiary-fixed": "#3c0700",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary-fixed-variant": "#494900",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#efefff",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#a32400",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#666600"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "border-width": "3px",
+                        "shadow-offset": "4px",
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "display-xl": ["Anton"],
+                        "body-md": ["Archivo Narrow"],
+                        "label-mono": ["Space Mono"],
+                        "headline-lg-mobile": ["Anton"],
+                        "headline-lg": ["Anton"],
+                        "body-lg": ["Archivo Narrow"],
+                        "metadata": ["Archivo Narrow"],
+                        "headline-md": ["Anton"]
+                    },
+                    "fontSize": {
+                        "display-xl": ["80px", { "lineHeight": "80px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "fontWeight": "400" }],
+                        "body-lg": ["20px", { "lineHeight": "30px", "fontWeight": "400" }],
+                        "metadata": ["14px", { "lineHeight": "18px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .dot-pattern {
+            background-image: radial-gradient(circle, #000000 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        /* Y2K Brutalist Specific Utils */
+        .brutal-border {
+            border: 3px solid #1b1b1b;
+        }
+        .brutal-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(27,27,27,1);
+        }
+        .brutal-interactive:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px 0px rgba(27,27,27,1);
+        }
+    </style>
+</head>
+<body class="bg-surface dot-pattern min-h-screen font-body-md text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface dark:bg-surface-container-high border-b-3 border-on-background dark:border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="flex items-center gap-8">
+<a class="font-display-xl text-headline-md uppercase text-primary dark:text-inverse-primary tracking-tighter hover:bg-secondary-fixed transition-colors active:translate-x-[2px] active:translate-y-[2px] active:shadow-none" href="#">VIVIORA</a>
+<div class="hidden md:flex gap-6">
+<a class="text-on-surface-variant dark:text-outline-variant font-label-mono text-label-mono hover:bg-secondary-fixed dark:hover:bg-secondary-fixed-dim transition-colors active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2 uppercase" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-mono text-label-mono hover:bg-secondary-fixed dark:hover:bg-secondary-fixed-dim transition-colors active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2 uppercase" href="#">Reading</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-mono text-label-mono hover:bg-secondary-fixed dark:hover:bg-secondary-fixed-dim transition-colors active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2 uppercase" href="#">Game</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-mono text-label-mono hover:bg-secondary-fixed dark:hover:bg-secondary-fixed-dim transition-colors active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2 uppercase" href="#">Library</a>
+<a class="text-primary dark:text-inverse-primary border-b-3 border-primary pb-1 font-label-mono text-label-mono hover:bg-secondary-fixed dark:hover:bg-secondary-fixed-dim transition-colors active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2 uppercase flex-col" href="#">Profile</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="notifications" class="text-primary dark:text-inverse-primary hover:bg-secondary-fixed dark:hover:bg-secondary-fixed-dim transition-colors active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2 brutal-border bg-white">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="settings" class="text-primary dark:text-inverse-primary hover:bg-secondary-fixed dark:hover:bg-secondary-fixed-dim transition-colors active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2 brutal-border bg-white">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-32 pb-20 px-margin-desktop max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Header Section (Spans full width) -->
+<header class="col-span-12 mb-8 bg-white brutal-border brutal-shadow p-8 flex flex-col md:flex-row items-center md:items-start gap-8 relative overflow-hidden">
+<!-- Decorative Background Element -->
+<div class="absolute -right-20 -top-20 w-64 h-64 bg-secondary-fixed brutal-border rounded-full opacity-20 pointer-events-none"></div>
+<!-- Avatar -->
+<div class="shrink-0 relative">
+<img class="w-48 h-48 brutal-border brutal-shadow object-cover bg-primary-container" data-alt="A vibrant, stylized portrait of an energetic student in a Y2K retro-tech style. Bright neon green and electric blue background with heavy halftone patterns. The student looks determined, framed by thick black comic-style outlines. High contrast, raw digital art aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbZ0ETBEfTADat2HOnSxKK4Gfsc6QTiYwx1UNS7ZAMy5f0Nm5qvGTJ6EfsEIqOncZ4gHJC9X91DMX9z9CVrNTEaD7b1FCS5K7wTtS6GRDx_0VKZDKb1nNyuG_bX-KteZgnt5xd5Ym6iHG_JbCeHT9AP-SVI3O0fMYzi2wJb_V-VFHtou35lWhPsrcY2CRZK1mtvsTfwdNyDg0IH3wvZVqGgwx1Re1Ql01oqoOBezjgHhXW8-mXZKBRqg"/>
+<div class="absolute -bottom-4 -right-4 bg-tertiary-container text-on-tertiary-container brutal-border font-label-mono text-label-mono px-3 py-1 rotate-[-10deg]">LVL 14</div>
+</div>
+<!-- Profile Info -->
+<div class="flex-grow text-center md:text-left z-10">
+<h1 class="font-display-xl text-display-xl text-on-background uppercase tracking-tight mb-2">NGUYỄN MINH</h1>
+<div class="flex flex-wrap justify-center md:justify-start gap-4 mb-4">
+<span class="bg-black text-white font-label-mono text-label-mono px-3 py-1 uppercase tracking-widest">HỌC SINH</span>
+<span class="bg-white brutal-border font-label-mono text-label-mono px-3 py-1 uppercase tracking-widest">11A2</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l-3 border-primary pl-4">
+                    Avid sci-fi reader. Obsessed with cyberpunk lore and historical fiction. Currently aiming for the 'Galaxy Brain' achievement tier.
+                </p>
+</div>
+<!-- Edit Button -->
+<button class="md:self-start bg-primary text-on-primary brutal-border brutal-shadow brutal-interactive font-label-mono text-label-mono px-6 py-3 uppercase flex items-center gap-2 hover:bg-[#CCFF00] hover:text-black transition-colors">
+<span class="material-symbols-outlined" data-icon="edit">edit</span> CHỈNH SỬA HỒ SƠ
+            </button>
+</header>
+<!-- Statistics Row (Spans full width) -->
+<section class="col-span-12 mb-12 grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<!-- Stat 1 -->
+<div class="bg-white brutal-border brutal-shadow p-4 flex flex-col items-center justify-center hover:bg-secondary-container transition-colors brutal-interactive cursor-default">
+<span class="text-4xl mb-2">📚</span>
+<span class="font-headline-md text-headline-md uppercase">12</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase text-center">CUỐN SÁCH</span>
+</div>
+<!-- Stat 2 -->
+<div class="bg-white brutal-border brutal-shadow p-4 flex flex-col items-center justify-center hover:bg-tertiary-fixed transition-colors brutal-interactive cursor-default">
+<span class="text-4xl mb-2">🔥</span>
+<span class="font-headline-md text-headline-md uppercase">8</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase text-center">NGÀY LIÊN TIẾP</span>
+</div>
+<!-- Stat 3 -->
+<div class="bg-white brutal-border brutal-shadow p-4 flex flex-col items-center justify-center hover:bg-primary-fixed transition-colors brutal-interactive cursor-default">
+<span class="text-4xl mb-2">⏱</span>
+<span class="font-headline-md text-headline-md uppercase">430</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase text-center">PHÚT ĐỌC</span>
+</div>
+<!-- Stat 4 -->
+<div class="bg-white brutal-border brutal-shadow p-4 flex flex-col items-center justify-center hover:bg-[#CCFF00] transition-colors brutal-interactive cursor-default">
+<span class="text-4xl mb-2">🏆</span>
+<span class="font-headline-md text-headline-md uppercase">7</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase text-center">THÀNH TÍCH</span>
+</div>
+</section>
+<!-- Left Column -->
+<div class="col-span-12 md:col-span-7 flex flex-col gap-8">
+<!-- Current Reading -->
+<section class="bg-white brutal-border brutal-shadow">
+<div class="bg-primary text-on-primary p-3 border-b-3 border-on-background flex justify-between items-center">
+<h2 class="font-label-mono text-label-mono uppercase tracking-widest">ĐANG ĐỌC</h2>
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+</div>
+<div class="p-6 flex flex-col sm:flex-row gap-6">
+<div class="shrink-0">
+<img class="w-32 h-48 brutal-border object-cover bg-surface-dim" data-alt="A striking, Y2K retro-tech style book cover illustration. Neon purple and electric blue geometric shapes interlock over a stark white background. Heavy black brutalist borders frame a stylized, glitch-art silhouette of a futuristic city. High contrast, vibrant, and energetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9SLxDR8Rjgql49YCC3_3b7PoFxD9F0ptItE5dwQrzdHz3siHLTaqpuwtYFdCdLpcdysFKZdjk-qJVn1xl0qB1jBYmeawQbjvLkhYT8bdATsesRXgu9jhbj4Rpsx2CQiaGUYUfQLnWUk7slzZxslsJf10578wF3Y23ASdFH2x5UEncTHhTQN6U5OLrUC_6KdQDWnLe4jPEffsJTmAEy-vg6vDlcXqn-OjtEOWDz1PB8H0HwxIjBpXZcg"/>
+</div>
+<div class="flex flex-col justify-between">
+<div>
+<span class="bg-black text-white font-label-mono text-label-mono px-2 py-1 uppercase text-[10px] inline-block mb-2">Sci-Fi</span>
+<h3 class="font-headline-md text-headline-md uppercase mb-1">Neuromancer's Echo</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 line-clamp-2">The digital frontier is expanding faster than the human mind can comprehend. A journey into the raw data stream.</p>
+</div>
+<!-- Progress Bar -->
+<div class="mt-auto">
+<div class="flex justify-between font-label-mono text-label-mono text-[10px] uppercase mb-1">
+<span>Progress</span>
+<span>65%</span>
+</div>
+<div class="h-4 bg-white brutal-border w-full relative">
+<div class="absolute top-0 left-0 h-full bg-[#CCFF00] border-r-3 border-on-background" style="width: 65%;"></div>
+</div>
+<button class="mt-4 w-full bg-white brutal-border brutal-shadow brutal-interactive font-label-mono text-label-mono py-2 uppercase hover:bg-primary hover:text-white transition-colors">TIẾP TỤC ĐỌC</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Achievements -->
+<section class="bg-white brutal-border brutal-shadow">
+<div class="bg-tertiary-container text-on-tertiary-container p-3 border-b-3 border-on-background flex justify-between items-center">
+<h2 class="font-label-mono text-label-mono uppercase tracking-widest">KHO THÀNH TÍCH</h2>
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+</div>
+<div class="p-6 grid grid-cols-2 sm:grid-cols-3 gap-6">
+<!-- Badge 1 -->
+<div class="flex flex-col items-center text-center group cursor-pointer">
+<div class="w-20 h-20 bg-secondary-fixed brutal-border brutal-shadow flex items-center justify-center mb-3 group-hover:bg-[#CCFF00] group-hover:-translate-y-1 transition-all">
+<span class="material-symbols-outlined text-4xl" data-icon="local_fire_department">local_fire_department</span>
+</div>
+<span class="font-label-mono text-label-mono uppercase font-bold text-[10px]">1 Week Fire</span>
+</div>
+<!-- Badge 2 -->
+<div class="flex flex-col items-center text-center group cursor-pointer">
+<div class="w-20 h-20 bg-primary-fixed brutal-border brutal-shadow flex items-center justify-center mb-3 group-hover:bg-primary group-hover:text-white group-hover:-translate-y-1 transition-all">
+<span class="material-symbols-outlined text-4xl" data-icon="auto_stories">auto_stories</span>
+</div>
+<span class="font-label-mono text-label-mono uppercase font-bold text-[10px]">Speed Reader</span>
+</div>
+<!-- Badge 3 -->
+<div class="flex flex-col items-center text-center group cursor-pointer">
+<div class="w-20 h-20 bg-tertiary-fixed brutal-border brutal-shadow flex items-center justify-center mb-3 rotate-45 group-hover:bg-tertiary group-hover:text-white group-hover:-translate-y-1 transition-all">
+<span class="material-symbols-outlined text-4xl -rotate-45" data-icon="psychology">psychology</span>
+</div>
+<span class="font-label-mono text-label-mono uppercase font-bold text-[10px]">Trivia Master</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column -->
+<div class="col-span-12 md:col-span-5">
+<section class="bg-white brutal-border brutal-shadow h-full flex flex-col">
+<div class="bg-black text-white p-3 border-b-3 border-on-background flex justify-between items-center">
+<h2 class="font-label-mono text-label-mono uppercase tracking-widest">HOẠT ĐỘNG GẦN ĐÂY</h2>
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<div class="p-6 flex flex-col gap-6 flex-grow">
+<!-- Feed Item 1 -->
+<div class="border-b-3 border-surface-dim pb-6 last:border-b-0 last:pb-0">
+<div class="flex gap-4">
+<div class="w-10 h-10 bg-primary-fixed brutal-border shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="format_quote">format_quote</span>
+</div>
+<div>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase text-[10px] mb-1">ĐÃ ĐĂNG ĐÁNH GIÁ · 2h ago</p>
+<p class="font-body-lg text-body-lg leading-tight mb-2">"The pacing in chapter 4 was incredible. Felt like a literal rollercoaster."</p>
+<a class="font-label-mono text-label-mono text-primary hover:underline uppercase text-[10px]" href="#">↳ Neuromancer's Echo</a>
+</div>
+</div>
+</div>
+<!-- Feed Item 2 -->
+<div class="border-b-3 border-surface-dim pb-6 last:border-b-0 last:pb-0">
+<div class="flex gap-4">
+<div class="w-10 h-10 bg-secondary-fixed brutal-border shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-black" data-icon="sports_esports">sports_esports</span>
+</div>
+<div>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase text-[10px] mb-1">ĐÃ CHƠI TRÒ CHƠI · 1d ago</p>
+<p class="font-body-lg text-body-lg leading-tight mb-2">Scored 4,500 pts in Vocab Blaster.</p>
+<span class="inline-block bg-surface-container-high font-label-mono text-label-mono px-2 py-1 text-[10px] brutal-border">High Score!</span>
+</div>
+</div>
+</div>
+<!-- Feed Item 3 -->
+<div class="border-b-3 border-surface-dim pb-6 last:border-b-0 last:pb-0">
+<div class="flex gap-4">
+<div class="w-10 h-10 bg-tertiary-fixed brutal-border shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="book">book</span>
+</div>
+<div>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase text-[10px] mb-1">ĐÃ ĐỌC XONG SÁCH · 3d ago</p>
+<p class="font-body-lg text-body-lg leading-tight mb-2">Completed 'The Algorithmic Heart'.</p>
+<div class="flex gap-1 mt-1 text-secondary-container">
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star_half">star_half</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full bg-surface-container-high border-t-3 border-on-background py-3 font-label-mono text-label-mono uppercase hover:bg-surface-dim transition-colors">TẢI THÊM</button>
+</section>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,35 @@
+{
+  "name": "viviora-api",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:migrate": "node scripts/migrate.js",
+    "db:reset": "node scripts/reset.js",
+    "db:seed": "node scripts/seed.js",
+    "achievements:recalculate": "node scripts/recalculateAchievements.js",
+    "test": "node --test test/*.test.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "exceljs": "^4.4.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "express-session": "^1.18.1",
+    "image-size": "^2.0.2",
+    "multer": "^2.0.0",
+    "nodemailer": "^7.0.3",
+    "pg": "^8.13.3",
+    "qrcode": "^1.5.4",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "eslint": "^9.25.0",
+    "prettier": "^3.5.3"
+  }
+}

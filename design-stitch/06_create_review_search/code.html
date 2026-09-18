@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>06_Create_Review_Search</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#efefff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1b1b1b",
+                        "background": "#f9f9f9",
+                        "on-secondary-fixed-variant": "#494900",
+                        "on-surface": "#1b1b1b",
+                        "on-surface-variant": "#434656",
+                        "outline": "#747688",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-container": "#eeeeee",
+                        "secondary": "#626200",
+                        "on-primary-fixed-variant": "#0035bd",
+                        "tertiary-fixed": "#ffdad2",
+                        "primary-fixed": "#dde1ff",
+                        "tertiary-container": "#ce3000",
+                        "inverse-surface": "#303030",
+                        "tertiary-fixed-dim": "#ffb4a2",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "on-tertiary-fixed-variant": "#8a1d00",
+                        "inverse-primary": "#b8c3ff",
+                        "primary": "#0040df",
+                        "primary-container": "#2d5bff",
+                        "surface": "#f9f9f9",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "secondary-container": "#e7e700",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#ffece8",
+                        "on-secondary-container": "#666600",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary-fixed": "#3c0700",
+                        "secondary-fixed-dim": "#cdcd00",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#104af0",
+                        "surface-bright": "#f9f9f9",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary-fixed": "#1d1d00",
+                        "outline-variant": "#c4c5d9",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001355",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#eaea00",
+                        "tertiary": "#a32400",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e8e8e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "shadow-offset": "4px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "border-width": "3px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Archivo Narrow", "sans-serif"],
+                        "headline-md": ["Anton", "sans-serif"],
+                        "headline-lg": ["Anton", "sans-serif"],
+                        "metadata": ["Archivo Narrow", "sans-serif"],
+                        "display-xl": ["Anton", "sans-serif"],
+                        "label-mono": ["Space Mono", "monospace"],
+                        "body-md": ["Archivo Narrow", "sans-serif"],
+                        "headline-lg-mobile": ["Anton", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["20px", { "lineHeight": "30px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "fontWeight": "400" }],
+                        "metadata": ["14px", { "lineHeight": "18px", "fontWeight": "600" }],
+                        "display-xl": ["80px", { "lineHeight": "80px", "fontWeight": "400" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .dot-pattern {
+            background-image: radial-gradient(circle at 1px 1px, black 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-lg {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-border {
+            border: 3px solid #1b1b1b;
+        }
+        .active-press:active {
+            transform: translate(4px, 4px);
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen text-on-background relative overflow-hidden font-body-md">
+<!-- Blurred Background Context -->
+<div aria-hidden="true" class="absolute inset-0 z-0 select-none pointer-events-none">
+<img alt="Background Context" class="w-full h-full object-cover filter blur-sm opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOxkk_p3fdWdfbPNnpzN-0EPV80Ahn4hxeYYHTckgqK1Bkoc2QuOifRTMVpdOt73WRBkH6GzuJMVatCpmSCkPxaDFazWgA_6b1KpOmydhSmeM81uZcT-dLlbMbvw9MwETpUXERKIkD08et9aDhb0fbcTnLHRNDm89g3L7Cgoiyt2RbGe983Z5gdcygptQIWfZLiFkPOyliQbFzPkPlmhKOD03FiytS2EfDirbl2hW8b09ABm3rvS757w"/>
+<div class="absolute inset-0 bg-background/50"></div>
+</div>
+<!-- Modal Overlay -->
+<div class="absolute inset-0 z-50 flex items-center justify-center p-margin-mobile md:p-margin-desktop bg-black/20 backdrop-blur-sm">
+<!-- Main Modal Container -->
+<main class="w-full max-w-2xl bg-surface-container-lowest neo-border neo-shadow-lg flex flex-col max-h-[921px] dot-pattern relative">
+<!-- Header -->
+<header class="bg-primary px-6 py-4 neo-border border-l-0 border-r-0 border-t-0 flex justify-between items-center relative z-10">
+<h1 class="font-headline-md text-headline-md text-on-primary uppercase tracking-wide">
+                    ĐÁNH GIÁ SÁCH MỚI
+                </h1>
+<span class="font-label-mono text-label-mono bg-on-primary text-primary px-2 py-1 neo-border uppercase">BƯỚC 1/3</span>
+</header>
+<!-- Content Area -->
+<div class="p-6 md:p-8 flex-1 overflow-y-auto bg-surface-container-lowest relative z-10 space-y-8">
+<!-- Search Input -->
+<div class="space-y-2">
+<label class="font-label-mono text-label-mono uppercase text-on-surface block" for="book-search">TÌM SÁCH ĐỂ ĐÁNH GIÁ</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-[24px]">search</span>
+<input class="w-full h-14 pl-12 pr-4 bg-surface-container-lowest neo-border text-on-surface font-body-lg text-body-lg focus:outline-none focus:shadow-[4px_4px_0px_0px_#0040df] transition-shadow placeholder:font-body-lg placeholder:text-on-surface-variant/60" id="book-search" placeholder="Search by title, author, or ISBN..." type="text" value="Percy"/>
+</div>
+</div>
+<!-- Search Results -->
+<div class="space-y-4">
+<h2 class="font-label-mono text-label-mono text-on-surface-variant uppercase border-b-2 border-on-surface-variant/20 pb-2">Kết quả (3)</h2>
+<!-- Result Card 1 (Unselected) -->
+<div class="bg-surface-container-lowest neo-border p-4 flex gap-4 items-center hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="w-16 h-24 bg-surface-variant neo-border flex-shrink-0 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all" data-alt="A brightly lit, high-contrast book cover featuring a minimalist illustration of a lightning bolt in electric blue against a stark white background. The style is graphic, retro-tech, and bold, fitting a neo-brutalist Y2K aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgArv6yA2P4CO6CbTA8IWln-rJ2Xim7kho2v9w_SO_QGj5HdJgtasCcCjV6zd9N0LNWHOnfG4TR8VCUo6F2OCe8DUYyH7FHTafFgRzXVNbcv9QtklxJRNfzdwaMabbXi2zmACqLRllnvTuOYq0N_hNXcWdy6OAqw24dRG8c76O5TFrEf2n0uubdhmjASPrkA2uaMPCp8HYI3xZfKgiux6xAxHQgix0d_haha1aTefZ28N8V-nSJ9URDA"/>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">The Lightning Thief</h3>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">Rick Riordan</p>
+<span class="inline-block mt-2 font-label-mono text-label-mono bg-surface-container-highest px-2 py-1 neo-border text-xs">FANTASY</span>
+</div>
+<button class="hidden md:flex h-10 px-4 bg-surface-container-lowest neo-border neo-shadow font-headline-md text-body-md uppercase items-center active-press hover:bg-secondary-container transition-colors shrink-0">
+                            CHỌN
+                        </button>
+</div>
+<!-- Result Card 2 (SELECTED STATE) -->
+<div class="bg-[#CCFF00] neo-border neo-shadow p-4 flex gap-4 items-center relative transform -translate-y-1 z-10 transition-transform">
+<div class="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-on-surface rounded-full flex items-center justify-center text-[#CCFF00] border-2 border-surface-container-lowest">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="w-16 h-24 bg-surface-variant neo-border flex-shrink-0 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A high-contrast book cover displaying a prominent golden trident on a deep purple background. The illustration is stark, flat, and vector-based, aligning with a retro-digital, Y2K zine aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqxvP82FT_-8gWw6qbQfY2Ts1VFWl3dPBCOYRegLsfhQrVBIrDazSpaVeN7NWFKuTz5YxQ5ZHmZ3ccm6CFVbWDXTj2mWlpTzWdXCPmior64VHBvuJYqn_19XqrcyaZuUDYi7-3Q7m5mZAl8nQ8ax2Rdjw6y3dn-ftm0iKgA-BfN2MoqJByOP-zt2KpizKFeISnT5tRRBcpZxe5WEUEB8OkdPG01hLurVkKGF7gg8rfVSeyJBigR5ky3Q"/>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">The Sea of Monsters</h3>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">Rick Riordan</p>
+<span class="inline-block mt-2 font-label-mono text-label-mono bg-on-surface text-surface-container-lowest px-2 py-1 neo-border text-xs uppercase">ĐÃ CHỌN</span>
+</div>
+<button class="hidden md:flex h-10 px-4 bg-on-surface text-surface-container-lowest neo-border font-headline-md text-body-md uppercase items-center shrink-0">
+                            ĐÃ CHỌN
+                        </button>
+</div>
+<!-- Result Card 3 (Unselected) -->
+<div class="bg-surface-container-lowest neo-border p-4 flex gap-4 items-center hover:bg-surface-container-low transition-colors cursor-pointer group opacity-75">
+<div class="w-16 h-24 bg-surface-variant neo-border flex-shrink-0 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all" data-alt="A minimalist book cover showing a green dragon silhouette over a stark white and grey dot-grid background. The design is geometric and heavily styled with thick black outlines, characteristic of neo-brutalist digital art." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS3pyOBe-phG3Lq1_aNu87wZKEteAd7uSpYA1eQdYBB6_6i_0wgOdKAyMDbcuutuz-wBzUSsJn-4RkaOqMaJtg4KzDO_Mn-nSNGiqgo7OsiHgIA868f6O3Rug-S9Byani7eLsHtH2Rcq46G_pXIAn1pvLyd4_OC-nKZVw_pYzCjFN_GnWM53e2ao1dUsS8tLApztP3phIHMgHEEoQGdmQluSIXAjNxW3xFht-exhg1nLvL0GA9RH-4MA"/>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">The Titan's Curse</h3>
+<p class="font-body-md text-body-md text-on-surface-variant truncate">Rick Riordan</p>
+<span class="inline-block mt-2 font-label-mono text-label-mono bg-surface-container-highest px-2 py-1 neo-border text-xs">FANTASY</span>
+</div>
+<button class="hidden md:flex h-10 px-4 bg-surface-container-lowest neo-border neo-shadow font-headline-md text-body-md uppercase items-center active-press hover:bg-secondary-container transition-colors shrink-0">
+                            CHỌN
+                        </button>
+</div>
+</div>
+</div>
+<!-- Footer Navigation -->
+<footer class="bg-surface-container-low p-6 neo-border border-l-0 border-r-0 border-b-0 flex justify-between items-center relative z-10">
+<button class="h-12 px-6 bg-surface-container-lowest neo-border neo-shadow font-headline-md text-headline-md uppercase items-center active-press hover:bg-surface-variant transition-colors text-on-surface">
+                    HỦY
+                </button>
+<!-- Enabled Next Button because a book is selected -->
+<button class="h-12 px-8 bg-primary text-on-primary neo-border neo-shadow font-headline-md text-headline-md uppercase items-center active-press hover:bg-[#9D00FF] transition-colors flex gap-2">
+                    TIẾP THEO
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</footer>
+</main>
+</div>
+</body></html>

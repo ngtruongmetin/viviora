@@ -1,0 +1,66 @@
+services:
+  vv-postgres:
+    restart: unless-stopped
+    image: postgres:16-alpine
+    container_name: vv-postgres
+    command: ["postgres", "-c", "timezone=Asia/Ho_Chi_Minh"]
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-viviora}
+      POSTGRES_USER: ${POSTGRES_USER:-viviora}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
+    ports:
+      - "${HOST_BIND_IP:-0.0.0.0}:${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - ./backend/data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  vv-backend:
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vv-backend
+    environment:
+      PORT: 4000
+      NODE_ENV: ${NODE_ENV:-development}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-viviora}:${POSTGRES_PASSWORD}@vv-postgres:5432/${POSTGRES_DB:-viviora}
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET must be set}
+      FRONTEND_ORIGIN: http://localhost:${FRONTEND_PORT:-5080}
+      UPLOAD_DIR: /app/uploads
+      AVATAR_MAX_SIZE: ${AVATAR_MAX_SIZE:-5242880}
+      LIBRARY_IMPORT_MAX_SIZE: ${LIBRARY_IMPORT_MAX_SIZE:-10485760}
+      LIBRARY_IMPORT_MAX_ROWS: ${LIBRARY_IMPORT_MAX_ROWS:-50000}
+      LIBRARY_IMPORT_TTL_MS: ${LIBRARY_IMPORT_TTL_MS:-1800000}
+      LIBRARY_IMPORT_PREVIEW_LIMIT: ${LIBRARY_IMPORT_PREVIEW_LIMIT:-30}
+      LIBRARY_COVER_MAX_SIZE: ${LIBRARY_COVER_MAX_SIZE:-5242880}
+      BACKUP_DIR: /app/backups
+    ports:
+      - "${HOST_BIND_IP:-0.0.0.0}:${BACKEND_PORT:-4000}:4000"
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./backend/backups:/app/backups
+    depends_on:
+      vv-postgres:
+        condition: service_healthy
+    command: sh -c "npm run db:migrate && npm start"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:4000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  vv-frontend:
+    restart: unless-stopped
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vv-frontend
+    ports:
+      - "${HOST_BIND_IP:-0.0.0.0}:${FRONTEND_PORT:-5080}:80"
+    depends_on:
+      vv-backend:
+        condition: service_healthy

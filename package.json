@@ -1,0 +1,14 @@
+{
+  "name": "viviora",
+  "private": true,
+  "scripts": {
+    "dev": "docker compose up --build",
+    "down": "docker compose down",
+    "db:migrate": "npm --prefix backend run db:migrate",
+    "db:reset": "npm --prefix backend run db:reset",
+    "db:seed": "npm --prefix backend run db:seed",
+    "test": "npm --prefix backend test",
+    "lint": "npm --prefix backend run lint && npm --prefix frontend run lint",
+    "build": "npm --prefix frontend run build"
+  }
+}

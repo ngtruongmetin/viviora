@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Viviora Question Bank</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton:wght@100..900&family=Archivo+Narrow:wght@100..900&family=Space+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f9f9f9",
+                        "inverse-primary": "#b8c3ff",
+                        "surface": "#f9f9f9",
+                        "secondary-fixed-dim": "#cdcd00",
+                        "secondary-fixed": "#eaea00",
+                        "tertiary-fixed": "#ffdad2",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#001355",
+                        "surface-container-low": "#f3f3f3",
+                        "primary-container": "#2d5bff",
+                        "surface-container-highest": "#e2e2e2",
+                        "outline": "#747688",
+                        "surface-dim": "#dadada",
+                        "secondary-container": "#e7e700",
+                        "tertiary-fixed-dim": "#ffb4a2",
+                        "on-primary-container": "#efefff",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "on-secondary-fixed": "#1d1d00",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#494900",
+                        "on-secondary-container": "#666600",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#dde1ff",
+                        "on-tertiary-fixed-variant": "#8a1d00",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ce3000",
+                        "surface-container": "#eeeeee",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary-fixed": "#3c0700",
+                        "on-tertiary-container": "#ffece8",
+                        "surface-variant": "#e2e2e2",
+                        "on-background": "#1b1b1b",
+                        "error": "#ba1a1a",
+                        "secondary": "#626200",
+                        "surface-tint": "#104af0",
+                        "inverse-surface": "#303030",
+                        "surface-container-high": "#e8e8e8",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "primary": "#0040df",
+                        "on-primary-fixed-variant": "#0035bd",
+                        "tertiary": "#a32400",
+                        "on-surface-variant": "#434656",
+                        "on-surface": "#1b1b1b",
+                        "outline-variant": "#c4c5d9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0rem",
+                        "lg": "0rem",
+                        "xl": "0rem",
+                        "full": "0rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "shadow-offset": "4px",
+                        "border-width": "3px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "metadata": ["Archivo Narrow"],
+                        "headline-md": ["Anton"],
+                        "label-mono": ["Space Mono"],
+                        "display-xl": ["Anton"],
+                        "body-md": ["Archivo Narrow"],
+                        "headline-lg": ["Anton"],
+                        "headline-lg-mobile": ["Anton"],
+                        "body-lg": ["Archivo Narrow"]
+                    },
+                    "fontSize": {
+                        "metadata": ["14px", { "lineHeight": "18px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display-xl": ["80px", { "lineHeight": "80px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "body-lg": ["20px", { "lineHeight": "30px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .dot-grid {
+            background-image: radial-gradient(circle at 1px 1px, #1b1b1b 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-background dot-grid text-on-background min-h-screen">
+<!-- Top Navigation Placeholder (Hidden for this specific task view as requested) -->
+<!-- Main Content Canvas -->
+<main class="w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-12 flex flex-col gap-8">
+<!-- Header Section -->
+<header class="flex flex-col gap-4">
+<button class="w-fit flex items-center gap-2 font-label-mono text-label-mono text-on-background hover:text-primary transition-colors mb-2">
+<span class="material-symbols-outlined">arrow_back</span>
+                QUAY LẠI QUẢN LÝ SÁCH
+            </button>
+<div class="border-[3px] border-on-background bg-surface-lowest p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] bg-white relative">
+<div class="absolute top-0 right-0 p-2 border-l-[3px] border-b-[3px] border-on-background bg-secondary-fixed text-on-secondary-fixed font-label-mono text-label-mono uppercase">
+                    QUESTION BANK / KHO CÂU HỎI
+                </div>
+<h1 class="font-display-xl text-headline-lg-mobile md:text-display-xl uppercase mt-4 mb-2 tracking-tighter">007 PHẦN TẬP 10</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant font-bold">Lan Phương</p>
+</div>
+</header>
+<!-- Statistics Section -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Stat 1 -->
+<div class="border-[3px] border-on-background bg-white p-6 flex flex-col gap-2 relative shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:translate-x-[-1px] transition-transform">
+<span class="font-label-mono text-label-mono text-on-surface-variant">TỔNG CÂU HỎI</span>
+<span class="font-headline-lg text-headline-lg">42</span>
+</div>
+<!-- Stat 2 -->
+<div class="border-[3px] border-on-background bg-white p-6 flex flex-col gap-2 relative shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:translate-x-[-1px] transition-transform">
+<div class="absolute top-0 left-0 w-full h-2 bg-primary"></div>
+<span class="font-label-mono text-label-mono text-on-surface-variant mt-2">MULTIPLE CHOICE (MC)</span>
+<span class="font-headline-lg text-headline-lg">30</span>
+</div>
+<!-- Stat 3 -->
+<div class="border-[3px] border-on-background bg-white p-6 flex flex-col gap-2 relative shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:translate-x-[-1px] transition-transform">
+<div class="absolute top-0 left-0 w-full h-2 bg-[#CCFF00]"></div>
+<span class="font-label-mono text-label-mono text-on-surface-variant mt-2">TRUE / FALSE (TF)</span>
+<span class="font-headline-lg text-headline-lg">12</span>
+</div>
+</section>
+<!-- List Area -->
+<section class="flex flex-col gap-6 mt-8">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b-[3px] border-on-background pb-4">
+<h2 class="font-headline-md text-headline-md uppercase">CÂU HỎI</h2>
+<!-- Filter Tabs -->
+<div class="flex flex-wrap gap-2">
+<button class="border-[3px] border-on-background bg-primary text-on-primary font-label-mono text-label-mono px-4 py-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all">
+                        TẤT CẢ 42
+                    </button>
+<button class="border-[3px] border-on-background bg-white text-on-background hover:bg-surface-container-high font-label-mono text-label-mono px-4 py-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all">
+                        MC 30
+                    </button>
+<button class="border-[3px] border-on-background bg-white text-on-background hover:bg-surface-container-high font-label-mono text-label-mono px-4 py-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all">
+                        TF 12
+                    </button>
+</div>
+</div>
+<!-- Question Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- MC Card -->
+<article class="border-[3px] border-on-background bg-white flex flex-col shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] h-full">
+<header class="bg-primary text-on-primary p-3 border-b-[3px] border-on-background flex justify-between items-center">
+<span class="font-label-mono text-label-mono">MC · CÂU HỎI 01</span>
+</header>
+<div class="p-6 flex flex-col gap-4 grow">
+<h3 class="font-headline-md text-headline-md">Nhân vật chính của cuốn sách là ai?</h3>
+<div class="flex flex-col gap-2 font-body-md text-body-md">
+<div class="border-[3px] border-on-background p-3 flex gap-3">
+<span class="font-bold">A.</span> <span>Nam</span>
+</div>
+<div class="border-[3px] border-on-background p-3 flex gap-3 bg-secondary-fixed text-on-secondary-fixed font-bold relative">
+<span class="absolute right-3 top-3 material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>B.</span> <span>Lan Phương</span>
+</div>
+<div class="border-[3px] border-on-background p-3 flex gap-3">
+<span class="font-bold">C.</span> <span>Hùng</span>
+</div>
+<div class="border-[3px] border-on-background p-3 flex gap-3">
+<span class="font-bold">D.</span> <span>Mai</span>
+</div>
+</div>
+<div class="mt-4 p-4 border-[3px] border-on-background bg-surface-container-low font-body-md text-body-md">
+<strong class="font-label-mono text-label-mono block mb-2">✓ ĐÁP ÁN ĐÚNG: B</strong>
+<p class="font-metadata text-metadata">Giải thích: Lan Phương là tác giả và cũng là hình tượng được xây dựng làm nhân vật chính trong tác phẩm này.</p>
+</div>
+</div>
+<footer class="border-t-[3px] border-on-background p-3 flex gap-3 bg-surface-lowest mt-auto">
+<button class="border-[3px] border-on-background bg-primary text-on-primary font-label-mono text-label-mono px-4 py-2 flex-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm">edit</span> SỬA
+                        </button>
+<button class="border-[3px] border-on-background bg-error text-on-error font-label-mono text-label-mono px-4 py-2 flex-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm">delete</span> XÓA
+                        </button>
+</footer>
+</article>
+<!-- TF Card -->
+<article class="border-[3px] border-on-background bg-white flex flex-col shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] h-full">
+<header class="bg-[#CCFF00] text-on-background p-3 border-b-[3px] border-on-background flex justify-between items-center">
+<span class="font-label-mono text-label-mono font-bold">TF · CÂU HỎI 02</span>
+</header>
+<div class="p-6 flex flex-col gap-4 grow">
+<h3 class="font-headline-md text-headline-md">Lan Phương là tác giả của cuốn sách.</h3>
+<div class="flex gap-2 font-body-md text-body-md h-full content-start items-start">
+<div class="border-[3px] border-on-background p-4 flex-1 text-center bg-secondary-fixed text-on-secondary-fixed font-bold flex flex-col items-center justify-center gap-2 relative">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                ĐÚNG
+                            </div>
+<div class="border-[3px] border-on-background p-4 flex-1 text-center font-bold flex flex-col items-center justify-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined">cancel</span>
+                                SAI
+                            </div>
+</div>
+<div class="mt-auto p-4 border-[3px] border-on-background bg-surface-container-low font-body-md text-body-md">
+<strong class="font-label-mono text-label-mono block mb-2">✓ ĐÚNG</strong>
+<p class="font-metadata text-metadata">Giải thích: Thông tin này được ghi rõ ngay trên bìa sách và phần giới thiệu.</p>
+</div>
+</div>
+<footer class="border-t-[3px] border-on-background p-3 flex gap-3 bg-surface-lowest mt-auto">
+<button class="border-[3px] border-on-background bg-primary text-on-primary font-label-mono text-label-mono px-4 py-2 flex-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm">edit</span> SỬA
+                        </button>
+<button class="border-[3px] border-on-background bg-error text-on-error font-label-mono text-label-mono px-4 py-2 flex-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm">delete</span> XÓA
+                        </button>
+</footer>
+</article>
+</div>
+</section>
+</main>
+</body></html>

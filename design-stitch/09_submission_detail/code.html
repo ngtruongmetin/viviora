@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>09_Submission_Detail</title>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config Injection -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#f3f3f3",
+                    "surface": "#f9f9f9",
+                    "surface-tint": "#104af0",
+                    "on-tertiary-fixed-variant": "#8a1d00",
+                    "inverse-surface": "#303030",
+                    "tertiary": "#a32400",
+                    "surface-variant": "#e2e2e2",
+                    "on-secondary-container": "#666600",
+                    "surface-dim": "#dadada",
+                    "primary-fixed": "#dde1ff",
+                    "on-secondary-fixed-variant": "#494900",
+                    "inverse-on-surface": "#f1f1f1",
+                    "primary": "#0040df",
+                    "on-primary-container": "#efefff",
+                    "surface-container": "#eeeeee",
+                    "on-tertiary-fixed": "#3c0700",
+                    "surface-container-high": "#e8e8e8",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#ce3000",
+                    "on-error-container": "#93000a",
+                    "secondary": "#626200",
+                    "on-secondary-fixed": "#1d1d00",
+                    "on-surface-variant": "#434656",
+                    "on-tertiary-container": "#ffece8",
+                    "tertiary-fixed-dim": "#ffb4a2",
+                    "on-surface": "#1b1b1b",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e2e2e2",
+                    "on-primary-fixed": "#001355",
+                    "secondary-fixed-dim": "#cdcd00",
+                    "on-primary-fixed-variant": "#0035bd",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1b1b1b",
+                    "background": "#f9f9f9",
+                    "secondary-fixed": "#eaea00",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#ffdad2",
+                    "secondary-container": "#e7e700",
+                    "outline": "#747688",
+                    "primary-fixed-dim": "#b8c3ff",
+                    "surface-bright": "#f9f9f9",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#c4c5d9",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#b8c3ff",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#2d5bff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "unit": "4px",
+                    "shadow-offset": "4px",
+                    "gutter": "16px",
+                    "border-width": "3px",
+                    "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": [
+                            "Anton"
+                    ],
+                    "headline-md": [
+                            "Anton"
+                    ],
+                    "label-mono": [
+                            "Space Mono"
+                    ],
+                    "headline-lg": [
+                            "Anton"
+                    ],
+                    "body-md": [
+                            "Archivo Narrow"
+                    ],
+                    "metadata": [
+                            "Archivo Narrow"
+                    ],
+                    "body-lg": [
+                            "Archivo Narrow"
+                    ],
+                    "display-xl": [
+                            "Anton"
+                    ]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": [
+                            "32px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-mono": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "48px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "metadata": [
+                            "14px",
+                            {
+                                    "lineHeight": "18px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "20px",
+                            {
+                                    "lineHeight": "30px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display-xl": [
+                            "80px",
+                            {
+                                    "lineHeight": "80px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            /* Dot Grid Background */
+            background-color: #f9f9f9;
+            background-image: radial-gradient(#1b1b1b 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        /* Neo-brutalist custom utilities */
+        .brutal-border {
+            border: 3px solid #1b1b1b;
+        }
+        .brutal-shadow {
+            box-shadow: 4px 4px 0px 0px #1b1b1b;
+        }
+        .brutal-shadow-lg {
+            box-shadow: 8px 8px 0px 0px #1b1b1b;
+        }
+        .brutal-btn-press:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px 0px #1b1b1b;
+        }
+        .brutal-chip-inactive {
+            border: 3px solid #1b1b1b;
+            background-color: #ffffff;
+            color: #1b1b1b;
+        }
+        .brutal-chip-active {
+            background-color: #1b1b1b;
+            color: #ffffff;
+            border: 3px solid #1b1b1b;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface h-screen flex flex-col md:flex-row overflow-hidden">
+<!-- JSON SideNavBar (Desktop Only) -->
+<!-- Matches intent: Teacher moderation dashboard, let's highlight "Home" as the default landing for moderation tasks since no "Moderation" tab exists in JSON -->
+<nav aria-label="Sidebar" class="hidden md:flex flex-col h-screen w-64 left-0 sticky bg-surface-container border-r-3 border-on-surface p-gutter gap-4 z-40">
+<!-- Header Info -->
+<div class="mb-8">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Bảng điều khiển Viviora</h2>
+<div class="flex items-center gap-3">
+<img alt="User profile avatar" class="w-12 h-12 rounded-full brutal-border object-cover" data-alt="A neo-brutalist stylized avatar of a teacher, featuring thick black outlines, stark white background, and vibrant electric blue accents. The style mimics y2k retro-tech pixel art." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc6T0XQ92N1ekFfU9tprdof3XRZOatO7QX_Gen54XXzmcLF5wnQhUPRejnHd74EI1B71tRf8iTmUEAEq1IyS_uyicFs6qKLboXerqVJFSKO5zfYWW8yZRcEeEX1ckjN-3x2w4vnXIETaGVE12-w6zTCWHmJEhi9mzVcLRrn2NynwElDofCRn259WdpTmSmTvUN62VzeAOtXMJ-jeXGlXxvC7XjHF5YCaDnN8GZGQfs0n10qjI-jII9TQ"/>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Độc giả Cấp 12</span>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex flex-col gap-2">
+<!-- Active Tab: Home (Fallback for Dashboard/Moderation) -->
+<a class="flex items-center gap-3 p-3 bg-primary text-on-primary border-3 border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-tertiary-container hover:text-on-tertiary-container hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-mono text-label-mono">Trang chủ</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface hover:bg-surface-variant hover:bg-tertiary-container hover:text-on-tertiary-container hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-mono text-label-mono">Thư viện của tôi</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface hover:bg-surface-variant hover:bg-tertiary-container hover:text-on-tertiary-container hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-mono text-label-mono">Nhóm đọc sách</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface hover:bg-surface-variant hover:bg-tertiary-container hover:text-on-tertiary-container hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform" href="#">
+<span class="material-symbols-outlined">military_tech</span>
+<span class="font-label-mono text-label-mono">Thử thách</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface hover:bg-surface-variant hover:bg-tertiary-container hover:text-on-tertiary-container hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-mono text-label-mono">Cài đặt</span>
+</a>
+</div>
+<div class="mt-auto">
+<button class="w-full bg-primary text-on-primary font-headline-md text-headline-md uppercase brutal-border brutal-shadow brutal-btn-press p-3 transition-all">BẮT ĐẦU ĐỌC</button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col overflow-hidden">
+<!-- JSON TopAppBar -->
+<header class="w-full top-0 sticky z-50 flex justify-between items-center px-margin-desktop py-4 bg-surface border-b-3 border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<!-- Brand -->
+<div class="font-headline-md text-headline-md uppercase text-primary tracking-tighter">VIVIORA</div>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-4">
+<button class="text-primary hover:bg-secondary-container hover:text-on-secondary-container p-2 brutal-border brutal-btn-press transition-all bg-surface">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-primary hover:bg-secondary-container hover:text-on-secondary-container p-2 brutal-border brutal-btn-press transition-all bg-surface">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Canvas -->
+<main class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop">
+<!-- Page Header -->
+<div class="mb-8 flex items-center gap-4">
+<button aria-label="Go back" class="p-2 brutal-border bg-white brutal-shadow brutal-btn-press hover:bg-lime-300 transition-colors">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface uppercase">BÀI NỘP ĐÁNH GIÁ</h1>
+</div>
+<!-- Bento Grid Layout for Details -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter max-w-7xl mx-auto">
+<!-- Left Column: Student & Book Info -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Student Meta Card -->
+<div class="bg-white brutal-border brutal-shadow p-6 relative overflow-hidden group">
+<!-- Abstract geo accent -->
+<div class="absolute top-0 right-0 w-16 h-16 bg-lime-300 border-l-3 border-b-3 border-on-surface transform translate-x-8 -translate-y-8 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform"></div>
+<div class="flex items-start gap-4 mb-4">
+<div class="w-16 h-16 rounded-full brutal-border overflow-hidden bg-primary shrink-0">
+<img alt="Student Avatar" class="w-full h-full object-cover" data-alt="A neo-brutalist avatar of a high school student named Leo, rendered in high contrast black and white with a bright lime green background, pixel art style, retro-tech y2k vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNGAI1mVh8oU9rNlw7X6d7cLnwBGJX7PGtXKE37xWh9QGyv_y7mVTpEmnaxm2AGL8X3L9tiGyzopS_yHrW7-PnjFSVq7DgiAe2wgRMHa6mmjet53cllmVjcD49DeeC_TuX9t0TavqMq9UdbyZ7DMjW-6hYrqFFsnznBPvsNo5DevtwyXLzzaG5_4QOLDw6wkeV-16XdcmopgeADj6vdVLDIGrcyn7ow_ezp-eNKyXY3x2W4R_XUtLDIA"/>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md uppercase text-on-surface">Leo R.</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant bg-surface-variant px-2 py-1 brutal-border inline-block mt-1">Lớp: 11A2</p>
+</div>
+</div>
+<div class="space-y-2 mt-6">
+<div class="flex justify-between border-b-3 border-on-surface border-dotted pb-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant">Đã nộp</span>
+<span class="font-label-mono text-label-mono text-on-surface">Oct 24, 14:32</span>
+</div>
+<div class="flex justify-between border-b-3 border-on-surface border-dotted pb-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant">Trạng thái</span>
+<span class="font-label-mono text-label-mono text-[#ce3000] uppercase">CHỜ DUYỆT</span>
+</div>
+</div>
+</div>
+<!-- Book Card -->
+<div class="bg-white brutal-border p-0 flex flex-col group">
+<div class="bg-[#9D00FF] p-2 border-b-3 border-on-surface">
+<span class="font-label-mono text-label-mono text-white uppercase">KIỆT TÁC VIỄN TƯỞNG</span>
+</div>
+<div class="p-4 flex gap-4">
+<div class="w-1/3 shrink-0">
+<img alt="Dune Book Cover" class="w-full h-auto brutal-border brutal-shadow" data-alt="Book cover of Dune by Frank Herbert, styled in a stark neo-brutalist aesthetic with heavy black outlines, stark white, and electric blue sand dunes. Bold, blocky typography. High contrast, gritty texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6us437zFAdGcuI3RQ3GYSkrVFo5IMGxHJMeCLy93hOO-h7Q8asMyPdAJ6LqVZ3owjbv7btHRnY40zeU5-ufVH89_H_wVWwwYvnqh-7pjAl_drOuH3wZ6w02iNviatVbgJNFUZC75ARXI0Ln8XJgZT_izxMlG6RMeP9Bo18kpj7vHFT1RznL-nNcIFPgLM3nnrpUQmeELBhd6SpH1FQCyoRYP9BRpZoJ78vOWkW_P4xiotPvSGogvkpA"/>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="font-headline-md text-headline-md uppercase text-on-surface">Dune</h4>
+<p class="font-body-md text-body-md text-on-surface-variant italic mb-2">Frank Herbert</p>
+<!-- Rating -->
+<div class="flex text-[#e7e700] drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Review Text & Feedback -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Review Content -->
+<div class="bg-white brutal-border brutal-shadow-lg p-6 md:p-8 flex-1">
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface mb-6 inline-block bg-lime-300 px-3 py-1 brutal-border transform -rotate-1">NHẬN XÉT CỦA HỌC SINH</h2>
+<div class="prose prose-lg max-w-none font-body-lg text-body-lg text-on-surface space-y-4">
+<p>I wasn't sure if I would like Dune because I thought it would be just another slow sci-fi book, but the political intrigue completely hooked me. The way Herbert builds the world of Arrakis makes it feel like a real place that you can almost taste the sand.</p>
+<p>Paul's journey is fascinating, though sometimes he feels a bit too perfect. What I really loved was the ecology aspect and how water is treated as the most precious currency. It made me think a lot about our own world's resources.</p>
+<p>The vocabulary was challenging in parts, especially keeping track of all the different factions like the Bene Gesserit and the Spacing Guild, but the glossary helped. Definitely a 5-star read for me, though I needed a break after finishing it because it's so dense.</p>
+</div>
+</div>
+<!-- Teacher Feedback Section -->
+<div class="bg-surface-container border-t-3 border-l-3 border-r-3 border-on-surface p-6 pb-0 mt-4 relative">
+<!-- Decorative tape effect -->
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-6 bg-yellow-300 brutal-border transform rotate-2 opacity-80"></div>
+<h3 class="font-headline-md text-headline-md uppercase text-on-surface mb-4">PHẢN HỒI CỦA GIÁO VIÊN</h3>
+<!-- Quick Chips -->
+<div class="flex flex-wrap gap-2 mb-4" id="feedback-chips">
+<button class="brutal-chip-inactive px-3 py-1 font-label-mono text-label-mono uppercase hover:bg-primary hover:text-white transition-colors brutal-btn-press">GỢI Ý TUYỆT VỜI!</button>
+<button class="brutal-chip-inactive px-3 py-1 font-label-mono text-label-mono uppercase hover:bg-primary hover:text-white transition-colors brutal-btn-press">CẦN THÊM CHI TIẾT</button>
+<button class="brutal-chip-inactive px-3 py-1 font-label-mono text-label-mono uppercase hover:bg-primary hover:text-white transition-colors brutal-btn-press">TỪ VỰNG XUẤT SẮC</button>
+<button class="brutal-chip-inactive px-3 py-1 font-label-mono text-label-mono uppercase hover:bg-primary hover:text-white transition-colors brutal-btn-press">CẤU TRÚC TỐT</button>
+</div>
+<!-- Text Input -->
+<textarea class="w-full bg-white brutal-border p-4 font-body-md text-body-md focus:outline-none focus:ring-0 focus:shadow-[4px_4px_0px_0px_#0040df] transition-shadow min-h-[120px]" placeholder="Viết phản hồi cá nhân tại đây... (Archive Narrow)"></textarea>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row gap-0">
+<button class="flex-1 bg-[#ba1a1a] text-white font-headline-md text-headline-md uppercase p-6 brutal-border brutal-shadow hover:bg-[#93000a] brutal-btn-press transition-all">
+                            Reject
+                        </button>
+<button class="flex-1 bg-[#CCFF00] text-on-surface font-headline-md text-headline-md uppercase p-6 brutal-border brutal-shadow hover:bg-[#aacc00] brutal-btn-press transition-all">
+                            Approve
+                        </button>
+</div>
+</div>
+</div>
+<!-- Bottom spacer for scrolling -->
+<div class="h-24"></div>
+</main>
+</div>
+<script>
+        // Simple interaction for feedback chips
+        document.addEventListener('DOMContentLoaded', () => {
+            const chips = document.querySelectorAll('#feedback-chips button');
+            const textarea = document.querySelector('textarea');
+
+            chips.forEach(chip => {
+                chip.addEventListener('click', (e) => {
+                    // Toggle active visual state
+                    e.target.classList.toggle('brutal-chip-inactive');
+                    e.target.classList.toggle('brutal-chip-active');
+                    
+                    // Append text to textarea (basic implementation)
+                    const chipText = e.target.innerText;
+                    if(e.target.classList.contains('brutal-chip-active')) {
+                        if(textarea.value.length > 0 && !textarea.value.endsWith(' ')) {
+                            textarea.value += ' ' + chipText + '. ';
+                        } else {
+                            textarea.value += chipText + '. ';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body></html>

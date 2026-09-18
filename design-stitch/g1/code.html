@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viviora - Chỉnh sửa Trò chơi (Modal)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&amp;family=Plus+Jakarta+Sans:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+<style>
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #00000088;
+  }
+  .font-anton { font-family: 'Anton', sans-serif; letter-spacing: -0.02em; }
+  .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+  .brutal-border { border: 3px solid #000000; }
+  .brutal-border-b { border-bottom: 3px solid #000000; }
+  .brutal-border-t { border-top: 3px solid #000000; }
+  .brutal-border-r { border-right: 3px solid #000000; }
+  .brutal-shadow { box-shadow: 4px 4px 0px 0px #000000; }
+  .brutal-shadow-sm { box-shadow: 2px 2px 0px 0px #000000; }
+  .brutal-shadow-modal { box-shadow: 10px 10px 0px 0px #000000; }
+  .brutal-btn { transition: all 0.1s ease; }
+  .brutal-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px 0px #000000; }
+  .brutal-btn:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0px 0px #000000; }
+  .dot-bg {
+    background-image: radial-gradient(#d1d5db 1.5px, transparent 1.5px);
+    background-size: 20px 20px;
+  }
+</style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8 dot-bg relative">
+
+  <div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-0"></div>
+
+  <!-- MODAL CONTAINER (Chỉnh sửa trò chơi) -->
+  <div class="relative z-10 w-full max-w-2xl bg-white brutal-border brutal-shadow-modal flex flex-col max-h-[92vh] overflow-hidden"><div class="w-full h-2 bg-[#2D5BFF] shrink-0 brutal-border-b"></div>
+
+    <!-- MODAL HEADER -->
+    <div class="bg-white text-black px-6 py-4 flex items-center justify-between brutal-border-b shrink-0">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-gray-700">videogame_asset</span>
+          <span class="text-[11px] font-mono-code font-bold tracking-wider text-gray-600 uppercase">QUẢN LÝ TRÒ CHƠI / CHỈNH SỬA</span>
+        </div>
+        <h2 class="text-3xl font-anton uppercase tracking-tight text-black mt-0.5">CHỈNH SỬA TRÒ CHƠI</h2>
+      </div>
+      <button class="w-10 h-10 bg-[#F3F3F3] text-black brutal-border flex items-center justify-center hover:bg-black hover:text-white transition-colors brutal-btn" aria-label="Đóng">
+        <span class="material-symbols-outlined text-2xl font-bold">close</span>
+      </button>
+    </div>
+
+    <!-- MODAL BODY -->
+    <div class="p-6 md:p-8 overflow-y-auto space-y-6 flex-1 bg-[#F9F9F9]">
+
+      <!-- LOCKED LOGIC ATTRIBUTES BANNER -->
+      <div class="bg-[#F3F3F3] p-4 brutal-border space-y-2"><div class="-mx-4 -mt-4 mb-3 h-1.5 bg-[#FFE500] brutal-border-b"></div>
+        <div class="flex items-center justify-between text-xs font-mono-code">
+          <span class="text-gray-600 font-bold uppercase">SÁCH LIÊN KẾT:</span>
+          <span class="font-bold text-black bg-white px-2 py-0.5 brutal-border">Toán 9 Tập 1</span>
+        </div>
+        <div class="flex items-center justify-between text-xs font-mono-code">
+          <span class="text-gray-600 font-bold uppercase">THEME &amp; LOẠI CÂU HỎI:</span>
+          <span class="font-bold text-black bg-white px-2 py-0.5 brutal-border">MINESWEEPER • MC (TRẮC NGHIỆM)</span>
+        </div>
+        <p class="text-[10px] font-mono-code text-gray-500 italic pt-1 border-t border-gray-300">
+          * Lưu ý: Không thể thay đổi sách liên kết hoặc loại câu hỏi đã chọn để bảo toàn logic của game.
+        </p>
+      </div>
+
+      <!-- EDITABLE FORM -->
+      <div class="bg-white p-6 brutal-border brutal-shadow space-y-5"><div class="-mx-6 -mt-6 mb-5 h-2 bg-[#2D5BFF] brutal-border-b"></div>
+
+        <!-- 1. SỬA TÊN TRÒ CHƠI -->
+        <div class="space-y-1.5">
+          <label class="block text-xs font-mono-code font-bold uppercase text-black">
+            TÊN TRÒ CHƠI <span class="text-red-600">*</span>
+          </label>
+          <input type="text" value="Chiến dịch Phá mìn Đại số 9" class="w-full bg-[#F3F3F3] brutal-border p-3 text-sm font-bold font-mono-code focus:bg-white focus:ring-0 focus:border-black">
+        </div>
+
+        <!-- 2. SỬA SỐ LƯỢNG CÂU HỎI -->
+        <div class="space-y-2 pt-2 border-t border-gray-200">
+          <div class="flex items-center justify-between">
+            <label class="text-xs font-mono-code font-bold uppercase text-black">
+              SỐ LƯỢNG CÂU HỎI KHI CHƠI <span class="text-red-600">*</span>
+            </label>
+            <span class="text-xs font-mono-code bg-[#2D5BFF] text-white px-2 py-0.5 font-bold">
+              Question Bank hiện có: 24 câu MC
+            </span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="w-36">
+              <input type="number" min="1" max="24" value="15" class="w-full bg-[#F3F3F3] brutal-border p-3 text-xl font-anton text-center focus:bg-white focus:ring-0 focus:border-black">
+            </div>
+            <div class="flex-1 bg-white brutal-border p-3 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-mono-code font-bold text-gray-600">GIỚI HẠN CHO PHÉP: </span>
+                <span class="font-anton text-lg text-black">1 - 24 CÂU</span>
+              </div>
+              <span class="text-[11px] font-mono-code bg-[#00D668] text-black font-bold px-2 py-1 brutal-border brutal-shadow-sm">✓ ĐỦ ĐIỀU KIỆN</span>
+            </div>
+          </div>
+
+          <!-- Progress Visual -->
+          <div class="space-y-1 pt-1">
+            <div class="w-full bg-[#F3F3F3] h-4 brutal-border overflow-hidden p-0.5"><div class="bg-[#2D5BFF] h-full flex items-center justify-end px-1" style="width: 62.5%;"><div class="w-1.5 h-full bg-[#FFE500]"></div></div></div>
+            <div class="flex justify-between text-[10px] font-mono-code text-gray-500 font-bold">
+              <span class="">Tối thiểu: 1</span>
+              <span class="text-black font-bold">15 / 24 câu (62.5% ngân hàng câu hỏi)</span>
+              <span class="">Tối đa: 24</span>
+            </div>
+          </div>
+
+          <!-- Warning helper -->
+          <div class="p-3 bg-[#FFFEE6] brutal-border border-l-8 border-l-[#2D5BFF] text-xs font-mono-code text-black leading-relaxed flex items-center gap-2"><span class="material-symbols-outlined text-lg text-[#2D5BFF]">info</span><span class="">Học sinh sẽ được bốc <strong>15 câu ngẫu nhiên</strong> trong số 24 câu MC mỗi lượt tham gia.</span></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- MODAL FOOTER ACTIONS -->
+    <div class="bg-white px-6 py-4 brutal-border-t flex items-center justify-between shrink-0">
+      <button class="brutal-btn px-6 py-2.5 bg-white brutal-border font-anton text-sm uppercase text-gray-700 hover:bg-gray-100">
+        HỦY THAY ĐỔI
+      </button>
+
+      <button class="brutal-btn px-8 py-3 bg-[#2D5BFF] text-white brutal-border brutal-shadow font-anton text-base uppercase tracking-wider flex items-center gap-2">
+        <span class="material-symbols-outlined text-xl">save</span>
+        <span class="">LƯU CẬP NHẬT</span>
+      </button>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+</body></html>

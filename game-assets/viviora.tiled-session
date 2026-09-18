@@ -1,0 +1,68 @@
+{
+    "activeFile": "viviora2.tmx",
+    "expandedProjectPaths": [
+        ".",
+        "kenney_rpg-urban-pack/Tiles"
+    ],
+    "fileStates": {
+        "v1.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 3,
+            "scaleInEditor": 5.5
+        },
+        "viviora.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1719,
+                "y": 999
+            }
+        },
+        "viviora.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "viviora1.tmx": {
+            "scale": 2,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 259.75,
+                "y": 336.75
+            }
+        },
+        "viviora2.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 537.5,
+                "y": 366.5
+            }
+        }
+    },
+    "last.imagePath": "D:/Code/Web/viviora/game-assets/kenney_rpg-urban-pack/Tilemap",
+    "map.height": 40,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 60,
+    "openFiles": [
+        "viviora1.tmx",
+        "v1.tsx",
+        "viviora2.tmx"
+    ],
+    "project": "viviora.tiled-project",
+    "recentFiles": [
+        "viviora1.tmx",
+        "v1.tsx",
+        "viviora2.tmx",
+        "viviora.tsx",
+        "viviora.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    },
+    "tileset.type": 0
+}

@@ -1,0 +1,388 @@
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { ArrowLeft, Maximize2, Volume2, VolumeX } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import './minesweeper.css';
+
+type Point = { x: number; y: number };
+type GameState = 'idle' | 'moving' | 'correct' | 'wrong' | 'advancing' | 'complete';
+type Question = { question: string; answers: string[]; correct: number; explanation: string };
+
+const MOVE_MS = 900;
+const WRONG_RETURN_MS = 600;
+
+const questions: Question[] = [
+  {
+    question: 'Thủ đô của Việt Nam là thành phố nào?',
+    answers: ['Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Huế'],
+    correct: 0,
+    explanation: 'Hà Nội là thủ đô của Việt Nam.',
+  },
+  {
+    question: 'Hành tinh nào được gọi là hành tinh đỏ?',
+    answers: ['Sao Kim', 'Sao Hỏa', 'Sao Mộc', 'Sao Thổ'],
+    correct: 1,
+    explanation: 'Sao Hỏa có bề mặt màu đỏ đặc trưng.',
+  },
+  {
+    question: 'Ai là tác giả của “Dế Mèn phiêu lưu ký”?',
+    answers: ['Tô Hoài', 'Nam Cao', 'Ngô Tất Tố', 'Xuân Diệu'],
+    correct: 0,
+    explanation: 'Tô Hoài viết tác phẩm thiếu nhi nổi tiếng này.',
+  },
+  {
+    question: 'Đại dương lớn nhất thế giới là gì?',
+    answers: ['Đại Tây Dương', 'Ấn Độ Dương', 'Thái Bình Dương', 'Bắc Băng Dương'],
+    correct: 2,
+    explanation: 'Thái Bình Dương là đại dương rộng nhất.',
+  },
+  {
+    question: 'Một năm có bao nhiêu tháng?',
+    answers: ['10', '11', '12', '13'],
+    correct: 2,
+    explanation: 'Một năm dương lịch có 12 tháng.',
+  },
+  {
+    question: 'Loài vật nào là biểu tượng của sự kiên trì?',
+    answers: ['Thỏ', 'Rùa', 'Cáo', 'Hươu'],
+    correct: 1,
+    explanation: 'Rùa nhắc chúng ta tiến chậm mà chắc.',
+  },
+];
+
+// One stable isosceles-trapezoid layout reused for every question.
+const ANSWER_POSITIONS: Point[] = [
+  { x: -330, y: -45 }, // A: lower left
+  { x: -160, y: -255 }, // B: upper left
+  { x: 160, y: -255 }, // C: upper right
+  { x: 330, y: -45 }, // D: lower right
+];
+
+const runningSprites = {
+  forward: [
+    '/minesweeper/forward1.png',
+    '/minesweeper/forward2.png',
+    '/minesweeper/forward1.png',
+    '/minesweeper/forward2.png',
+  ],
+  left: [
+    '/minesweeper/left1.png',
+    '/minesweeper/left2.png',
+    '/minesweeper/left1.png',
+    '/minesweeper/left2.png',
+  ],
+  right: [
+    '/minesweeper/right1.png',
+    '/minesweeper/right2.png',
+    '/minesweeper/right1.png',
+    '/minesweeper/right2.png',
+  ],
+};
+type Direction = keyof typeof runningSprites;
+
+const cssPosition = (value: number) => `calc(50% ${value >= 0 ? '+' : '-'} ${Math.abs(value)}px)`;
+
+export function MinesweeperMockup() {
+  const navigate = useNavigate();
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [state, setState] = useState<GameState>('idle');
+  const [anchor, setAnchor] = useState<Point>({ x: 0, y: 0 });
+  const initialCameraY = typeof window === 'undefined' ? 0 : -(window.innerHeight * 0.26);
+  const [camera, setCamera] = useState<Point>({ x: 0, y: initialCameraY });
+  const [previousCamera, setPreviousCamera] = useState<Point>({ x: 0, y: initialCameraY });
+  const [target, setTarget] = useState<Point | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [direction, setDirection] = useState<Direction>('forward');
+  const [frame, setFrame] = useState(0);
+  const [audioOn, setAudioOn] = useState(true);
+  const [incoming, setIncoming] = useState<{ index: number; anchor: Point } | null>(null);
+  const arenaRef = useRef<HTMLElement>(null);
+  const cameraInitialized = useRef(false);
+  const [playerOffsetY, setPlayerOffsetY] = useState(() =>
+    typeof window === 'undefined' ? 0 : window.innerHeight * 0.26,
+  );
+  const question = questions[questionIndex];
+  const points = useMemo(
+    () => ANSWER_POSITIONS.map((point) => ({ x: point.x + anchor.x, y: point.y + anchor.y })),
+    [anchor],
+  );
+  const incomingPoints = useMemo(
+    () =>
+      incoming
+        ? ANSWER_POSITIONS.map((point) => ({
+            x: point.x + incoming.anchor.x,
+            y: point.y + incoming.anchor.y,
+          }))
+        : [],
+    [incoming],
+  );
+
+  useLayoutEffect(() => {
+    const updatePlayerOffset = () => {
+      const height = arenaRef.current?.clientHeight || window.innerHeight;
+      const offset = height * 0.26;
+      setPlayerOffsetY(offset);
+      if (!cameraInitialized.current) {
+        const initialCamera = { x: 0, y: -offset };
+        setCamera(initialCamera);
+        setPreviousCamera(initialCamera);
+        cameraInitialized.current = true;
+      }
+    };
+    updatePlayerOffset();
+    window.addEventListener('resize', updatePlayerOffset);
+    return () => window.removeEventListener('resize', updatePlayerOffset);
+  }, []);
+
+  useEffect(() => {
+    if (state !== 'moving') return;
+    const interval = window.setInterval(() => setFrame((current) => current + 1), 130);
+    return () => window.clearInterval(interval);
+  }, [state]);
+
+  useEffect(() => {
+    if (state !== 'moving' || !target || selected === null) return;
+    const timer = window.setTimeout(() => {
+      if (selected === question.correct) {
+        setScore((current) => current + 1);
+        setFrame(0);
+        if (questionIndex < questions.length - 1) {
+          setIncoming({ index: questionIndex + 1, anchor: target });
+        }
+        setState('correct');
+      } else {
+        setCamera(previousCamera);
+        setFrame(0);
+        setState('wrong');
+      }
+    }, MOVE_MS);
+    return () => window.clearTimeout(timer);
+  }, [state, target, selected, question.correct, questionIndex, previousCamera]);
+
+  useEffect(() => {
+    if (state !== 'wrong') return;
+    const timer = window.setTimeout(() => {
+      setTarget(null);
+      setSelected(null);
+      setFrame(0);
+      setState('idle');
+    }, WRONG_RETURN_MS);
+    return () => window.clearTimeout(timer);
+  }, [state]);
+
+  useEffect(() => {
+    if (state !== 'correct') return;
+    const timer = window.setTimeout(() => setState('advancing'), 720);
+    return () => window.clearTimeout(timer);
+  }, [state]);
+
+  useEffect(() => {
+    if (state !== 'advancing') return;
+    const timer = window.setTimeout(() => {
+      if (questionIndex === questions.length - 1) {
+        setTarget(null);
+        setSelected(null);
+        setIncoming(null);
+        setFrame(0);
+        setState('complete');
+        return;
+      }
+      const nextAnchor = target ?? camera;
+      const nextCamera = { x: nextAnchor.x, y: nextAnchor.y - playerOffsetY };
+      setQuestionIndex((current) => current + 1);
+      setAnchor(nextAnchor);
+      setCamera(nextCamera);
+      setPreviousCamera(nextCamera);
+
+      setIncoming(null);
+      setTarget(null);
+      setSelected(null);
+      setState('idle');
+    }, 380);
+    return () => window.clearTimeout(timer);
+  }, [state, questionIndex, target, camera]);
+
+  const choose = (answerIndex: number) => {
+    if (state !== 'idle') return;
+    const destination = points[answerIndex];
+    const cameraDestination = { x: destination.x, y: destination.y - playerOffsetY };
+    const delta = { x: cameraDestination.x - camera.x, y: cameraDestination.y - camera.y };
+    setPreviousCamera(camera);
+    setTarget(destination);
+    setSelected(answerIndex);
+    setFrame(0);
+    setDirection(
+      Math.abs(delta.x) >= Math.abs(delta.y) * 0.5 ? (delta.x < 0 ? 'left' : 'right') : 'forward',
+    );
+    setCamera(cameraDestination);
+    setState('moving');
+  };
+
+  const goBack = () => {
+    if (window.history.length > 1) window.history.back();
+  };
+  const toggleFullscreen = () => {
+    document.documentElement.requestFullscreen?.().catch(() => undefined);
+  };
+  const sprite =
+    state === 'moving' ? runningSprites[direction][frame % 2] : '/minesweeper/frame1.png';
+
+  return (
+    <main className="mine-game">
+      <aside className="mine-sidebar">
+        <div className="mine-hud mine-sidebar-hud">
+          <div className="mine-score-hud">
+            <strong>{score}</strong>
+            <span>{'\u0110I\u1ec2M'}</span>
+          </div>
+          <div className="mine-progress">
+            <span>{`C\u00c2U ${questionIndex + 1} / ${questions.length}`}</span>
+            <div>
+              {questions.map((_, index) => (
+                <i key={index} className={index <= questionIndex ? 'on' : ''} />
+              ))}
+            </div>
+          </div>
+          <div className="mine-tools">
+            <button title="Toggle sound" onClick={() => setAudioOn((value) => !value)}>
+              {audioOn ? <Volume2 size={17} /> : <VolumeX size={17} />}
+            </button>
+            <button title="Fullscreen" onClick={toggleFullscreen}>
+              <Maximize2 size={17} />
+            </button>
+          </div>
+        </div>
+        <button className="mine-back" onClick={goBack}>
+          <ArrowLeft size={16} /> Quay lại
+        </button>
+        <section className="mine-panel">
+          <div className="mine-count">
+            {state === 'complete' ? 'HOÀN THÀNH' : `CÂU ${questionIndex + 1} / ${questions.length}`}
+          </div>
+          {state === 'complete' ? (
+            <div className="mine-complete">
+              <div className="mine-complete-mark">✓</div>
+              <h1>Vượt qua bãi mìn</h1>
+              <p>Bạn đã hoàn thành hành trình kiến thức.</p>
+              <strong>
+                {score} / {questions.length} điểm
+              </strong>
+              <button onClick={() => navigate('/game')}>Quay về</button>
+            </div>
+          ) : (
+            <>
+              <h1>{question.question}</h1>
+              <div className="mine-divider" />
+              {state === 'idle' && (
+                <p className="mine-instruction">
+                  Chọn một điểm đến trên bản đồ. Nhân vật sẽ tự chạy tới đó.
+                </p>
+              )}
+              {state === 'moving' && <p className="mine-instruction">Đang tiến về điểm đến...</p>}
+              {state === 'wrong' && (
+                <div className="mine-feedback wrong">
+                  <strong>Chưa chính xác</strong>
+                  <p>Đáp án đúng: {question.answers[question.correct]}</p>
+                  <small>Bãi mìn phát nổ. Camera đang đưa bạn về vị trí cũ.</small>
+                </div>
+              )}
+              {state === 'correct' && (
+                <div className="mine-feedback correct">
+                  <strong>Chính xác</strong>
+                  <p>{question.explanation}</p>
+                  <small>Khu vực tiếp theo đang mở ra.</small>
+                </div>
+              )}
+              <div className="mine-score">
+                <span>ĐIỂM</span>
+                <strong>{score}</strong>
+              </div>
+            </>
+          )}
+        </section>
+      </aside>
+      <section className="mine-field" ref={arenaRef} aria-label="Bản đồ dò mìn">
+        <div className="mine-hud">
+          <div className="mine-score-hud">
+            <strong>{score}</strong>
+            <span>ĐIỂM</span>
+          </div>
+          <div className="mine-progress">
+            <span>
+              CÂU {questionIndex + 1} / {questions.length}
+            </span>
+            <div>
+              {questions.map((_, index) => (
+                <i key={index} className={index <= questionIndex ? 'on' : ''} />
+              ))}
+            </div>
+          </div>
+          <div className="mine-tools">
+            <button
+              title={audioOn ? 'Tắt âm thanh' : 'Bật âm thanh'}
+              onClick={() => setAudioOn((value) => !value)}
+            >
+              {audioOn ? <Volume2 size={17} /> : <VolumeX size={17} />}
+            </button>
+            <button title="Toàn màn hình" onClick={toggleFullscreen}>
+              <Maximize2 size={17} />
+            </button>
+          </div>
+        </div>
+        <div
+          className={`mine-world ${state === 'wrong' ? 'returning' : ''}`}
+          style={{ transform: `translate3d(${-camera.x}px, ${-camera.y}px, 0)` }}
+        >
+          <div className="mine-tile-pool" />
+          {state !== 'complete' &&
+            points.map((point, index) => (
+              <button
+                key={`${questionIndex}-${index}`}
+                className={`mine-marker ${selected === index ? 'chosen' : ''} ${state !== 'idle' ? 'disabled' : ''} ${state === 'correct' || state === 'advancing' ? (state === 'correct' && selected === index ? 'arrived' : 'fading-out') : ''}`}
+                style={{ left: cssPosition(point.x), top: cssPosition(point.y) }}
+                onClick={() => choose(index)}
+                aria-label={`Đáp án ${String.fromCharCode(65 + index)}: ${question.answers[index]}`}
+              >
+                <span>{String.fromCharCode(65 + index)}</span>
+                <b>{question.answers[index]}</b>
+              </button>
+            ))}
+          {state !== 'complete' &&
+            incoming &&
+            incomingPoints.map((point, index) => (
+              <div
+                key={`incoming-${incoming.index}-${index}`}
+                className="mine-marker fresh disabled"
+                style={{ left: cssPosition(point.x), top: cssPosition(point.y) }}
+                aria-hidden="true"
+              >
+                <span>{String.fromCharCode(65 + index)}</span>
+                <b>{questions[incoming.index].answers[index]}</b>
+              </div>
+            ))}
+        </div>
+        <img
+          className={`mine-player ${state === 'wrong' ? 'is-wobbling' : ''}`}
+          src={state === 'wrong' ? '/minesweeper/wobble.png' : sprite}
+          alt="Nhân vật dò mìn"
+        />
+        {state === 'wrong' && (
+          <div className="mine-explosion" aria-hidden="true">
+            <span className="mine-ring" />
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+            <b>!</b>
+          </div>
+        )}
+        {state === 'moving' && <div className="mine-status">Đang di chuyển</div>}
+        {state === 'correct' && (
+          <div className="mine-status success">+1&nbsp;&nbsp;Đúng! Bản đồ đang tiến lên</div>
+        )}
+        {state === 'wrong' && <div className="mine-status danger">Dính mìn! Thử lại câu này</div>}
+      </section>
+    </main>
+  );
+}

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Viviora - Collection Details</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed-dim": "#b8c3ff",
+                        "secondary-container": "#e7e700",
+                        "background": "#f9f9f9",
+                        "on-secondary-fixed": "#1d1d00",
+                        "on-primary-fixed-variant": "#0035bd",
+                        "on-secondary-container": "#666600",
+                        "inverse-primary": "#b8c3ff",
+                        "surface-container-high": "#e8e8e8",
+                        "surface-container": "#eeeeee",
+                        "on-surface": "#1b1b1b",
+                        "on-primary": "#ffffff",
+                        "secondary": "#626200",
+                        "inverse-surface": "#303030",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#494900",
+                        "secondary-fixed": "#eaea00",
+                        "outline": "#747688",
+                        "primary-container": "#2d5bff",
+                        "outline-variant": "#c4c5d9",
+                        "tertiary-fixed-dim": "#ffb4a2",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1b1b1b",
+                        "on-surface-variant": "#434656",
+                        "surface-container-low": "#f3f3f3",
+                        "tertiary-fixed": "#ffdad2",
+                        "surface-bright": "#f9f9f9",
+                        "secondary-fixed-dim": "#cdcd00",
+                        "surface-tint": "#104af0",
+                        "on-tertiary-container": "#ffece8",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#a32400",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#001355",
+                        "surface-variant": "#e2e2e2",
+                        "tertiary-container": "#ce3000",
+                        "on-tertiary-fixed-variant": "#8a1d00",
+                        "surface": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#dde1ff",
+                        "primary": "#0040df",
+                        "surface-dim": "#dadada",
+                        "on-primary-container": "#efefff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-tertiary-fixed": "#3c0700",
+                        "error": "#ba1a1a"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "margin-mobile": "16px",
+                        "shadow-offset": "4px",
+                        "border-width": "3px",
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "gutter": "16px"
+                    },
+                    fontFamily: {
+                        "metadata": ["Archivo Narrow"],
+                        "body-lg": ["Archivo Narrow"],
+                        "display-xl": ["Anton"],
+                        "body-md": ["Archivo Narrow"],
+                        "headline-md": ["Anton"],
+                        "label-mono": ["Space Mono"],
+                        "headline-lg-mobile": ["Anton"],
+                        "headline-lg": ["Anton"]
+                    },
+                    fontSize: {
+                        "metadata": ["14px", { lineHeight: "18px", fontWeight: "600" }],
+                        "body-lg": ["20px", { lineHeight: "30px", fontWeight: "400" }],
+                        "display-xl": ["80px", { lineHeight: "80px", fontWeight: "400" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "28px", fontWeight: "400" }],
+                        "label-mono": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700" }],
+                        "headline-lg-mobile": ["32px", { lineHeight: "32px", fontWeight: "400" }],
+                        "headline-lg": ["48px", { lineHeight: "48px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Neo-Brutalist Specific Overrides */
+        body {
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+        }
+        
+        .dot-grid-bg {
+            background-image: radial-gradient(theme('colors.on-surface') 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .brutal-shadow {
+            box-shadow: 4px 4px 0px 0px theme('colors.on-surface');
+        }
+
+        .brutal-shadow-hover:hover {
+            box-shadow: 4px 4px 0px 0px theme('colors.on-surface');
+            transform: translate(-2px, -2px);
+        }
+        
+        .brutal-shadow-active:active {
+            box-shadow: 0px 0px 0px 0px theme('colors.on-surface');
+            transform: translate(4px, 4px);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md min-h-screen flex flex-col dot-grid-bg">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 flex justify-between items-center px-margin-desktop py-4 bg-surface border-b-border-width border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="font-headline-md text-headline-md uppercase text-primary tracking-tighter">
+            VIVIORA
+        </div>
+<div class="flex items-center gap-4">
+<button class="p-2 border-border-width border-on-surface bg-surface-container-lowest brutal-shadow brutal-shadow-active transition-all duration-75 hover:bg-secondary-container hover:text-on-secondary-container">
+<span class="material-symbols-outlined block" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 border-border-width border-on-surface bg-surface-container-lowest brutal-shadow brutal-shadow-active transition-all duration-75 hover:bg-secondary-container hover:text-on-secondary-container">
+<span class="material-symbols-outlined block" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-[calc(100vh-76px)] w-64 left-0 sticky p-gutter gap-4 border-r-border-width border-on-surface bg-surface-container overflow-y-auto">
+<div class="mb-8 border-b-border-width border-on-surface pb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Viviora Dashboard</h2>
+<p class="font-metadata text-metadata text-on-surface-variant mt-1">Level 12 Reader</p>
+</div>
+<ul class="flex flex-col gap-2 flex-1">
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono text-on-surface hover:bg-surface-variant hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform border-border-width border-transparent hover:border-on-surface" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+                        Home
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono bg-primary text-on-primary border-border-width border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+                        My Library
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono text-on-surface hover:bg-surface-variant hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform border-border-width border-transparent hover:border-on-surface" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                        Reading Groups
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono text-on-surface hover:bg-surface-variant hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform border-border-width border-transparent hover:border-on-surface" href="#">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+                        Challenges
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono text-on-surface hover:bg-surface-variant hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform border-border-width border-transparent hover:border-on-surface" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                        Settings
+                    </a>
+</li>
+</ul>
+<button class="mt-auto w-full py-3 bg-secondary-container text-on-secondary-container border-border-width border-on-surface brutal-shadow brutal-shadow-active font-headline-md text-headline-md uppercase transition-all">
+                Start Reading
+            </button>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-gutter md:p-margin-desktop bg-surface/90 backdrop-blur-sm relative">
+<!-- Hero Section -->
+<section class="mb-12 border-border-width border-on-surface bg-surface-container-lowest brutal-shadow relative overflow-hidden">
+<div class="grid grid-cols-1 md:grid-cols-4">
+<div class="p-8 md:col-span-3 border-b-border-width md:border-b-0 md:border-r-border-width border-on-surface relative">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-full -z-10"></div>
+<div class="inline-block bg-primary text-on-primary px-3 py-1 mb-4 border-border-width border-on-surface font-label-mono text-label-mono uppercase tracking-widest">
+                            DIGITAL ARCHIVE
+                        </div>
+<h1 class="font-display-xl text-display-xl uppercase leading-none mb-4 text-on-surface bg-secondary-container inline-box px-2">
+                            KHO SÁCH KHOA HỌC
+                        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-4 border-l-border-width border-primary pl-4 max-w-3xl">
+                            A curated digital repository of foundational texts and contemporary explorations of science, post-humanity, and virtual consciousness. Explore the catalog below.
+                        </p>
+</div>
+<div class="p-8 md:col-span-1 bg-surface-variant flex flex-col justify-center items-start md:items-center gap-6">
+<div class="text-center w-full">
+<span class="block font-headline-lg text-headline-lg text-primary">42</span>
+<span class="font-label-mono text-label-mono text-on-surface uppercase border-b-border-width border-on-surface pb-2 block">Volumes</span>
+</div>
+<div class="text-center w-full mt-2">
+<span class="block font-headline-lg text-headline-lg text-primary">18</span>
+<span class="font-label-mono text-label-mono text-on-surface uppercase">Authors</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Controls (Search, Filter, Sort) -->
+<section class="mb-8 flex flex-col md:flex-row items-center border-border-width border-on-surface brutal-shadow bg-surface z-10 sticky top-[76px]">
+<div class="w-full md:w-1/2 relative border-b-border-width md:border-b-0 md:border-r-border-width border-on-surface">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface z-10">search</span>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-lowest font-label-mono text-label-mono focus:outline-none focus:bg-surface-variant transition-colors placeholder:text-on-surface-variant/60 border-none" placeholder="SEARCH CATALOGUE..." type="text"/>
+</div>
+<div class="flex w-full md:w-1/2">
+<select class="flex-1 px-4 py-4 bg-surface-container-lowest border-r-border-width border-on-surface font-label-mono text-label-mono appearance-none focus:outline-none cursor-pointer focus:bg-surface-variant transition-colors border-y-0 border-l-0">
+<option>ALL CATEGORIES</option>
+<option>HARD SCI-FI</option>
+<option>DYSTOPIA</option>
+<option>CYBER-NOIR</option>
+</select>
+<select class="flex-1 px-4 py-4 bg-secondary-container text-on-secondary-container font-label-mono text-label-mono appearance-none focus:outline-none cursor-pointer border-none">
+<option>SORT: A-Z</option>
+<option>SORT: YEAR (NEW)</option>
+<option>SORT: YEAR (OLD)</option>
+</select>
+</div>
+</section>
+<!-- Book Grid -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter pb-16">
+<!-- Book Card 1 -->
+<article class="flex flex-col border-border-width border-on-surface bg-surface-container-lowest brutal-shadow transition-transform hover:-translate-y-2 group cursor-pointer">
+<div class="bg-primary text-on-primary px-3 py-2 font-label-mono text-label-mono border-b-border-width border-on-surface flex justify-between items-center">
+<span>FICTION</span>
+<span class="material-symbols-outlined text-sm" data-icon="bookmark_add">bookmark_add</span>
+</div>
+<div class="relative h-64 border-b-border-width border-on-surface bg-surface-variant overflow-hidden p-4 flex items-center justify-center">
+<div class="absolute inset-0 opacity-20 dot-grid-bg"></div>
+<div class="border-border-width border-on-surface bg-surface p-6 w-full h-full text-center flex items-center justify-center z-10 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<h3 class="font-headline-md text-headline-md uppercase leading-none">NEUROMANCER</h3>
+</div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface mb-1 leading-tight group-hover:text-primary transition-colors">Neuromancer</h2>
+<p class="font-metadata text-metadata text-on-surface-variant mb-4 border-b-2 border-on-surface-variant/20 pb-2">William Gibson</p>
+<div class="mt-auto grid grid-cols-2 gap-2 font-label-mono text-label-mono text-xs">
+<div class="flex flex-col">
+<span class="text-on-surface-variant/60">PUB</span>
+<span>Ace Books</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-on-surface-variant/60">YEAR</span>
+<span>1984</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Book Card 2 -->
+<article class="flex flex-col border-border-width border-on-surface bg-surface-container-lowest brutal-shadow transition-transform hover:-translate-y-2 group cursor-pointer">
+<div class="bg-secondary-container text-on-secondary-container px-3 py-2 font-label-mono text-label-mono border-b-border-width border-on-surface flex justify-between items-center">
+<span>ANTHOLOGY</span>
+<span class="material-symbols-outlined text-sm" data-icon="bookmark_add">bookmark_add</span>
+</div>
+<div class="relative h-64 border-b-border-width border-on-surface bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover mix-blend-multiply opacity-90 grayscale group-hover:grayscale-0 transition-all" data-alt="A striking graphic design book cover featuring a stark, high-contrast silhouette of a futuristic metropolis skyline against a harsh electric yellow background. Heavy, distressed black typography dominates the upper third. The style is raw, neo-brutalist, and reminiscent of 1990s cyberpunk zines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrkR8jJgIkUJQwgdNybmGLxgsB2SV3oAhSekPb9S11vv_EUMY73KANbuw4MgvbBnlU51sfTB6k8nQB2kJhWFvfXe5koGumdCBSB1hOitJ_YNN1f-ZUjLvZ9RqOPNxzwhqWfG14P0rP3hguZdF5vKKS180ha5hRezx8deDyDvwq8uSW8t-8WTPoY2HdCR8sWFOYt8exbnoZ5LmTzFnUE1m380IxrnEkwookdPc1qiiT1tl9JKlxH3FT2A"/>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface mb-1 leading-tight group-hover:text-primary transition-colors">Mirrorshades</h2>
+<p class="font-metadata text-metadata text-on-surface-variant mb-4 border-b-2 border-on-surface-variant/20 pb-2">Bruce Sterling (Ed.)</p>
+<div class="mt-auto grid grid-cols-2 gap-2 font-label-mono text-label-mono text-xs">
+<div class="flex flex-col">
+<span class="text-on-surface-variant/60">PUB</span>
+<span>Arbor House</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-on-surface-variant/60">YEAR</span>
+<span>1986</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Book Card 3 -->
+<article class="flex flex-col border-border-width border-on-surface bg-surface-container-lowest brutal-shadow transition-transform hover:-translate-y-2 group cursor-pointer">
+<div class="bg-surface-tint text-on-primary px-3 py-2 font-label-mono text-label-mono border-b-border-width border-on-surface flex justify-between items-center">
+<span>NOVEL</span>
+<span class="material-symbols-outlined text-sm" data-icon="bookmark_add">bookmark_add</span>
+</div>
+<div class="relative h-64 border-b-border-width border-on-surface bg-surface-variant overflow-hidden p-4 flex items-center justify-center">
+<div class="absolute inset-0 opacity-20 dot-grid-bg"></div>
+<div class="border-border-width border-on-surface bg-surface p-6 w-full h-full text-center flex items-center justify-center z-10 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<h3 class="font-headline-md text-headline-md uppercase leading-none">SNOW<br/>CRASH</h3>
+</div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface mb-1 leading-tight group-hover:text-primary transition-colors">Snow Crash</h2>
+<p class="font-metadata text-metadata text-on-surface-variant mb-4 border-b-2 border-on-surface-variant/20 pb-2">Neal Stephenson</p>
+<div class="mt-auto grid grid-cols-2 gap-2 font-label-mono text-label-mono text-xs">
+<div class="flex flex-col">
+<span class="text-on-surface-variant/60">PUB</span>
+<span>Bantam Books</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-on-surface-variant/60">YEAR</span>
+<span>1992</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Book Card 4 -->
+<article class="flex flex-col border-border-width border-on-surface bg-surface-container-lowest brutal-shadow transition-transform hover:-translate-y-2 group cursor-pointer">
+<div class="bg-tertiary-container text-on-tertiary-container px-3 py-2 font-label-mono text-label-mono border-b-border-width border-on-surface flex justify-between items-center">
+<span>MANGA</span>
+<span class="material-symbols-outlined text-sm" data-icon="bookmark_add">bookmark_add</span>
+</div>
+<div class="relative h-64 border-b-border-width border-on-surface bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="An intense, high-contrast black and white illustration of a cyborg character's eye and mechanical cranial plating. The drawing style mimics 1980s Japanese cyberpunk manga with heavy inking, stark shadows, and technical mechanical detailing. A bold red geometric shape overlays a portion of the image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnoJPytbr1MzJIqFO65kUpQK1StMkBbmI92lFrN02bUWRVkgaDVQs2vdDLQZwrm0cBjc_LaNfX40g8FIEccE0wOzYuEFja1QDs91J6EcrGfB7kjl1xX7x77nhf8opm2llVF29aNiP3Pfsci2gxX1-SpWryjZi6HaOi9VTpJBJTuOitSsscjM5wwW3YwZGsXzXIGHSN4xwqMx5LsKmm8uSbDJTzT0QwlzPy7G63mWc5TVEhBnFK6jQ23w"/>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface mb-1 leading-tight group-hover:text-primary transition-colors">Ghost in the Shell</h2>
+<p class="font-metadata text-metadata text-on-surface-variant mb-4 border-b-2 border-on-surface-variant/20 pb-2">Masamune Shirow</p>
+<div class="mt-auto grid grid-cols-2 gap-2 font-label-mono text-label-mono text-xs">
+<div class="flex flex-col">
+<span class="text-on-surface-variant/60">PUB</span>
+<span>Kodansha</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-on-surface-variant/60">YEAR</span>
+<span>1989</span>
+</div>
+</div>
+</div>
+</article>
+</section>
+</main>
+</div>
+</body></html>

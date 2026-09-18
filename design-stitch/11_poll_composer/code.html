@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>11_Poll_Composer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#eaea00",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed-variant": "#494900",
+                      "inverse-surface": "#303030",
+                      "surface-tint": "#104af0",
+                      "on-secondary-fixed": "#1d1d00",
+                      "surface-container-highest": "#e2e2e2",
+                      "primary-container": "#2d5bff",
+                      "on-background": "#1b1b1b",
+                      "on-surface": "#1b1b1b",
+                      "tertiary": "#a32400",
+                      "outline-variant": "#c4c5d9",
+                      "on-tertiary-fixed": "#3c0700",
+                      "on-primary-container": "#efefff",
+                      "secondary-container": "#e7e700",
+                      "primary": "#0040df",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#b8c3ff",
+                      "surface-dim": "#dadada",
+                      "on-primary-fixed": "#001355",
+                      "secondary-fixed-dim": "#cdcd00",
+                      "on-error-container": "#93000a",
+                      "on-surface-variant": "#434656",
+                      "on-primary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#ce3000",
+                      "on-secondary-container": "#666600",
+                      "inverse-primary": "#b8c3ff",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#0035bd",
+                      "tertiary-fixed-dim": "#ffb4a2",
+                      "surface-variant": "#e2e2e2",
+                      "on-tertiary-container": "#ffece8",
+                      "surface-bright": "#f9f9f9",
+                      "secondary": "#626200",
+                      "tertiary-fixed": "#ffdad2",
+                      "surface-container-low": "#f3f3f3",
+                      "surface-container": "#eeeeee",
+                      "background": "#f9f9f9",
+                      "primary-fixed": "#dde1ff",
+                      "surface": "#f9f9f9",
+                      "outline": "#747688",
+                      "surface-container-high": "#e8e8e8",
+                      "inverse-on-surface": "#f1f1f1",
+                      "on-error": "#ffffff",
+                      "on-tertiary-fixed-variant": "#8a1d00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "shadow-offset": "4px",
+                      "gutter": "16px",
+                      "border-width": "3px",
+                      "margin-desktop": "40px",
+                      "margin-mobile": "16px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "label-mono": [
+                              "Space Mono"
+                      ],
+                      "headline-lg": [
+                              "Anton"
+                      ],
+                      "headline-lg-mobile": [
+                              "Anton"
+                      ],
+                      "body-md": [
+                              "Archivo Narrow"
+                      ],
+                      "headline-md": [
+                              "Anton"
+                      ],
+                      "body-lg": [
+                              "Archivo Narrow"
+                      ],
+                      "display-xl": [
+                              "Anton"
+                      ],
+                      "metadata": [
+                              "Archivo Narrow"
+                      ]
+              },
+              "fontSize": {
+                      "label-mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "20px",
+                              {
+                                      "lineHeight": "30px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-xl": [
+                              "80px",
+                              {
+                                      "lineHeight": "80px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "metadata": [
+                              "14px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .grid-bg {
+            background-image: radial-gradient(#1b1b1b 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-lg {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-hover:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-active:active {
+            transform: translate(4px, 4px);
+            box-shadow: none !important;
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-background grid-bg min-h-screen font-body-md text-on-background flex flex-col md:flex-row">
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex bg-surface-container-lowest dark:bg-surface-dim docked left-0 h-full border-r-[3px] border-on-surface w-64 shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] fixed left-0 top-0 h-full flex flex-col p-gutter gap-4 z-40">
+<div class="mb-8 flex flex-col gap-2">
+<h1 class="font-display-xl text-headline-md text-tertiary">VIVIORA</h1>
+<p class="font-label-mono text-label-mono uppercase text-on-surface-variant">Đọc để khám phá</p>
+</div>
+<button class="bg-primary text-on-primary border-[3px] border-on-surface neo-shadow hover:bg-[#CCFF00] hover:text-on-surface transition-colors font-headline-md text-headline-md uppercase py-2 px-4 mb-6 neo-shadow-active">
+            Đăng bài mới
+        </button>
+<ul class="flex flex-col gap-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono uppercase text-on-surface hover:bg-surface-variant border-[3px] border-transparent hover:border-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">home</span> Trang chủ
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono uppercase text-on-surface hover:bg-surface-variant border-[3px] border-transparent hover:border-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">menu_book</span> Thư viện
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono uppercase bg-secondary-container text-on-secondary-container border-[3px] border-on-surface shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">school</span> Lớp học
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono uppercase text-on-surface hover:bg-surface-variant border-[3px] border-transparent hover:border-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">military_tech</span> Thử thách
+                </a>
+</li>
+</ul>
+<ul class="flex flex-col gap-2 mt-auto">
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono uppercase text-on-surface hover:bg-surface-variant border-[3px] border-transparent hover:border-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">help</span> Hỗ trợ
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 font-label-mono text-label-mono uppercase text-on-surface hover:bg-surface-variant border-[3px] border-transparent hover:border-on-surface transition-all" href="#">
+<span class="material-symbols-outlined">logout</span> Đăng xuất
+                </a>
+</li>
+</ul>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow md:ml-64 relative min-h-screen">
+<!-- Dummy Feed Background -->
+<div class="p-margin-mobile md:p-margin-desktop opacity-50 pointer-events-none flex flex-col gap-6 max-w-3xl mx-auto">
+<div class="w-full bg-surface-container-lowest border-[3px] border-on-surface p-6 h-40"></div>
+<div class="w-full bg-surface-container-lowest border-[3px] border-on-surface p-6 h-64"></div>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay md:pl-64">
+<div class="w-full max-w-2xl bg-surface-container-lowest border-[3px] border-on-surface neo-shadow-lg p-6 md:p-8 flex flex-col gap-6 relative">
+<!-- Header -->
+<div class="flex justify-between items-center border-b-[3px] border-on-surface pb-4">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-primary">Tạo Bình Chọn Mới</h2>
+<button class="w-10 h-10 flex items-center justify-center border-[3px] border-on-surface bg-surface-bright hover:bg-error hover:text-on-error transition-colors neo-shadow-active text-on-surface">
+<span class="material-symbols-outlined font-bold">close</span>
+</button>
+</div>
+<!-- Question Input -->
+<div class="flex flex-col">
+<textarea class="w-full border-[3px] border-on-surface bg-surface-bright p-4 font-body-lg text-body-lg focus:outline-none focus:ring-0 focus:shadow-[4px_4px_0px_0px_#0040df] transition-shadow resize-y min-h-[120px]" placeholder="Nhập câu hỏi của bạn..."></textarea>
+</div>
+<!-- Options -->
+<div class="flex flex-col gap-3" id="options-container">
+<!-- Option 1 -->
+<div class="flex items-center gap-3">
+<div class="flex-grow relative">
+<input class="w-full border-[3px] border-on-surface bg-surface-container-lowest p-4 font-body-lg text-body-lg focus:outline-none focus:ring-0 focus:shadow-[4px_4px_0px_0px_#0040df] transition-shadow" placeholder="Lựa chọn 1" type="text"/>
+</div>
+<button class="w-12 h-12 flex items-center justify-center border-[3px] border-transparent hover:border-error text-on-surface-variant hover:text-error transition-colors shrink-0" title="Xóa lựa chọn">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Option 2 -->
+<div class="flex items-center gap-3">
+<div class="flex-grow relative">
+<input class="w-full border-[3px] border-on-surface bg-surface-container-lowest p-4 font-body-lg text-body-lg focus:outline-none focus:ring-0 focus:shadow-[4px_4px_0px_0px_#0040df] transition-shadow" placeholder="Lựa chọn 2" type="text"/>
+</div>
+<button class="w-12 h-12 flex items-center justify-center border-[3px] border-transparent hover:border-error text-on-surface-variant hover:text-error transition-colors shrink-0" title="Xóa lựa chọn">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<button class="self-start border-[3px] border-on-surface border-dashed bg-surface-bright px-4 py-3 font-label-mono text-label-mono uppercase flex items-center gap-2 hover:bg-surface-variant transition-colors text-on-surface hover:text-on-surface mt-2 w-full justify-center">
+<span class="material-symbols-outlined">add</span> Thêm lựa chọn
+                </button>
+</div>
+<!-- Attachments -->
+<div class="flex gap-4 border-t-[3px] border-on-surface pt-6 mt-2">
+<button class="flex-1 bg-[#CCFF00] border-[3px] border-on-surface py-3 font-headline-md text-headline-md uppercase text-on-surface neo-shadow hover:bg-surface-variant neo-shadow-hover neo-shadow-active transition-all flex justify-center items-center gap-2">
+                    📚 Gắn sách
+                </button>
+<button class="flex-1 bg-[#FFB3FF] border-[3px] border-on-surface py-3 font-headline-md text-headline-md uppercase text-on-surface neo-shadow hover:bg-surface-variant neo-shadow-hover neo-shadow-active transition-all flex justify-center items-center gap-2">
+                    🖼 Thêm ảnh
+                </button>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-4 mt-2">
+<button class="flex-1 bg-surface-container-lowest border-[3px] border-on-surface py-4 font-headline-md text-headline-md uppercase text-on-surface neo-shadow hover:bg-surface-variant neo-shadow-hover neo-shadow-active transition-all">
+                    Hủy
+                </button>
+<button class="flex-[2] bg-primary border-[3px] border-on-surface py-4 font-headline-md text-headline-md uppercase text-on-primary neo-shadow hover:bg-[#0035bd] neo-shadow-hover neo-shadow-active transition-all flex justify-center items-center gap-2">
+                    Đăng bình chọn <span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

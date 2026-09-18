@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nhập Câu Hỏi - Question Engine</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#dadada",
+                      "surface-container-highest": "#e2e2e2",
+                      "inverse-on-surface": "#f1f1f1",
+                      "secondary": "#626200",
+                      "tertiary-container": "#ce3000",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container": "#eeeeee",
+                      "inverse-surface": "#303030",
+                      "primary-fixed": "#dde1ff",
+                      "on-surface": "#1b1b1b",
+                      "on-primary-fixed-variant": "#0035bd",
+                      "secondary-container": "#e7e700",
+                      "secondary-fixed-dim": "#cdcd00",
+                      "surface-bright": "#f9f9f9",
+                      "on-tertiary-fixed-variant": "#8a1d00",
+                      "on-secondary-fixed-variant": "#494900",
+                      "secondary-fixed": "#eaea00",
+                      "on-secondary-container": "#666600",
+                      "on-primary-container": "#efefff",
+                      "outline": "#747688",
+                      "background": "#f9f9f9",
+                      "on-surface-variant": "#434656",
+                      "on-tertiary-container": "#ffece8",
+                      "surface": "#f9f9f9",
+                      "tertiary-fixed": "#ffdad2",
+                      "on-background": "#1b1b1b",
+                      "primary-container": "#2d5bff",
+                      "on-error-container": "#93000a",
+                      "on-primary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#104af0",
+                      "on-primary-fixed": "#001355",
+                      "inverse-primary": "#b8c3ff",
+                      "surface-container-high": "#e8e8e8",
+                      "on-tertiary-fixed": "#3c0700",
+                      "surface-container-low": "#f3f3f3",
+                      "surface-variant": "#e2e2e2",
+                      "primary-fixed-dim": "#b8c3ff",
+                      "outline-variant": "#c4c5d9",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed": "#1d1d00",
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "primary": "#0040df",
+                      "tertiary-fixed-dim": "#ffb4a2",
+                      "tertiary": "#a32400",
+                      "on-error": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "margin-desktop": "40px",
+                      "border-width": "3px",
+                      "shadow-offset": "4px",
+                      "unit": "4px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Anton"
+                      ],
+                      "body-md": [
+                              "Archivo Narrow"
+                      ],
+                      "headline-lg-mobile": [
+                              "Anton"
+                      ],
+                      "metadata": [
+                              "Archivo Narrow"
+                      ],
+                      "headline-lg": [
+                              "Anton"
+                      ],
+                      "display-xl": [
+                              "Anton"
+                      ],
+                      "body-lg": [
+                              "Archivo Narrow"
+                      ],
+                      "label-mono": [
+                              "Space Mono"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "metadata": [
+                              "14px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-xl": [
+                              "80px",
+                              {
+                                      "lineHeight": "80px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "20px",
+                              {
+                                      "lineHeight": "30px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .brutalist-border { border: 3px solid #1b1b1b; }
+        .brutalist-shadow { box-shadow: 4px 4px 0px 0px #1b1b1b; }
+        .brutalist-shadow-hover:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0px 0px #1b1b1b; }
+        .brutalist-shadow-active:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px 0px #1b1b1b; }
+        
+        .dashed-bg {
+            background-image: repeating-linear-gradient(45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2), repeating-linear-gradient(45deg, #e2e2e2 25%, transparent 25%, transparent 75%, #e2e2e2 75%, #e2e2e2);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+        }
+
+        /* Custom scrollbar for brutalist look */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #f9f9f9; border-left: 3px solid #1b1b1b; }
+        ::-webkit-scrollbar-thumb { background: #1b1b1b; border: 2px solid #f9f9f9; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen w-screen overflow-hidden flex relative">
+<!-- Background Content (Blurred) -->
+<div class="absolute inset-0 z-0 bg-cover bg-center blur-sm opacity-50 grayscale pointer-events-none" data-alt="A background representing the main question bank interface of a neo-brutalist web application. It features stark white backgrounds, heavy black grid lines, and vibrant blue accents. The layout includes complex tables with sharp, square corners and bold, blocky typography. The scene is brightly lit, emphasizing the high-contrast, technical aesthetic of early digital interfaces combined with modern layout systems." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAzy3RD39sRPZO-ojr_nLEruJ-BvJk4tarrVShi-SCEAgeKxr0gXqUpAitp431zuTixTLp9YAa3kzDKiVqnNnrBD71GQYlmaXyDlm2Hyqqeq_Xv1bhXocQSUda8FHUJXjRwAZzlvQdW7OkFWgjlRA1G5TJHoISoMJ8fHreU1haJF2yS6NHVuQd-BjN6vxi0PjErvuu1pDTOLdoGYNtSwYpeo5N7vpE6k2kTN6H2D8whfI8nUYqfM6nBRA');">
+<!-- Overlay to ensure high contrast for modal -->
+<div class="absolute inset-0 bg-white/70"></div>
+</div>
+<!-- Modal Overlay Container -->
+<div class="absolute inset-0 z-50 flex items-center justify-center p-gutter md:p-margin-desktop bg-black/40 backdrop-blur-md">
+<!-- Modal Window -->
+<div class="w-full max-w-5xl bg-surface-container-lowest brutalist-border brutalist-shadow flex flex-col max-h-full">
+<!-- Modal Header -->
+<div class="flex justify-between items-start border-b-[3px] border-on-background p-6">
+<div>
+<span class="font-label-mono text-label-mono text-outline uppercase block mb-1">QUESTION BANK / NHẬP DỮ LIỆU</span>
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-on-background">NHẬP CÂU HỎI TỪ EXCEL</h1>
+</div>
+<button aria-label="Đóng" class="w-12 h-12 flex items-center justify-center bg-white brutalist-border brutalist-shadow brutalist-shadow-hover brutalist-shadow-active transition-all">
+<span class="material-symbols-outlined text-3xl font-bold">close</span>
+</button>
+</div>
+<!-- Workflow Indicator -->
+<div class="flex border-b-[3px] border-on-background bg-surface-container"><div class="flex-1 p-4 bg-surface-container text-on-surface-variant brutalist-border-r border-on-background font-headline-md text-headline-md flex items-center gap-3">
+<span class="bg-white text-on-surface-variant px-2 py-1 brutalist-border text-sm leading-none flex items-center"><span class="material-symbols-outlined text-sm">check</span></span>
+                    TẢI FILE
+                </div>
+<div class="flex-1 p-4 bg-primary text-on-primary font-headline-md text-headline-md flex items-center gap-3">
+<span class="bg-white text-primary px-2 py-1 brutalist-border text-sm leading-none">02</span>
+                    KIỂM TRA &amp; XÁC NHẬN
+                </div></div>
+<!-- Modal Content (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 bg-[radial-gradient(#e2e2e2_1px,transparent_1px)] [background-size:20px_20px]"><!-- File Info Bar -->
+<div class="flex flex-wrap items-center justify-between gap-4 bg-white brutalist-border p-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">description</span>
+<span class="font-bold">questions.xlsx</span>
+<span class="text-outline">|</span>
+<span>50 DÒNG</span>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-1 text-primary font-bold">
+<span class="material-symbols-outlined text-sm">check_circle</span> HỢP LỆ: 50
+        </div>
+<div class="flex items-center gap-1 text-outline">
+<span class="material-symbols-outlined text-sm">error</span> LỖI: 0
+        </div>
+</div>
+</div>
+<!-- Statistics Blocks -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-white brutalist-border p-4 brutalist-shadow">
+<div class="text-outline font-label-mono text-label-mono uppercase">TỔNG CÂU HỎI</div>
+<div class="text-3xl font-headline-md">50</div>
+</div>
+<div class="bg-white brutalist-border p-4 brutalist-shadow border-primary">
+<div class="text-primary font-label-mono text-label-mono uppercase">MULTIPLE CHOICE</div>
+<div class="text-3xl font-headline-md">32</div>
+</div>
+<div class="bg-white brutalist-border p-4 brutalist-shadow border-secondary-container">
+<div class="text-secondary font-label-mono text-label-mono uppercase">TRUE / FALSE</div>
+<div class="text-3xl font-headline-md">18</div>
+</div>
+</div>
+<!-- Status Banner -->
+<div class="bg-primary text-on-primary p-4 brutalist-border text-center font-headline-md uppercase">
+    FILE HỢP LỆ — SẴN SÀNG NHẬP
+</div>
+<!-- Preview Table -->
+<div class="bg-white brutalist-border overflow-hidden">
+<div class="bg-surface-dim p-3 border-b-[3px] border-on-background font-label-mono text-label-mono uppercase">
+        XEM TRƯỚC DỮ LIỆU
+    </div>
+<div class="divide-y-[3px] divide-on-background">
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<span class="font-label-mono text-outline">01</span>
+<span class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 text-xs brutalist-border">MC</span>
+<span class="font-bold">Nhân vật chính của cuốn sách là ai?</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-sm font-metadata">10 Điểm</span>
+<span class="material-symbols-outlined cursor-pointer">expand_more</span>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<span class="font-label-mono text-outline">02</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 text-xs brutalist-border">TF</span>
+<span class="font-bold">Lan Phương là tác giả của cuốn sách.</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-sm font-metadata">10 Điểm</span>
+<span class="material-symbols-outlined cursor-pointer">expand_more</span>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<span class="font-label-mono text-outline">03</span>
+<span class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 text-xs brutalist-border">MC</span>
+<span class="font-bold">Bối cảnh câu chuyện diễn ra ở đâu?</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-sm font-metadata">15 Điểm</span>
+<span class="material-symbols-outlined cursor-pointer">expand_more</span>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<span class="font-label-mono text-outline">04</span>
+<span class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 text-xs brutalist-border">MC</span>
+<span class="font-bold">Ai là người đã giúp đỡ nhân vật chính?</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-sm font-metadata">10 Điểm</span>
+<span class="material-symbols-outlined cursor-pointer">expand_more</span>
+</div>
+</div>
+</div>
+</div></div>
+<!-- Bottom Actions -->
+<div class="border-t-[3px] border-on-background p-6 bg-surface-container flex justify-between items-center mt-auto"><button class="bg-white text-on-background px-6 py-3 font-headline-md text-headline-md uppercase brutalist-border brutalist-shadow brutalist-shadow-hover brutalist-shadow-active transition-all">
+                    HỦY
+                </button>
+<div class="flex gap-4">
+<button class="bg-white text-on-background px-6 py-3 font-headline-md text-headline-md uppercase brutalist-border brutalist-shadow-hover brutalist-shadow-active transition-all">
+                        QUAY LẠI
+                    </button>
+<button class="bg-primary text-on-primary px-8 py-3 font-headline-md text-headline-md uppercase brutalist-border brutalist-shadow brutalist-shadow-hover brutalist-shadow-active transition-all">
+                        XÁC NHẬN NHẬP 50 CÂU
+                    </button>
+</div></div>
+</div>
+</div>
+</body></html>

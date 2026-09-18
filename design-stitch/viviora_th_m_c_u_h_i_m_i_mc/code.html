@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Viviora - Add/Edit Question Modal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:wght@400;600&amp;family=Space+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background": "#f9f9f9",
+                        "inverse-primary": "#b8c3ff",
+                        "surface": "#f9f9f9",
+                        "secondary-fixed-dim": "#cdcd00",
+                        "secondary-fixed": "#eaea00",
+                        "tertiary-fixed": "#ffdad2",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#001355",
+                        "surface-container-low": "#f3f3f3",
+                        "primary-container": "#2d5bff",
+                        "surface-container-highest": "#e2e2e2",
+                        "outline": "#747688",
+                        "surface-dim": "#dadada",
+                        "secondary-container": "#e7e700",
+                        "tertiary-fixed-dim": "#ffb4a2",
+                        "on-primary-container": "#efefff",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "on-secondary-fixed": "#1d1d00",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#494900",
+                        "on-secondary-container": "#666600",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#dde1ff",
+                        "on-tertiary-fixed-variant": "#8a1d00",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ce3000",
+                        "surface-container": "#eeeeee",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary-fixed": "#3c0700",
+                        "on-tertiary-container": "#ffece8",
+                        "surface-variant": "#e2e2e2",
+                        "on-background": "#1b1b1b",
+                        "error": "#ba1a1a",
+                        "secondary": "#626200",
+                        "surface-tint": "#104af0",
+                        "inverse-surface": "#303030",
+                        "surface-container-high": "#e8e8e8",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "primary": "#0040df",
+                        "on-primary-fixed-variant": "#0035bd",
+                        "tertiary": "#a32400",
+                        "on-surface-variant": "#434656",
+                        "on-surface": "#1b1b1b",
+                        "outline-variant": "#c4c5d9"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "shadow-offset": "4px",
+                        "border-width": "3px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px"
+                    },
+                    fontFamily: {
+                        "metadata": ["Archivo Narrow"],
+                        "headline-md": ["Anton"],
+                        "label-mono": ["Space Mono"],
+                        "display-xl": ["Anton"],
+                        "body-md": ["Archivo Narrow"],
+                        "headline-lg": ["Anton"],
+                        "headline-lg-mobile": ["Anton"],
+                        "body-lg": ["Archivo Narrow"]
+                    },
+                    fontSize: {
+                        "metadata": ["14px", { "lineHeight": "18px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display-xl": ["80px", { "lineHeight": "80px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "body-lg": ["20px", { "lineHeight": "30px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Neo-Brutalist Pattern */
+        .bg-dot-pattern {
+            background-image: radial-gradient(circle, #1b1b1b 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        /* Hard Shadows */
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+        .neo-shadow-lg {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+        }
+        
+        /* Interactions */
+        .neo-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: none !important;
+        }
+        
+        /* Forms */
+        .neo-input:focus {
+            box-shadow: 4px 4px 0px 0px #0040df;
+            outline: none;
+        }
+        
+        /* Custom Radio */
+        .neo-radio {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid #1b1b1b;
+            border-radius: 0;
+            background-color: #fff;
+            position: relative;
+            cursor: pointer;
+        }
+        .neo-radio:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background-color: #0040df;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen w-screen overflow-hidden flex flex-col">
+<!-- Background Layer (Simulated Main Page Context) -->
+<div class="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none"></div>
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-on-background text-primary dark:text-primary-fixed-dim font-headline-md text-headline-md uppercase border-b-[3px] border-on-background dark:border-outline-variant shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center w-full px-margin-desktop h-20 max-w-full z-10 relative">
+<div class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tighter">QUESTION ENGINE</div>
+<nav class="hidden md:flex gap-8 h-full">
+<div class="text-on-surface-variant dark:text-outline hover:text-primary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors flex items-center h-full px-4 cursor-pointer">Dashboard</div>
+<div class="text-primary dark:text-secondary-fixed border-b-[3px] border-primary pb-1 flex items-center h-full px-4 cursor-pointer">Library</div>
+<div class="text-on-surface-variant dark:text-outline hover:text-primary hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors flex items-center h-full px-4 cursor-pointer">Analytics</div>
+</nav>
+<div class="flex gap-4">
+<span class="material-symbols-outlined cursor-pointer" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer" data-icon="account_circle">account_circle</span>
+</div>
+</header>
+<div class="flex flex-1 relative overflow-hidden">
+<!-- SideNavBar -->
+<aside class="bg-surface-bright dark:bg-surface-dim text-primary dark:text-primary-fixed font-metadata text-metadata uppercase border-r-[3px] border-on-background shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] fixed left-0 top-20 h-[calc(100vh-80px)] p-gutter flex flex-col gap-4 w-64 z-10 hidden md:flex bg-white">
+<div class="flex flex-col gap-1 mb-6 mt-4">
+<span class="font-headline-lg text-headline-lg text-on-background leading-none">The Great Gatsby</span>
+<span class="text-on-surface-variant font-metadata text-metadata">F. Scott Fitzgerald</span>
+</div>
+<button class="bg-primary text-on-primary border-[3px] border-on-background neo-shadow neo-btn font-headline-md text-headline-md uppercase py-2 px-4 mb-6 transition-all">Create Question</button>
+<nav class="flex flex-col w-full">
+<div class="flex items-center gap-2 p-3 mb-2 text-on-surface hover:bg-surface-container-high hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span> All Questions
+                </div>
+<div class="bg-secondary-fixed text-on-secondary-fixed border-[3px] border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center gap-2 p-3 mb-2 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="format_list_bulleted">format_list_bulleted</span> Multiple Choice
+                </div>
+<div class="flex items-center gap-2 p-3 mb-2 text-on-surface hover:bg-surface-container-high hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span> True/False
+                </div>
+<div class="flex items-center gap-2 p-3 mb-2 text-on-surface hover:bg-surface-container-high hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span> Drafts
+                </div>
+<div class="flex items-center gap-2 p-3 mb-2 text-on-surface hover:bg-surface-container-high hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span> Archive
+                </div>
+</nav>
+</aside>
+<!-- Main Content Area (Blurred out due to modal) -->
+<main class="flex-1 ml-0 md:ml-64 p-margin-mobile md:p-margin-desktop overflow-y-auto blur-sm grayscale-[50%] transition-all duration-300 pointer-events-none">
+<!-- Dummy content to show behind blur -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="bg-white border-[3px] border-on-background neo-shadow p-6 flex flex-col gap-4">
+<div class="font-label-mono text-label-mono bg-primary text-white p-2 self-start uppercase">MC — Trắc Nghiệm</div>
+<h3 class="font-headline-md text-headline-md">What color is the green light?</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Explanation: It represents Gatsby's hopes and dreams.</p>
+</div>
+<div class="bg-white border-[3px] border-on-background neo-shadow p-6 flex flex-col gap-4">
+<div class="font-label-mono text-label-mono bg-secondary-fixed text-on-secondary-fixed border-[3px] border-on-background p-2 self-start uppercase">TF — Đúng / Sai</div>
+<h3 class="font-headline-md text-headline-md">Nick Carraway is the author.</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Explanation: He is the narrator, not the author.</p>
+</div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/40 backdrop-blur-md">
+<!-- Modal Container -->
+<div class="bg-background border-[3px] border-on-background neo-shadow-lg w-full max-w-4xl max-h-[90vh] flex flex-col rounded-none overflow-hidden relative shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+<!-- Modal Header -->
+<div class="bg-tertiary-fixed border-b-[3px] border-on-background px-6 py-4 flex justify-between items-center shrink-0">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase m-0 leading-none">THÊM CÂU HỎI</h2>
+<button class="w-10 h-10 border-[3px] border-on-background bg-white hover:bg-error-container flex items-center justify-center neo-shadow neo-btn transition-colors">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-8 bg-dot-pattern">
+<!-- Type Selector Tabs -->
+<div class="flex gap-4 border-b-[3px] border-on-background pb-4 shrink-0">
+<button class="bg-primary text-on-primary border-[3px] border-on-background neo-shadow font-label-mono text-label-mono px-6 py-3 uppercase transition-transform cursor-default">
+                        [ MC — TRẮC NGHIỆM ]
+                    </button>
+<button class="bg-white text-on-background border-[3px] border-on-background hover:bg-surface-container-highest neo-shadow neo-btn font-label-mono text-label-mono px-6 py-3 uppercase transition-all">
+                        [ TF — ĐÚNG / SAI ]
+                    </button>
+</div>
+<div class="flex flex-col gap-8 bg-white border-[3px] border-on-background p-6 lg:p-8 neo-shadow relative">
+<!-- Question Input -->
+<div class="flex flex-col gap-2">
+<label class="font-label-mono text-label-mono uppercase">Nội dung câu hỏi</label>
+<textarea class="neo-input border-[3px] border-on-background bg-surface-lowest p-4 font-body-lg text-body-lg min-h-[120px] resize-y transition-shadow placeholder:text-on-surface-variant placeholder:opacity-60" placeholder="Nhập nội dung câu hỏi tại đây..."></textarea>
+</div>
+<!-- Answers Grid -->
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-end border-b-[3px] border-on-background pb-2 mb-2">
+<span class="font-label-mono text-label-mono uppercase">Các đáp án</span>
+<span class="font-metadata text-metadata text-primary uppercase">Chọn đáp án đúng</span>
+</div>
+<!-- Answer A -->
+<div class="flex items-center gap-4 bg-surface-container-low p-4 border-[3px] border-transparent hover:border-on-background transition-colors group">
+<div class="flex-1 flex items-center gap-4">
+<span class="font-headline-md text-headline-md w-8">A.</span>
+<input class="neo-input flex-1 border-[3px] border-on-background p-3 font-body-md text-body-md transition-shadow" placeholder="Nội dung đáp án A" type="text"/>
+</div>
+<div class="flex items-center justify-center w-12 h-12 shrink-0">
+<input checked="" class="neo-radio cursor-pointer" name="correct_answer" type="radio"/>
+</div>
+</div>
+<!-- Answer B -->
+<div class="flex items-center gap-4 bg-surface-container-low p-4 border-[3px] border-transparent hover:border-on-background transition-colors group">
+<div class="flex-1 flex items-center gap-4">
+<span class="font-headline-md text-headline-md w-8">B.</span>
+<input class="neo-input flex-1 border-[3px] border-on-background p-3 font-body-md text-body-md transition-shadow" placeholder="Nội dung đáp án B" type="text"/>
+</div>
+<div class="flex items-center justify-center w-12 h-12 shrink-0">
+<input class="neo-radio cursor-pointer" name="correct_answer" type="radio"/>
+</div>
+</div>
+<!-- Answer C -->
+<div class="flex items-center gap-4 bg-surface-container-low p-4 border-[3px] border-transparent hover:border-on-background transition-colors group">
+<div class="flex-1 flex items-center gap-4">
+<span class="font-headline-md text-headline-md w-8">C.</span>
+<input class="neo-input flex-1 border-[3px] border-on-background p-3 font-body-md text-body-md transition-shadow" placeholder="Nội dung đáp án C" type="text"/>
+</div>
+<div class="flex items-center justify-center w-12 h-12 shrink-0">
+<input class="neo-radio cursor-pointer" name="correct_answer" type="radio"/>
+</div>
+</div>
+<!-- Answer D -->
+<div class="flex items-center gap-4 bg-surface-container-low p-4 border-[3px] border-transparent hover:border-on-background transition-colors group">
+<div class="flex-1 flex items-center gap-4">
+<span class="font-headline-md text-headline-md w-8">D.</span>
+<input class="neo-input flex-1 border-[3px] border-on-background p-3 font-body-md text-body-md transition-shadow" placeholder="Nội dung đáp án D" type="text"/>
+</div>
+<div class="flex items-center justify-center w-12 h-12 shrink-0">
+<input class="neo-radio cursor-pointer" name="correct_answer" type="radio"/>
+</div>
+</div>
+</div>
+<!-- Explanation Input -->
+<div class="flex flex-col gap-2 mt-4">
+<label class="font-label-mono text-label-mono uppercase">Giải thích (Tùy chọn)</label>
+<textarea class="neo-input border-[3px] border-on-background bg-surface-lowest p-4 font-body-md text-body-md min-h-[80px] resize-y transition-shadow placeholder:text-on-surface-variant placeholder:opacity-60" placeholder="Thêm lời giải thích hoặc gợi ý..."></textarea>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="bg-surface-container-high border-t-[3px] border-on-background px-6 py-5 flex justify-end gap-4 shrink-0">
+<button class="bg-white text-on-background border-[3px] border-on-background hover:bg-surface-variant neo-shadow neo-btn font-headline-md text-headline-md px-8 py-2 uppercase transition-all tracking-wide">
+                    HỦY
+                </button>
+<button class="bg-primary text-on-primary border-[3px] border-on-background hover:bg-[#CCFF00] hover:text-on-background neo-shadow neo-btn font-headline-md text-headline-md px-8 py-2 uppercase transition-all tracking-wide flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="save">save</span>
+                    LƯU CÂU HỎI
+                </button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thư Viện Học Sinh - Viviora</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#b8c3ff",
+                        "secondary-container": "#e7e700",
+                        "background": "#f9f9f9",
+                        "on-secondary-fixed": "#1d1d00",
+                        "on-primary-fixed-variant": "#0035bd",
+                        "on-secondary-container": "#666600",
+                        "inverse-primary": "#b8c3ff",
+                        "surface-container-high": "#e8e8e8",
+                        "surface-container": "#eeeeee",
+                        "on-surface": "#1b1b1b",
+                        "on-primary": "#ffffff",
+                        "secondary": "#626200",
+                        "inverse-surface": "#303030",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#494900",
+                        "secondary-fixed": "#eaea00",
+                        "outline": "#747688",
+                        "primary-container": "#2d5bff",
+                        "outline-variant": "#c4c5d9",
+                        "tertiary-fixed-dim": "#ffb4a2",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1b1b1b",
+                        "on-surface-variant": "#434656",
+                        "surface-container-low": "#f3f3f3",
+                        "tertiary-fixed": "#ffdad2",
+                        "surface-bright": "#f9f9f9",
+                        "secondary-fixed-dim": "#cdcd00",
+                        "surface-tint": "#104af0",
+                        "on-tertiary-container": "#ffece8",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#a32400",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#001355",
+                        "surface-variant": "#e2e2e2",
+                        "tertiary-container": "#ce3000",
+                        "on-tertiary-fixed-variant": "#8a1d00",
+                        "surface": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#dde1ff",
+                        "primary": "#0040df",
+                        "surface-dim": "#dadada",
+                        "on-primary-container": "#efefff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-tertiary-fixed": "#3c0700",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0rem", /* Neo-brutalist: no rounded corners */
+                        "lg": "0rem",
+                        "xl": "0rem",
+                        "full": "0rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "shadow-offset": "4px",
+                        "border-width": "3px",
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "metadata": ["Archivo Narrow"],
+                        "body-lg": ["Archivo Narrow"],
+                        "display-xl": ["Anton"],
+                        "body-md": ["Archivo Narrow"],
+                        "headline-md": ["Anton"],
+                        "label-mono": ["Space Mono"],
+                        "headline-lg-mobile": ["Anton"],
+                        "headline-lg": ["Anton"]
+                    },
+                    "fontSize": {
+                        "metadata": ["14px", { "lineHeight": "18px", "fontWeight": "600" }],
+                        "body-lg": ["20px", { "lineHeight": "30px", "fontWeight": "400" }],
+                        "display-xl": ["80px", { "lineHeight": "80px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+        
+        .dot-grid {
+            background-image: radial-gradient(#1b1b1b 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px #1b1b1b;
+        }
+        
+        .neo-shadow-hover:hover {
+            box-shadow: 4px 4px 0px 0px #1b1b1b;
+            transform: translate(-2px, -2px);
+        }
+        
+        .neo-shadow-active:active {
+            box-shadow: 0px 0px 0px 0px #1b1b1b !important;
+            transform: translate(4px, 4px) !important;
+        }
+    </style>
+<link data-snapdom="injected-import" href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/></head>
+<body class="bg-surface dot-grid text-on-surface font-body-md text-body-md min-h-screen flex selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex flex-col h-screen w-64 left-0 sticky p-gutter gap-4 border-r-[3px] border-on-surface bg-surface-container z-40">
+<!-- Brand / Header -->
+<div class="flex flex-col gap-2 mb-8">
+<h1 class="font-headline-md text-headline-md text-on-surface uppercase tracking-tighter">Viviora Dashboard</h1>
+<p class="font-label-mono text-label-mono text-on-surface-variant">Level 12 Reader</p>
+</div>
+<!-- Navigation Links -->
+<ul class="flex flex-col gap-2 flex-1">
+<li class="">
+<a class="flex items-center gap-3 p-3 text-on-surface hover:bg-tertiary-container hover:text-on-tertiary-container hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform border-[3px] border-transparent font-label-mono text-label-mono uppercase" href="#">
+<span class="material-symbols-outlined" style='font-variation-settings: "FILL" 0;'>home</span>
+                    Home
+                </a>
+</li>
+<li class="">
+<!-- ACTIVE STATE -->
+<a class="flex items-center gap-3 p-3 bg-primary text-on-primary border-[3px] border-on-surface shadow-[4px_4px_0px_0px_rgba(27,27,27,1)] font-label-mono text-label-mono uppercase" href="#">
+<span class="material-symbols-outlined" style='font-variation-settings: "FILL" 1;'>menu_book</span>
+                    My Library
+                </a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 p-3 text-on-surface hover:bg-tertiary-container hover:text-on-tertiary-container hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform border-[3px] border-transparent font-label-mono text-label-mono uppercase" href="#">
+<span class="material-symbols-outlined" style='font-variation-settings: "FILL" 0;'>group</span>
+                    Reading Groups
+                </a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 p-3 text-on-surface hover:bg-tertiary-container hover:text-on-tertiary-container hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform border-[3px] border-transparent font-label-mono text-label-mono uppercase" href="#">
+<span class="material-symbols-outlined" style='font-variation-settings: "FILL" 0;'>military_tech</span>
+                    Challenges
+                </a>
+</li>
+</ul>
+<!-- Settings & CTA -->
+<div class="flex flex-col gap-4 mt-auto">
+<a class="flex items-center gap-3 p-3 text-on-surface hover:bg-surface-variant font-label-mono text-label-mono uppercase" href="#">
+<span class="material-symbols-outlined" style='font-variation-settings: "FILL" 0;'>settings</span>
+                Settings
+            </a>
+<button class="w-full bg-secondary-container text-on-secondary-container border-[3px] border-on-surface shadow-[4px_4px_0px_0px_rgba(27,27,27,1)] font-headline-md text-headline-md py-3 uppercase neo-shadow-active transition-all duration-75">
+                Start Reading
+            </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 border-b-[3px] border-on-surface shadow-[4px_4px_0px_0px_rgba(27,27,27,1)] flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 bg-surface">
+<!-- Mobile Menu & Brand -->
+<div class="flex items-center gap-4">
+<button class="md:hidden flex items-center justify-center p-2 border-[3px] border-on-surface bg-primary text-on-primary neo-shadow neo-shadow-active transition-all">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-headline-md text-headline-md uppercase text-primary tracking-tighter">VIVIORA</div>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<div class="hidden md:flex border-[3px] border-on-surface bg-surface-container px-3 py-2 items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 p-0 font-label-mono text-label-mono w-32 placeholder-on-surface-variant" placeholder="Quick search..." type="text"/>
+</div>
+<button class="flex items-center justify-center p-2 border-[3px] border-transparent hover:bg-secondary-container hover:text-on-secondary-container hover:border-on-surface active:translate-x-1 active:translate-y-1 transition-all duration-75 text-on-surface-variant">
+<span class="material-symbols-outlined" style='font-variation-settings: "FILL" 0;'>notifications</span>
+</button>
+<button class="flex items-center justify-center p-2 border-[3px] border-transparent hover:bg-secondary-container hover:text-on-secondary-container hover:border-on-surface active:translate-x-1 active:translate-y-1 transition-all duration-75 text-on-surface-variant">
+<span class="material-symbols-outlined" style='font-variation-settings: "FILL" 0;'>account_circle</span>
+</button>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-margin-mobile md:p-margin-desktop space-y-12 pb-24">
+<!-- Hero Section -->
+<section class="flex flex-col gap-6 bg-surface-container-low border-[3px] border-on-surface p-8 md:p-12 shadow-[8px_8px_0px_0px_rgba(27,27,27,1)] relative overflow-hidden">
+<!-- Abstract geometry accent -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container border-l-[3px] border-b-[3px] border-on-surface translate-x-4 -translate-y-4 transform rotate-12"></div>
+<div class="relative z-10 max-w-3xl flex flex-col gap-4">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary uppercase tracking-tight">KHÁM PHÁ THƯ VIỆN</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l-[3px] border-tertiary-container pl-4">Khám phá những kho sách và những cuốn sách đang chờ bạn. Hàng ngàn tài liệu học tập, văn học và khoa học được tổ chức theo chuyên mục.</p>
+<!-- Large Search Bar -->
+<div class="mt-4 flex w-full max-w-2xl">
+<input class="flex-1 bg-surface border-[3px] border-on-surface p-4 font-body-md text-body-md focus:outline-none focus:shadow-[4px_4px_0px_0px_#0040df] transition-shadow placeholder:opacity-60" placeholder="Tìm tên sách hoặc tác giả..." type="text"/>
+<button class="bg-primary text-on-primary border-y-[3px] border-r-[3px] border-on-surface px-6 flex items-center justify-center hover:bg-secondary-container hover:text-on-secondary-container transition-colors">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Collection Grid -->
+<section class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="h-[3px] bg-on-surface flex-1"></div>
+<h3 class="font-headline-md text-headline-md uppercase text-on-surface">Kho Sách</h3>
+<div class="h-[3px] bg-on-surface flex-1"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Collection Card 1 -->
+<article class="bg-surface border-[3px] border-on-surface shadow-[4px_4px_0px_0px_rgba(27,27,27,1)] flex flex-col group p-5 gap-4 hover:-translate-y-1 transition-transform">
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-headline-md text-headline-md text-on-surface uppercase leading-none mt-1">KHO SÁCH VĂN HỌC</h4>
+<div class="bg-tertiary-container text-on-tertiary-container p-2 border-[3px] border-on-surface flex-shrink-0 shadow-[2px_2px_0px_0px_rgba(27,27,27,1)]">
+<span class="material-symbols-outlined block">auto_stories</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant border-l-[3px] border-primary pl-3 line-clamp-2">Tuyển tập các tác phẩm văn học kinh điển và đương đại từ các tác giả danh tiếng.</p>
+<div class="flex gap-3 h-28 w-full mt-2">
+<div class="w-1/3 bg-surface-container-high border-[3px] border-on-surface flex items-center justify-center relative group-hover:-translate-y-1 transition-transform delay-75">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Bìa Sách</span>
+</div>
+<div class="w-1/3 bg-surface-container-high border-[3px] border-on-surface flex items-center justify-center relative group-hover:-translate-y-2 transition-transform delay-100">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Bìa Sách</span>
+</div>
+<div class="w-1/3 bg-surface-container-high border-[3px] border-on-surface flex items-center justify-center relative group-hover:-translate-y-1 transition-transform delay-150">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Bìa Sách</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-3 mt-4">
+<div class="border-t-[3px] border-on-surface pt-2 flex flex-col">
+<span class="font-headline-md text-xl text-primary">1,240</span>
+<span class="font-label-mono text-[10px] uppercase text-on-surface-variant">Sách</span>
+</div>
+<div class="border-t-[3px] border-on-surface pt-2 flex flex-col">
+<span class="font-headline-md text-xl text-primary">350</span>
+<span class="font-label-mono text-[10px] uppercase text-on-surface-variant">Tác Giả</span>
+</div>
+<div class="border-t-[3px] border-on-surface pt-2 flex flex-col">
+<span class="font-headline-md text-xl text-primary">1800+</span>
+<span class="font-label-mono text-[10px] uppercase text-on-surface-variant">Năm</span>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary border-[3px] border-on-surface py-3 font-headline-md text-xl uppercase shadow-[4px_4px_0px_0px_rgba(27,27,27,1)] hover:bg-secondary-container hover:text-on-secondary-container active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 mt-2">
+        KHÁM PHÁ <span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+</article>
+<!-- Collection Card 2 -->
+<article class="bg-surface border-[3px] border-on-surface shadow-[4px_4px_0px_0px_rgba(27,27,27,1)] flex flex-col group p-5 gap-4 hover:-translate-y-1 transition-transform">
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-headline-md text-headline-md text-on-surface uppercase leading-none mt-1">KHO SÁCH KHOA HỌC</h4>
+<div class="bg-[#9D00FF] text-white p-2 border-[3px] border-on-surface flex-shrink-0 shadow-[2px_2px_0px_0px_rgba(27,27,27,1)]">
+<span class="material-symbols-outlined block">science</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant border-l-[3px] border-[#9D00FF] pl-3 line-clamp-2">Lưu trữ kiến thức bách khoa, nghiên cứu và tài liệu học thuật chuyên sâu.</p>
+<div class="flex gap-3 h-28 w-full mt-2">
+<div class="w-1/3 bg-surface-container-high border-[3px] border-on-surface flex items-center justify-center relative group-hover:-translate-y-1 transition-transform delay-75">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Bìa Sách</span>
+</div>
+<div class="w-1/3 bg-surface-container-high border-[3px] border-on-surface flex items-center justify-center relative group-hover:-translate-y-2 transition-transform delay-100">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Bìa Sách</span>
+</div>
+<div class="w-1/3 bg-surface-container-high border-[3px] border-on-surface flex items-center justify-center relative group-hover:-translate-y-1 transition-transform delay-150">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Bìa Sách</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-3 mt-4">
+<div class="border-t-[3px] border-on-surface pt-2 flex flex-col">
+<span class="font-headline-md text-xl text-[#9D00FF]">850</span>
+<span class="font-label-mono text-[10px] uppercase text-on-surface-variant">Sách</span>
+</div>
+<div class="border-t-[3px] border-on-surface pt-2 flex flex-col">
+<span class="font-headline-md text-xl text-[#9D00FF]">210</span>
+<span class="font-label-mono text-[10px] uppercase text-on-surface-variant">Tác Giả</span>
+</div>
+<div class="border-t-[3px] border-on-surface pt-2 flex flex-col">
+<span class="font-headline-md text-xl text-[#9D00FF]">1950+</span>
+<span class="font-label-mono text-[10px] uppercase text-on-surface-variant">Năm</span>
+</div>
+</div>
+<button class="w-full bg-[#9D00FF] text-white border-[3px] border-on-surface py-3 font-headline-md text-xl uppercase shadow-[4px_4px_0px_0px_rgba(27,27,27,1)] hover:bg-secondary-container hover:text-on-secondary-container hover:border-on-surface active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 mt-2">
+        KHÁM PHÁ <span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+</article>
+<!-- Collection Card 3 -->
+<article class="bg-surface border-[3px] border-on-surface shadow-[4px_4px_0px_0px_rgba(27,27,27,1)] flex flex-col group p-5 gap-4 hover:-translate-y-1 transition-transform">
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-headline-md text-headline-md text-on-surface uppercase leading-none mt-1">KHO SÁCH LỊCH SỬ</h4>
+<div class="bg-secondary-container text-on-secondary-container p-2 border-[3px] border-on-surface flex-shrink-0 shadow-[2px_2px_0px_0px_rgba(27,27,27,1)]">
+<span class="material-symbols-outlined block">history_edu</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant border-l-[3px] border-secondary-container pl-3 line-clamp-2">Ghi chép về quá khứ, biên niên sử và các tài liệu khảo cổ học giá trị.</p>
+<div class="flex gap-3 h-28 w-full mt-2">
+<div class="w-1/3 bg-surface-container-high border-[3px] border-on-surface flex items-center justify-center relative group-hover:-translate-y-1 transition-transform delay-75">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Bìa Sách</span>
+</div>
+<div class="w-1/3 bg-surface-container-high border-[3px] border-on-surface flex items-center justify-center relative group-hover:-translate-y-2 transition-transform delay-100">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Bìa Sách</span>
+</div>
+<div class="w-1/3 bg-surface-container-high border-[3px] border-on-surface flex items-center justify-center relative group-hover:-translate-y-1 transition-transform delay-150">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase">Bìa Sách</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-3 mt-4">
+<div class="border-t-[3px] border-on-surface pt-2 flex flex-col">
+<span class="font-headline-md text-xl text-on-surface">1,500</span>
+<span class="font-label-mono text-[10px] uppercase text-on-surface-variant">Sách</span>
+</div>
+<div class="border-t-[3px] border-on-surface pt-2 flex flex-col">
+<span class="font-headline-md text-xl text-on-surface">400</span>
+<span class="font-label-mono text-[10px] uppercase text-on-surface-variant">Tác Giả</span>
+</div>
+<div class="border-t-[3px] border-on-surface pt-2 flex flex-col">
+<span class="font-headline-md text-xl text-on-surface">1000+</span>
+<span class="font-label-mono text-[10px] uppercase text-on-surface-variant">Năm</span>
+</div>
+</div>
+<button class="w-full bg-secondary-container text-on-secondary-container border-[3px] border-on-surface py-3 font-headline-md text-xl uppercase shadow-[4px_4px_0px_0px_rgba(27,27,27,1)] hover:bg-primary hover:text-on-primary active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 mt-2">
+        KHÁM PHÁ <span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+</article>
+</div>
+</section>
+</div>
+</main>
+</body></html>

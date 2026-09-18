@@ -1,0 +1,401 @@
+Project viviora {
+  database_type: 'PostgreSQL'
+  Note: 'Current schema snapshot. Generated from the running database after migrations 001-006.'
+}
+
+Table users {
+  id text [pk]
+  username text [not null, unique]
+  name text [not null]
+  email text [unique]
+  password_hash text [not null]
+  role text [not null, note: 'STUDENT | TEACHER | ADMIN']
+  class_name text
+  gender text
+  specialization text
+  avatar_url text
+  bio text
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  is_active boolean [not null, default: true]
+
+  indexes {
+    (role, is_active, created_at, id) [name: 'idx_users_admin_list']
+    name [type: gin, name: 'idx_users_name_search']
+    username [type: gin, name: 'idx_users_username_search']
+  }
+
+  Note: 'Checks: role IN (STUDENT, TEACHER, ADMIN); class_name matches ^[6-9]A[0-9]+$; specialization uses the configured subject allowlist.'
+}
+
+Table library_collections {
+  id text [pk]
+  name text [not null]
+  description text
+  imported_file_name text [not null]
+  total_books integer [not null, default: 0, note: 'CHECK total_books >= 0; maintained by database triggers']
+  created_by text
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (created_at, id) [name: 'idx_library_collections_created_at']
+    name [name: 'idx_library_collections_name', note: 'Expression index on lower(name)']
+  }
+}
+
+Table books {
+  id text [pk]
+  collection_id text [not null]
+  title text [not null]
+  author text
+  publisher text
+  publication_year integer [note: 'CHECK 1000 <= publication_year <= 3000']
+  price numeric(14,2) [note: 'CHECK price >= 0']
+  category text
+  cutter text
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  cover_url text
+
+  indexes {
+    (collection_id, title, id) [name: 'idx_library_books_collection']
+    (collection_id, category, publication_year) [name: 'idx_library_books_collection_category']
+    title [type: gin, name: 'idx_library_books_title_trgm']
+    author [type: gin, name: 'idx_library_books_author_trgm']
+    publisher [type: gin, name: 'idx_library_books_publisher_trgm']
+    (title, author, publisher) [type: gin, name: 'idx_library_books_search', note: 'Actual index is a to_tsvector expression']
+  }
+}
+
+Table question_banks {
+  id text [pk]
+  book_id text [not null, unique]
+  created_by text
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table questions {
+  id text [pk]
+  question_bank_id text [not null]
+  type text [not null, note: 'MC | TF']
+  content text [not null]
+  point integer [not null, default: 10, note: 'Must be greater than 0']
+  answer_explanation text
+  correct_answer boolean [note: 'Required for TF; null for MC']
+  created_by text
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table question_options {
+  id text [pk]
+  question_id text [not null]
+  label text [not null]
+  position integer [not null]
+  is_correct boolean [not null, default: false]
+}
+
+Table posts {
+  id text [pk]
+  author_id text [not null]
+  type text [not null, note: 'TEXT | BOOK_REVIEW | VIDEO_REVIEW | POLL | ACHIEVEMENT']
+  status text [not null, default: 'APPROVED', note: 'PENDING | APPROVED | REJECTED']
+  title text
+  content text [not null]
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (status, created_at, id) [name: 'idx_posts_feed']
+    (author_id, created_at) [name: 'idx_posts_author']
+  }
+}
+
+Table post_media {
+  id text [pk]
+  post_id text [not null]
+  url text [not null]
+  kind text [not null]
+  alt text
+}
+
+Table post_library_books {
+  post_id text [pk]
+  book_id text
+  book_title text [not null]
+  book_author text
+  book_cover_url text
+  book_category text
+
+  indexes {
+    book_id [name: 'idx_post_library_books_book']
+  }
+
+  Note: 'Current book attachment used by the library and feed.'
+}
+
+Table comments {
+  id text [pk]
+  post_id text [not null]
+  author_id text [not null]
+  parent_id text
+  content text [not null]
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (post_id, created_at) [name: 'idx_comments_post']
+  }
+}
+
+Table reactions {
+  id text [pk]
+  post_id text [not null]
+  user_id text [not null]
+  type text [not null, default: 'LIKE']
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    post_id [name: 'idx_reactions_post']
+    (post_id, user_id) [unique, name: 'reactions_post_id_user_id_key']
+  }
+}
+
+Table polls {
+  id text [pk]
+  post_id text [not null, unique]
+  question text [not null]
+}
+
+Table poll_options {
+  id text [pk]
+  poll_id text [not null]
+  label text [not null]
+  position integer [not null]
+}
+
+Table poll_votes {
+  id text [pk]
+  poll_id text [not null]
+  option_id text [not null]
+  user_id text [not null]
+
+  indexes {
+    poll_id [name: 'idx_poll_votes_poll']
+    (poll_id, user_id) [unique, name: 'poll_votes_poll_id_user_id_key']
+  }
+}
+
+Table moderation {
+  id text [pk]
+  post_id text [not null, unique]
+  reviewer_id text
+  status text [not null, default: 'PENDING']
+  reviewed_at timestamptz
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table moderation_feedback {
+  id text [pk]
+  moderation_id text [not null]
+  author_id text [not null]
+  content text [not null]
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table notifications {
+  id text [pk]
+  user_id text [not null]
+  type text [not null]
+  title text [not null]
+  body text [not null]
+  read_at timestamptz
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (user_id, created_at) [name: 'idx_notifications_user']
+  }
+}
+
+Table reading_progress {
+  id text [pk]
+  user_id text [not null]
+  book_id text [not null, note: 'References current library books']
+  progress integer [not null, default: 0]
+  minutes integer [not null, default: 0]
+  updated_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (user_id, book_id) [unique, name: 'reading_progress_user_id_book_id_key']
+  }
+}
+
+Table games {
+  id text [pk]
+  book_id text [not null]
+  question_type text [not null, note: 'MC | TF']
+  title text [not null]
+  description text
+  question_count integer [not null]
+  reward_cups integer [not null, default: 1]
+  created_by text
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table game_sessions {
+  id text [pk]
+  game_id text [not null]
+  user_id text [not null]
+  score integer [not null, default: 0]
+  total_points integer [not null, default: 0]
+  correct_count integer [not null, default: 0]
+  total_questions integer [not null]
+  cup_earned boolean [not null, default: false]
+  started_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  completed_at timestamptz
+}
+
+Table game_session_questions {
+  id text [pk]
+  session_id text [not null]
+  question_id text [not null]
+  position integer [not null]
+  selected_answer text
+  is_correct boolean
+  points_awarded integer [not null, default: 0]
+  answered_at timestamptz
+}
+
+Table user_game_rewards {
+  id text [pk]
+  user_id text [not null]
+  game_id text [not null]
+  cup_count integer [not null, default: 1]
+  earned_on date [not null]
+  week_start date [not null]
+  earned_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (user_id, game_id, earned_on) [unique, name: 'user_game_rewards_user_game_day_key']
+    (user_id, earned_at) [name: 'idx_user_game_rewards_user']
+  }
+}
+
+Table achievements {
+  id text [pk]
+  code text [not null, unique]
+  name text [not null]
+  description text [not null]
+  icon text [not null]
+  condition_text text
+  exp_reward integer [not null, default: 0]
+  sort_order integer
+  is_supported boolean [not null, default: false]
+  support_note text
+}
+
+Table user_achievements {
+  id text [pk]
+  user_id text [not null]
+  achievement_id text [not null]
+  unlocked_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  exp_awarded integer [not null, default: 0]
+
+  indexes {
+    (user_id, achievement_id) [unique, name: 'user_achievements_user_id_achievement_id_key']
+  }
+}
+
+Table levels {
+  level integer [pk]
+  required_exp integer [not null, unique]
+}
+
+Table user_activities {
+  id text [pk]
+  user_id text [not null]
+  type text [not null, note: 'POST_CREATED | COMMENT_CREATED | PROFILE_UPDATED | PASSWORD_CHANGED | MODERATION_REVIEWED']
+  metadata jsonb [not null, default: `'{}'::jsonb`]
+  created_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (user_id, created_at, id) [name: 'idx_user_activities_user_created']
+  }
+}
+
+Table sessions {
+  sid text [pk]
+  sess jsonb [not null]
+  expires bigint [not null]
+
+  Note: 'Express session store.'
+}
+
+Table schema_migrations {
+  filename text [pk]
+  applied_at timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+
+  Note: 'Migration bookkeeping table.'
+}
+
+// Legacy tables retained in the current PostgreSQL database after migration 002.
+Table community_books {
+  id text [pk]
+  title text [not null]
+  author text [not null]
+  genre text [not null]
+  cover_url text
+  description text
+
+  Note: 'Legacy community book catalog. Current library code uses books.'
+}
+
+Table post_books {
+  post_id text [pk]
+  book_id text [not null]
+
+  Note: 'Legacy post-to-community_books attachment table.'
+}
+
+Ref: users.id < posts.author_id
+Ref: posts.id < post_media.post_id [delete: cascade]
+Ref: posts.id - post_library_books.post_id [delete: cascade]
+Ref: books.id < post_library_books.book_id [delete: set null]
+Ref: posts.id < comments.post_id [delete: cascade]
+Ref: users.id < comments.author_id
+Ref: comments.id < comments.parent_id [delete: cascade]
+Ref: posts.id < reactions.post_id [delete: cascade]
+Ref: users.id < reactions.user_id
+Ref: posts.id - polls.post_id [delete: cascade]
+Ref: polls.id < poll_options.poll_id [delete: cascade]
+Ref: polls.id < poll_votes.poll_id [delete: cascade]
+Ref: poll_options.id < poll_votes.option_id [delete: cascade]
+Ref: users.id < poll_votes.user_id
+Ref: posts.id - moderation.post_id [delete: cascade]
+Ref: users.id < moderation.reviewer_id
+Ref: moderation.id < moderation_feedback.moderation_id [delete: cascade]
+Ref: users.id < moderation_feedback.author_id
+Ref: users.id < notifications.user_id [delete: cascade]
+Ref: users.id < reading_progress.user_id [delete: cascade]
+Ref: books.id < reading_progress.book_id [delete: cascade]
+Ref: achievements.id < user_achievements.achievement_id [delete: cascade]
+Ref: users.id < user_achievements.user_id [delete: cascade]
+Ref: users.id < user_activities.user_id [delete: cascade]
+Ref: books.id < games.book_id [delete: cascade]
+Ref: users.id < games.created_by [delete: set null]
+Ref: games.id < game_sessions.game_id [delete: cascade]
+Ref: users.id < game_sessions.user_id [delete: cascade]
+Ref: game_sessions.id < game_session_questions.session_id [delete: cascade]
+Ref: questions.id < game_session_questions.question_id
+Ref: users.id < user_game_rewards.user_id [delete: cascade]
+Ref: games.id < user_game_rewards.game_id [delete: cascade]
+Ref: users.id < library_collections.created_by [delete: set null]
+Ref: library_collections.id < books.collection_id [delete: cascade]
+Ref: books.id - question_banks.book_id [delete: cascade]
+Ref: users.id < question_banks.created_by [delete: set null]
+Ref: question_banks.id < questions.question_bank_id [delete: cascade]
+Ref: users.id < questions.created_by [delete: set null]
+Ref: questions.id < question_options.question_id [delete: cascade]
+Ref: posts.id - post_books.post_id [delete: cascade]
+Ref: community_books.id < post_books.book_id
