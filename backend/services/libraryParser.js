@@ -35,7 +35,9 @@ function parsePrice(value) {
     return { value: Math.round(value * 100) / 100 };
   }
 
-  let raw = text(value).replace(/[₫đ]|vnd/gi, '').replace(/\s/g, '');
+  let raw = text(value)
+    .replace(/[₫đ]|vnd/gi, '')
+    .replace(/\s/g, '');
   if (!raw) return { value: null };
   if (!/^-?[\d.,]+$/.test(raw)) return { value: null, error: 'Đơn giá không hợp lệ' };
 
@@ -68,7 +70,8 @@ function parseCoverUrl(value) {
   if (!raw) return { value: null };
   try {
     const parsed = new URL(raw);
-    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') throw new Error('invalid protocol');
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:')
+      throw new Error('invalid protocol');
     return { value: raw };
   } catch {
     return { value: null, error: 'Liên kết ảnh bìa không hợp lệ' };
@@ -88,7 +91,9 @@ function cellValue(sheet, rowIndex, columnIndex) {
 }
 
 function hasBookData(sheet, rowIndex) {
-  return Object.values(COLUMNS).some((columnIndex) => text(cellValue(sheet, rowIndex, columnIndex)));
+  return Object.values(COLUMNS).some((columnIndex) =>
+    text(cellValue(sheet, rowIndex, columnIndex)),
+  );
 }
 
 function createError(code, message) {
@@ -110,13 +115,23 @@ async function parseLibraryWorkbook(filePath, { maxRows = 50000, previewLimit = 
 
   if (sheet.rowCount < DATA_START_ROW) {
     return {
-      summary: { totalRows: 0, validBooks: 0, errorRows: 0, authorCount: 0, yearRange: null, categories: [] },
+      summary: {
+        totalRows: 0,
+        validBooks: 0,
+        errorRows: 0,
+        authorCount: 0,
+        yearRange: null,
+        categories: [],
+      },
       errors: [],
       books: [],
     };
   }
   if (sheet.rowCount - DATA_START_ROW + 1 > maxRows)
-    throw createError('EXCEL_TOO_LARGE', `File có quá nhiều dòng. Giới hạn là ${maxRows.toLocaleString('vi-VN')} dòng dữ liệu.`);
+    throw createError(
+      'EXCEL_TOO_LARGE',
+      `File có quá nhiều dòng. Giới hạn là ${maxRows.toLocaleString('vi-VN')} dòng dữ liệu.`,
+    );
 
   const books = [];
   const errors = [];
@@ -133,7 +148,7 @@ async function parseLibraryWorkbook(filePath, { maxRows = 50000, previewLimit = 
     const author = text(cellValue(sheet, rowIndex, COLUMNS.author)) || null;
     const publisher = text(cellValue(sheet, rowIndex, COLUMNS.publisher)) || null;
     const category = text(cellValue(sheet, rowIndex, COLUMNS.category)) || null;
-  const cutter = text(cellValue(sheet, rowIndex, COLUMNS.cutter)) || null;
+    const cutter = text(cellValue(sheet, rowIndex, COLUMNS.cutter)) || null;
     const coverUrl = text(cellValue(sheet, rowIndex, COLUMNS.cover_url)) || null;
     const yearResult = parseYear(cellValue(sheet, rowIndex, COLUMNS.publication_year));
     const priceResult = parsePrice(cellValue(sheet, rowIndex, COLUMNS.price));
@@ -164,7 +179,9 @@ async function parseLibraryWorkbook(filePath, { maxRows = 50000, previewLimit = 
     });
   }
 
-  const sortedCategories = Array.from(categories).sort((left, right) => left.localeCompare(right, 'vi'));
+  const sortedCategories = Array.from(categories).sort((left, right) =>
+    left.localeCompare(right, 'vi'),
+  );
   return {
     summary: {
       totalRows,
@@ -180,4 +197,11 @@ async function parseLibraryWorkbook(filePath, { maxRows = 50000, previewLimit = 
   };
 }
 
-module.exports = { COLUMNS, DATA_START_ROW, parseCoverUrl, parseLibraryWorkbook, parsePrice, parseYear };
+module.exports = {
+  COLUMNS,
+  DATA_START_ROW,
+  parseCoverUrl,
+  parseLibraryWorkbook,
+  parsePrice,
+  parseYear,
+};

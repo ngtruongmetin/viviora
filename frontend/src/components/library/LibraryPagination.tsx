@@ -12,9 +12,27 @@ export function LibraryPagination({ page, limit, total, onPageChange }: Paginati
   if (pageCount <= 1) return null;
   return (
     <nav className="library-pagination" aria-label="Phân trang thư viện">
-      <button className="icon-button" type="button" title="Trang trước" disabled={page === 1} onClick={() => onPageChange(page - 1)}><ArrowLeft size={18} /></button>
-      <span>TRANG {page} / {pageCount}</span>
-      <button className="icon-button" type="button" title="Trang sau" disabled={page === pageCount} onClick={() => onPageChange(page + 1)}><ArrowRight size={18} /></button>
+      <button
+        className="icon-button"
+        type="button"
+        title="Trang trước"
+        disabled={page === 1}
+        onClick={() => onPageChange(page - 1)}
+      >
+        <ArrowLeft size={18} />
+      </button>
+      <span>
+        TRANG {page} / {pageCount}
+      </span>
+      <button
+        className="icon-button"
+        type="button"
+        title="Trang sau"
+        disabled={page === pageCount}
+        onClick={() => onPageChange(page + 1)}
+      >
+        <ArrowRight size={18} />
+      </button>
     </nav>
   );
 }

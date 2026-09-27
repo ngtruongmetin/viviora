@@ -7,5 +7,8 @@ initialize()
     for (const user of users) await recalculateUserAchievements(user.id);
     console.log(`Recalculated achievements for ${users.length} users.`);
   })
-  .catch((error) => { console.error(error); process.exitCode = 1; })
+  .catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  })
   .finally(() => pool.end());

@@ -61,7 +61,18 @@ test('library parser reports row errors without aborting valid titles', async ()
     [],
     [],
     [null, 1, 'Tác giả', '', 'NXB', null, 2021, 50000, 'Văn học', 'A'],
-    [null, 2, 'Tác giả hai', 'Sách vẫn hợp lệ', 'NXB', null, 'hai nghìn', 'không rõ', 'Khoa học', 'B'],
+    [
+      null,
+      2,
+      'Tác giả hai',
+      'Sách vẫn hợp lệ',
+      'NXB',
+      null,
+      'hai nghìn',
+      'không rõ',
+      'Khoa học',
+      'B',
+    ],
   ];
   const { directory, filePath } = await writeWorkbook(rows);
   try {
@@ -82,7 +93,36 @@ test('library parser reports row errors without aborting valid titles', async ()
 });
 
 test('library parser reads an external cover URL from column V without downloading it', async () => {
-  const rows = [[], [], [], [], [null, 1, 'Tac gia', 'Sach co bia', 'NXB', null, 2021, 50000, 'Van hoc', 'A', null, null, null, null, null, null, null, null, null, null, null, 'https://example.com/book-cover.jpg']];
+  const rows = [
+    [],
+    [],
+    [],
+    [],
+    [
+      null,
+      1,
+      'Tac gia',
+      'Sach co bia',
+      'NXB',
+      null,
+      2021,
+      50000,
+      'Van hoc',
+      'A',
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      'https://example.com/book-cover.jpg',
+    ],
+  ];
   const { directory, filePath } = await writeWorkbook(rows);
   try {
     const result = await parseLibraryWorkbook(filePath);

@@ -11,7 +11,15 @@ function cleanup() {
 function createImport({ userId, bankId, fileName, parsed }) {
   cleanup();
   const id = crypto.randomUUID();
-  const item = { id, userId, bankId, fileName, parsed, status: 'READY', expiresAt: Date.now() + ttlMs };
+  const item = {
+    id,
+    userId,
+    bankId,
+    fileName,
+    parsed,
+    status: 'READY',
+    expiresAt: Date.now() + ttlMs,
+  };
   imports.set(id, item);
   return item;
 }
@@ -19,19 +27,31 @@ function createImport({ userId, bankId, fileName, parsed }) {
 function beginConfirmation(id, userId, bankId) {
   cleanup();
   const item = imports.get(id);
-  if (!item || item.userId !== userId || item.bankId !== bankId || item.status !== 'READY') return null;
+  if (!item || item.userId !== userId || item.bankId !== bankId || item.status !== 'READY')
+    return null;
   item.status = 'CONFIRMING';
   return item;
 }
 
-function releaseConfirmation(id) { if (imports.has(id)) imports.get(id).status = 'READY'; }
-function completeImport(id) { imports.delete(id); }
+function releaseConfirmation(id) {
+  if (imports.has(id)) imports.get(id).status = 'READY';
+}
+function completeImport(id) {
+  imports.delete(id);
+}
 function cancelImport(id, userId, bankId) {
   cleanup();
   const item = imports.get(id);
-  if (!item || item.userId !== userId || item.bankId !== bankId || item.status === 'CONFIRMING') return false;
+  if (!item || item.userId !== userId || item.bankId !== bankId || item.status === 'CONFIRMING')
+    return false;
   imports.delete(id);
   return true;
 }
 
-module.exports = { beginConfirmation, cancelImport, completeImport, createImport, releaseConfirmation };
+module.exports = {
+  beginConfirmation,
+  cancelImport,
+  completeImport,
+  createImport,
+  releaseConfirmation,
+};

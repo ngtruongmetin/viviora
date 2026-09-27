@@ -645,7 +645,10 @@
   .mine-progress > span {
     font-size: 8px;
   }
-  .mine-progress-track { width: min(150px, 100%); height: 7px; }
+  .mine-progress-track {
+    width: min(150px, 100%);
+    height: 7px;
+  }
   .mine-tools {
     top: 6px;
     right: 8px;

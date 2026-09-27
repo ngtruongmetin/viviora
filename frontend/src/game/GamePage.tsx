@@ -87,7 +87,8 @@ export function GamePage() {
 
         const collision = new TiledCollisionMap(map);
         vehicles = createVehicleRoutes(map.tileWidth).map(
-          (route) => new Vehicle({ tileTextures: loadedTileTextures, tileSize: map.tileWidth, route }),
+          (route) =>
+            new Vehicle({ tileTextures: loadedTileTextures, tileSize: map.tileWidth, route }),
         );
         gameWorld.sortableChildren = true;
 

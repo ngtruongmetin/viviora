@@ -36,7 +36,9 @@ export function LoginPage() {
   return (
     <AuthLayout>
       <form className="login-card" onSubmit={handleSubmit(onSubmit)}>
-        <Link className="auth-back" to="/"><ArrowRight size={15} /> VỀ TRANG CHỦ</Link>
+        <Link className="auth-back" to="/">
+          <ArrowRight size={15} /> VỀ TRANG CHỦ
+        </Link>
         <div className="wordmark">VIVIORA</div>
         <span className="eyebrow">ĐỌC ĐỂ KHÁM PHÁ</span>
         <h1>ĐĂNG NHẬP</h1>
@@ -53,7 +55,9 @@ export function LoginPage() {
         <button className="button primary" disabled={isSubmitting}>
           VÀO CỘNG ĐỒNG
         </button>
-        <p className="auth-switch">Chưa có tài khoản? <Link to="/dang-ky">ĐĂNG KÝ NGAY</Link></p>
+        <p className="auth-switch">
+          Chưa có tài khoản? <Link to="/dang-ky">ĐĂNG KÝ NGAY</Link>
+        </p>
       </form>
     </AuthLayout>
   );

@@ -11,7 +11,10 @@ export function MemberLayout({ children }: { children: ReactNode }) {
       <main className="layout">
         <Sidebar />
         <section className="content">{children}</section>
-        <div className="right-rail"><TrendingBooks /><LeaderboardMini /></div>
+        <div className="right-rail">
+          <TrendingBooks />
+          <LeaderboardMini />
+        </div>
       </main>
     </div>
   );

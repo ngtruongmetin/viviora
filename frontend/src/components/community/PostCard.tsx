@@ -60,9 +60,46 @@ export function PostCard({
       setLiked(data.liked);
       setReactionCount(data.reactionCount);
       if (data.achievementEvents) announceAchievement(data.achievementEvents);
-      queryClient.setQueryData<{ pages: Array<{ items: FeedPost[]; nextCursor: string | null }>; pageParams: unknown[] }>(['feed'], (current) => current ? { ...current, pages: current.pages.map((page) => ({ ...page, items: page.items.map((item) => item.id === post.id ? { ...item, liked: data.liked, reactionCount: data.reactionCount } : item) })) } : current);
-      queryClient.setQueriesData<FeedPost[]>({ queryKey: ['profile-posts'] }, (current) => current?.map((item) => item.id === post.id ? { ...item, liked: data.liked, reactionCount: data.reactionCount } : item));
-      queryClient.setQueriesData<{ id: string; posts: FeedPost[] }>({ queryKey: ['public-user'] }, (current) => current ? { ...current, posts: current.posts?.map((item) => item.id === post.id ? { ...item, liked: data.liked, reactionCount: data.reactionCount } : item) || [] } : current);
+      queryClient.setQueryData<{
+        pages: Array<{ items: FeedPost[]; nextCursor: string | null }>;
+        pageParams: unknown[];
+      }>(['feed'], (current) =>
+        current
+          ? {
+              ...current,
+              pages: current.pages.map((page) => ({
+                ...page,
+                items: page.items.map((item) =>
+                  item.id === post.id
+                    ? { ...item, liked: data.liked, reactionCount: data.reactionCount }
+                    : item,
+                ),
+              })),
+            }
+          : current,
+      );
+      queryClient.setQueriesData<FeedPost[]>({ queryKey: ['profile-posts'] }, (current) =>
+        current?.map((item) =>
+          item.id === post.id
+            ? { ...item, liked: data.liked, reactionCount: data.reactionCount }
+            : item,
+        ),
+      );
+      queryClient.setQueriesData<{ id: string; posts: FeedPost[] }>(
+        { queryKey: ['public-user'] },
+        (current) =>
+          current
+            ? {
+                ...current,
+                posts:
+                  current.posts?.map((item) =>
+                    item.id === post.id
+                      ? { ...item, liked: data.liked, reactionCount: data.reactionCount }
+                      : item,
+                  ) || [],
+              }
+            : current,
+      );
     },
     onError: () => toast.error('Không thể cập nhật lượt thích.'),
   });
@@ -127,9 +164,7 @@ export function PostCard({
               ? 'ĐÁNH GIÁ SÁCH'
               : 'BÀI ĐĂNG'}
         </span>
-        <time dateTime={post.created_at}>
-          {formatDate(post.created_at)}
-        </time>
+        <time dateTime={post.created_at}>{formatDate(post.created_at)}</time>
       </header>
 
       <div className="feed-post-body">
@@ -226,8 +261,7 @@ export function PostCard({
             onClick={() => reaction.mutate()}
             disabled={reaction.isPending}
           >
-            <Heart size={18} fill={liked ? 'currentColor' : 'none'} />{' '}
-            <span>{reactionCount}</span>
+            <Heart size={18} fill={liked ? 'currentColor' : 'none'} /> <span>{reactionCount}</span>
           </button>
           <button onClick={() => setCommentsOpen((value) => !value)}>
             <MessageCircle size={18} /> <span>{post.commentCount}</span>

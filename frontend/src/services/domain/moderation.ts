@@ -28,7 +28,10 @@ export type ModerationSubmission = {
 export type ModerationStats = { pending: number; approved: number; rejected: number };
 
 export const moderationApi = {
-  list: (status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'ALL' = 'PENDING') => api.get<{ items: ModerationSubmission[]; stats: ModerationStats }>('/moderation', { params: { status } }),
+  list: (status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'ALL' = 'PENDING') =>
+    api.get<{ items: ModerationSubmission[]; stats: ModerationStats }>('/moderation', {
+      params: { status },
+    }),
   decide: (postId: string, status: 'APPROVED' | 'REJECTED') =>
     api.patch(`/moderation/${postId}`, { status }),
 };

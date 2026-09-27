@@ -8,7 +8,11 @@ function text(value) {
   if (typeof value === 'object') {
     if ('result' in value) return text(value.result);
     if ('text' in value) return text(value.text);
-    if ('richText' in value) return value.richText.map((part) => part.text).join('').trim();
+    if ('richText' in value)
+      return value.richText
+        .map((part) => part.text)
+        .join('')
+        .trim();
   }
   return String(value).trim().replace(/\s+/g, ' ');
 }
@@ -39,17 +43,23 @@ function parseQuestionRow(sheet, rowNumber) {
   let normalized = { rowNumber, type, question, explanation, point: point === null ? 10 : point };
   if (type === 'MC') {
     if (options.some((option) => !option)) errors.push('MC phải có đủ 4 đáp án.');
-    const correctIndexes = options.map((option, index) => (option.startsWith('*') ? index : -1)).filter((index) => index !== -1);
+    const correctIndexes = options
+      .map((option, index) => (option.startsWith('*') ? index : -1))
+      .filter((index) => index !== -1);
     if (correctIndexes.length !== 1) errors.push('MC phải có đúng 1 đáp án được đánh dấu *.');
     normalized = {
       ...normalized,
-      options: options.map((option) => ({ label: option.startsWith('*') ? option.slice(1).trim() : option, isCorrect: option.startsWith('*') })),
+      options: options.map((option) => ({
+        label: option.startsWith('*') ? option.slice(1).trim() : option,
+        isCorrect: option.startsWith('*'),
+      })),
     };
   } else if (type === 'TF') {
     const trueMarked = options[0] === '*';
     const falseMarked = options[1] === '*';
     if (trueMarked === falseMarked) errors.push('TF phải đánh dấu * ở cột C hoặc D.');
-    if (options[2] || options[3]) errors.push('TF chỉ được sử dụng cột C hoặc D để đánh dấu đáp án.');
+    if (options[2] || options[3])
+      errors.push('TF chỉ được sử dụng cột C hoặc D để đánh dấu đáp án.');
     normalized = { ...normalized, correctAnswer: trueMarked };
   }
   return { ...normalized, valid: errors.length === 0, errors };
@@ -74,10 +84,14 @@ async function parseQuestionWorkbook(filePath, { maxRows = 50000, previewLimit =
   const rows = [];
   const errors = [];
   for (let rowNumber = DATA_START_ROW; rowNumber <= sheet.rowCount; rowNumber += 1) {
-    const values = [1, 2, 3, 4, 5, 6, 7, 8].map((column) => text(cellValue(sheet, rowNumber, column)));
+    const values = [1, 2, 3, 4, 5, 6, 7, 8].map((column) =>
+      text(cellValue(sheet, rowNumber, column)),
+    );
     if (!values.some(Boolean)) continue;
     if (rows.length >= maxRows) {
-      const error = new Error(`File có quá nhiều dòng. Giới hạn là ${maxRows.toLocaleString('vi-VN')} dòng dữ liệu.`);
+      const error = new Error(
+        `File có quá nhiều dòng. Giới hạn là ${maxRows.toLocaleString('vi-VN')} dòng dữ liệu.`,
+      );
       error.code = 'EXCEL_TOO_LARGE';
       throw error;
     }
@@ -90,7 +104,11 @@ async function parseQuestionWorkbook(filePath, { maxRows = 50000, previewLimit =
     totalRows: rows.length,
     validRows: validRows.length,
     invalidRows: errors.length,
-    statistics: { total: rows.length, mc: rows.filter((row) => row.type === 'MC').length, tf: rows.filter((row) => row.type === 'TF').length },
+    statistics: {
+      total: rows.length,
+      mc: rows.filter((row) => row.type === 'MC').length,
+      tf: rows.filter((row) => row.type === 'TF').length,
+    },
     rows: rows.slice(0, previewLimit),
     allRows: rows,
     errors,

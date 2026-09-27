@@ -9,7 +9,10 @@ test('library cover validation recognizes image signatures and rejects arbitrary
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'viviora-cover-test-'));
   const pngPath = path.join(directory, 'cover.png');
   const textPath = path.join(directory, 'not-image.png');
-  fs.writeFileSync(pngPath, Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0]));
+  fs.writeFileSync(
+    pngPath,
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0]),
+  );
   fs.writeFileSync(textPath, 'not an image');
   try {
     assert.equal(await ensureValidImage(pngPath), '.png');
@@ -20,7 +23,12 @@ test('library cover validation recognizes image signatures and rejects arbitrary
 });
 
 test('local library cover cleanup is constrained to Viviora cover paths', () => {
-  assert.equal(localCoverPath('/uploads/library-covers/valid-cover.png')?.endsWith(path.join('library-covers', 'valid-cover.png')), true);
+  assert.equal(
+    localCoverPath('/uploads/library-covers/valid-cover.png')?.endsWith(
+      path.join('library-covers', 'valid-cover.png'),
+    ),
+    true,
+  );
   assert.equal(localCoverPath('/uploads/library-covers/../avatar.jpg'), null);
   assert.equal(localCoverPath('https://example.com/cover.png'), null);
 });

@@ -25,7 +25,13 @@ type VehicleOptions = {
   route: VehicleRoute;
 };
 
-export function tileCenter(tileX: number, tileY: number, widthTiles: number, heightTiles: number, tileSize: number): Point {
+export function tileCenter(
+  tileX: number,
+  tileY: number,
+  widthTiles: number,
+  heightTiles: number,
+  tileSize: number,
+): Point {
   return {
     x: (tileX + widthTiles / 2) * tileSize,
     y: (tileY + heightTiles / 2) * tileSize,
@@ -61,7 +67,11 @@ export class Vehicle implements CollisionBody {
     this.view.position.copyFrom(this.route[0].position);
   }
 
-  update(deltaSeconds: number, playerBounds?: CollisionRect, obstacles: readonly CollisionBody[] = []) {
+  update(
+    deltaSeconds: number,
+    playerBounds?: CollisionRect,
+    obstacles: readonly CollisionBody[] = [],
+  ) {
     let remainingDistance = this.speed * Math.max(0, deltaSeconds);
 
     while (remainingDistance > 0) {
@@ -105,12 +115,25 @@ export class Vehicle implements CollisionBody {
   getCollisionBounds(x = this.view.x, y = this.view.y): CollisionRect {
     const halfWidth = (this.widthTiles * this.tileSize) / 2;
     const halfHeight = (this.heightTiles * this.tileSize) / 2;
-    return { left: x - halfWidth, right: x + halfWidth, top: y - halfHeight, bottom: y + halfHeight };
+    return {
+      left: x - halfWidth,
+      right: x + halfWidth,
+      top: y - halfHeight,
+      bottom: y + halfHeight,
+    };
   }
 
-  private canOccupy(x: number, y: number, playerBounds: CollisionRect | undefined, obstacles: readonly CollisionBody[]) {
-    if (playerBounds && rectanglesOverlap(this.getCollisionBounds(x, y), playerBounds)) return false;
-    return !obstacles.some((obstacle) => rectanglesOverlap(this.getCollisionBounds(x, y), obstacle.getCollisionBounds()));
+  private canOccupy(
+    x: number,
+    y: number,
+    playerBounds: CollisionRect | undefined,
+    obstacles: readonly CollisionBody[],
+  ) {
+    if (playerBounds && rectanglesOverlap(this.getCollisionBounds(x, y), playerBounds))
+      return false;
+    return !obstacles.some((obstacle) =>
+      rectanglesOverlap(this.getCollisionBounds(x, y), obstacle.getCollisionBounds()),
+    );
   }
 
   private shouldRespawn() {
@@ -130,7 +153,9 @@ export class Vehicle implements CollisionBody {
     this.heightTiles = point.heightTiles;
     const expectedTileCount = point.widthTiles * point.heightTiles;
     if (point.tileIds.length !== expectedTileCount) {
-      throw new Error(`Vehicle route point needs ${expectedTileCount} tiles, received ${point.tileIds.length}`);
+      throw new Error(
+        `Vehicle route point needs ${expectedTileCount} tiles, received ${point.tileIds.length}`,
+      );
     }
 
     this.view.removeChildren().forEach((child) => child.destroy());
@@ -140,13 +165,21 @@ export class Vehicle implements CollisionBody {
       const sprite = new Sprite(texture);
       sprite.anchor.set(0.5);
       sprite.roundPixels = true;
-      sprite.x = (index % point.widthTiles) * this.tileSize - ((point.widthTiles - 1) * this.tileSize) / 2;
-      sprite.y = Math.floor(index / point.widthTiles) * this.tileSize - ((point.heightTiles - 1) * this.tileSize) / 2;
+      sprite.x =
+        (index % point.widthTiles) * this.tileSize - ((point.widthTiles - 1) * this.tileSize) / 2;
+      sprite.y =
+        Math.floor(index / point.widthTiles) * this.tileSize -
+        ((point.heightTiles - 1) * this.tileSize) / 2;
       this.view.addChild(sprite);
     });
   }
 }
 
 function rectanglesOverlap(first: CollisionRect, second: CollisionRect) {
-  return first.left < second.right && first.right > second.left && first.top < second.bottom && first.bottom > second.top;
+  return (
+    first.left < second.right &&
+    first.right > second.left &&
+    first.top < second.bottom &&
+    first.bottom > second.top
+  );
 }

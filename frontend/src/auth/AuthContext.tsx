@@ -34,9 +34,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const refreshProgression = (event: Event) => {
-      const payload = (event as CustomEvent<{ exp?: number; currentLevel?: number; currentLevelExp?: number; nextLevelExp?: number | null }>).detail;
+      const payload = (
+        event as CustomEvent<{
+          exp?: number;
+          currentLevel?: number;
+          currentLevelExp?: number;
+          nextLevelExp?: number | null;
+        }>
+      ).detail;
       if (!payload || payload.exp === undefined) return;
-      setUser((current) => current ? { ...current, exp: payload.exp, level: payload.currentLevel, current_level_exp: payload.currentLevelExp, next_level_exp: payload.nextLevelExp } : current);
+      setUser((current) =>
+        current
+          ? {
+              ...current,
+              exp: payload.exp,
+              level: payload.currentLevel,
+              current_level_exp: payload.currentLevelExp,
+              next_level_exp: payload.nextLevelExp,
+            }
+          : current,
+      );
     };
     window.addEventListener('viviora-achievement-events', refreshProgression);
     return () => window.removeEventListener('viviora-achievement-events', refreshProgression);
@@ -45,7 +62,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (username: string, password: string) => {
     const response = await authApi.login(username, password);
     setUser(response.data.data);
-    if (response.data.data.achievementEvents) announceAchievement(response.data.data.achievementEvents);
+    if (response.data.data.achievementEvents)
+      announceAchievement(response.data.data.achievementEvents);
   };
   const logout = async () => {
     await authApi.logout();

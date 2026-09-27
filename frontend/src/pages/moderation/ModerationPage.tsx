@@ -11,7 +11,9 @@ import { formatDateTime } from '../../utils/dateTime';
 export function ModerationPage() {
   const queryClient = useQueryClient();
   const [classFilter, setClassFilter] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'PENDING' | 'APPROVED' | 'REJECTED' | 'ALL'>('PENDING');
+  const [statusFilter, setStatusFilter] = useState<'PENDING' | 'APPROVED' | 'REJECTED' | 'ALL'>(
+    'PENDING',
+  );
   const [rejectingPost, setRejectingPost] = useState<ModerationSubmission | null>(null);
   const query = useQuery({
     queryKey: ['moderation', statusFilter],
@@ -93,7 +95,23 @@ export function ModerationPage() {
 
         <section className="moderation-queue">
           <div className="moderation-tabs" role="tablist" aria-label="Trạng thái bài đăng">
-            {([['PENDING', 'CHỜ DUYỆT'], ['APPROVED', 'ĐÃ DUYỆT'], ['REJECTED', 'ĐÃ TỪ CHỐI'], ['ALL', 'TẤT CẢ']] as const).map(([value, label]) => <button type="button" key={value} className={statusFilter === value ? 'selected' : ''} onClick={() => setStatusFilter(value)}>{label}</button>)}
+            {(
+              [
+                ['PENDING', 'CHỜ DUYỆT'],
+                ['APPROVED', 'ĐÃ DUYỆT'],
+                ['REJECTED', 'ĐÃ TỪ CHỐI'],
+                ['ALL', 'TẤT CẢ'],
+              ] as const
+            ).map(([value, label]) => (
+              <button
+                type="button"
+                key={value}
+                className={statusFilter === value ? 'selected' : ''}
+                onClick={() => setStatusFilter(value)}
+              >
+                {label}
+              </button>
+            ))}
           </div>
           <h2>{statusFilter === 'PENDING' ? 'CẦN XỬ LÝ' : 'LỊCH SỬ BÀI ĐĂNG'}</h2>
           {query.isPending ? (
@@ -110,7 +128,23 @@ export function ModerationPage() {
             <div className="feed-post-list moderation-post-list">
               {filteredItems.map((item) => (
                 <div key={item.id} className="moderation-history-item">
-                  {statusFilter !== 'PENDING' && <div className={`moderation-history-meta ${item.moderation_status?.toLowerCase() || item.status?.toLowerCase() || ''}`}><strong>{item.moderation_status === 'APPROVED' ? 'ĐÃ DUYỆT' : item.moderation_status === 'REJECTED' ? 'ĐÃ TỪ CHỐI' : 'TRẠNG THÁI BÀI ĐĂNG'}</strong>{item.reviewer_name && <span>Bởi {item.reviewer_name}</span>}{item.reviewed_at && <time dateTime={item.reviewed_at}>{formatDateTime(item.reviewed_at)}</time>}</div>}
+                  {statusFilter !== 'PENDING' && (
+                    <div
+                      className={`moderation-history-meta ${item.moderation_status?.toLowerCase() || item.status?.toLowerCase() || ''}`}
+                    >
+                      <strong>
+                        {item.moderation_status === 'APPROVED'
+                          ? 'ĐÃ DUYỆT'
+                          : item.moderation_status === 'REJECTED'
+                            ? 'ĐÃ TỪ CHỐI'
+                            : 'TRẠNG THÁI BÀI ĐĂNG'}
+                      </strong>
+                      {item.reviewer_name && <span>Bởi {item.reviewer_name}</span>}
+                      {item.reviewed_at && (
+                        <time dateTime={item.reviewed_at}>{formatDateTime(item.reviewed_at)}</time>
+                      )}
+                    </div>
+                  )}
                   <PostCard
                     post={toFeedPost(item)}
                     variant={statusFilter === 'PENDING' ? 'moderation' : 'feed'}

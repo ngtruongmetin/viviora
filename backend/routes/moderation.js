@@ -9,7 +9,9 @@ router.use(requireRole('TEACHER', 'ADMIN'));
 router.get('/', async (req, res, next) => {
   try {
     const requestedStatus = String(req.query.status || 'PENDING').toUpperCase();
-    const status = ['PENDING', 'APPROVED', 'REJECTED', 'ALL'].includes(requestedStatus) ? requestedStatus : 'PENDING';
+    const status = ['PENDING', 'APPROVED', 'REJECTED', 'ALL'].includes(requestedStatus)
+      ? requestedStatus
+      : 'PENDING';
     const statusWhere = status === 'ALL' ? '' : `WHERE p.status='${status}'`;
     const [items, stats] = await Promise.all([
       all(
@@ -63,11 +65,10 @@ router.patch('/:postId', async (req, res, next) => {
         error: { code: 'PENDING_POST_NOT_FOUND', message: 'Không tìm thấy bài đang chờ duyệt.' },
       });
     }
-    await client.query('UPDATE moderation SET status=$1,reviewer_id=$2,reviewed_at=CURRENT_TIMESTAMP WHERE post_id=$3', [
-      status,
-      req.session.user.id,
-      req.params.postId,
-    ]);
+    await client.query(
+      'UPDATE moderation SET status=$1,reviewer_id=$2,reviewed_at=CURRENT_TIMESTAMP WHERE post_id=$3',
+      [status, req.session.user.id, req.params.postId],
+    );
     if (req.body.feedback)
       await client.query(
         'INSERT INTO moderation_feedback(id,moderation_id,author_id,content) SELECT $1,id,$2,$3 FROM moderation WHERE post_id=$4',

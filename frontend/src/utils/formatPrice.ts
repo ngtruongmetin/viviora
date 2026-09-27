@@ -6,13 +6,14 @@ function parsePrice(value: BookPriceValue) {
 
   const raw = value.trim().replace(/\s/g, '');
   if (!raw) return null;
-  const normalized = raw.includes(',') && raw.includes('.')
-    ? raw.lastIndexOf(',') > raw.lastIndexOf('.')
-      ? raw.replace(/\./g, '').replace(',', '.')
-      : raw.replace(/,/g, '')
-    : raw.includes(',')
-      ? raw.replace(',', '.')
-      : raw;
+  const normalized =
+    raw.includes(',') && raw.includes('.')
+      ? raw.lastIndexOf(',') > raw.lastIndexOf('.')
+        ? raw.replace(/\./g, '').replace(',', '.')
+        : raw.replace(/,/g, '')
+      : raw.includes(',')
+        ? raw.replace(',', '.')
+        : raw;
   const parsed = Number(normalized);
   return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
 }

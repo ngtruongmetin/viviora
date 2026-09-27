@@ -19,9 +19,29 @@ export interface CurrentUser {
   level?: number;
   current_level_exp?: number;
   next_level_exp?: number | null;
-  achievements?: { code: string; name: string; condition_text: string; exp_reward: number; is_supported?: boolean; unlocked?: boolean; unlocked_at?: string | null; progress_current?: number | null; progress_target?: number | null; progress_percent?: number | null }[];
+  achievements?: {
+    code: string;
+    name: string;
+    condition_text: string;
+    exp_reward: number;
+    is_supported?: boolean;
+    unlocked?: boolean;
+    unlocked_at?: string | null;
+    progress_current?: number | null;
+    progress_target?: number | null;
+    progress_percent?: number | null;
+  }[];
   activities?: UserActivity[];
-  game_progress?: { game_id: string; game_title: string; reward_cups: number; score: number; total_points: number; answered_count: number; completed: boolean; cup_earned: number }[];
+  game_progress?: {
+    game_id: string;
+    game_title: string;
+    reward_cups: number;
+    score: number;
+    total_points: number;
+    answered_count: number;
+    completed: boolean;
+    cup_earned: number;
+  }[];
 }
 
 export interface UserActivity {
@@ -37,6 +57,7 @@ export interface UserActivity {
 }
 
 export interface PublicUserProfile extends CurrentUser {
+  bookshelf?: Book[];
   roleLabel: string;
   posts: FeedPost[];
 }
@@ -118,6 +139,11 @@ export interface Book {
   updated_at: string;
   collection_name?: string;
   collection_description?: string | null;
+  is_favorite?: boolean;
+  is_bookmarked?: boolean;
+  reading_status?: 'WANT_TO_READ' | 'READING' | 'COMPLETED' | null;
+  progress?: number;
+  minutes?: number;
 }
 
 export interface LibraryImportPreview {

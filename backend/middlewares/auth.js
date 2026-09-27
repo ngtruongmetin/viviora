@@ -14,7 +14,9 @@ async function requireLogin(req, res, next) {
     const user = await currentActiveUser(req);
     if (!user || !user.is_active) {
       req.session.destroy(() => undefined);
-      return res.status(401).json({ error: { code: 'ACCOUNT_INACTIVE', message: 'Tài khoản không còn hoạt động.' } });
+      return res
+        .status(401)
+        .json({ error: { code: 'ACCOUNT_INACTIVE', message: 'Tài khoản không còn hoạt động.' } });
     }
     next();
   } catch (error) {
@@ -28,16 +30,16 @@ function requireRole(...roles) {
         error: { code: 'FORBIDDEN', message: 'Bạn không có quyền thực hiện thao tác này' },
       });
     (async () => {
-    try {
-      const user = await currentActiveUser(req);
-      if (!user || !user.is_active)
-        return res.status(403).json({
-          error: { code: 'FORBIDDEN', message: 'Bạn không có quyền thực hiện thao tác này' },
-        });
-      next();
-    } catch (error) {
-      next(error);
-    }
+      try {
+        const user = await currentActiveUser(req);
+        if (!user || !user.is_active)
+          return res.status(403).json({
+            error: { code: 'FORBIDDEN', message: 'Bạn không có quyền thực hiện thao tác này' },
+          });
+        next();
+      } catch (error) {
+        next(error);
+      }
     })();
   };
 }

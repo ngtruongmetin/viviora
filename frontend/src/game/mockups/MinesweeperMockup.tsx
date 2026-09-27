@@ -4,13 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './minesweeper.css';
 
 type Point = { x: number; y: number };
-type GameState =
-  | 'idle'
-  | 'moving'
-  | 'correct'
-  | 'wrong'
-  | 'advancing'
-  | 'complete';
+type GameState = 'idle' | 'moving' | 'correct' | 'wrong' | 'advancing' | 'complete';
 
 export type MinesweeperQuestion = {
   id?: string;
@@ -89,10 +83,10 @@ const defaultQuestions: MinesweeperQuestion[] = [
  * Camera chỉ pan toàn bộ world.
  */
 const ANSWER_POSITIONS: Point[] = [
-  { x: -330, y: -45 },  // A
+  { x: -330, y: -45 }, // A
   { x: -160, y: -255 }, // B
-  { x: 160, y: -255 },  // C
-  { x: 330, y: -45 },   // D
+  { x: 160, y: -255 }, // C
+  { x: 330, y: -45 }, // D
 ];
 
 const runningSprites = {
@@ -120,8 +114,7 @@ const runningSprites = {
 
 type Direction = keyof typeof runningSprites;
 
-const cssPosition = (value: number) =>
-  `calc(50% ${value >= 0 ? '+' : '-'} ${Math.abs(value)}px)`;
+const cssPosition = (value: number) => `calc(50% ${value >= 0 ? '+' : '-'} ${Math.abs(value)}px)`;
 
 /**
  * Tạo một bãi mìn tại một anchor.
@@ -142,7 +135,10 @@ export function MinesweeperMockup({
   rewardCups = 10,
 }: {
   questionSet?: MinesweeperQuestion[];
-  onAnswer?: (question: MinesweeperQuestion, selectedIndex: number) => Promise<{ isCorrect: boolean; pointsAwarded?: number; explanation?: string | null }>;
+  onAnswer?: (
+    question: MinesweeperQuestion,
+    selectedIndex: number,
+  ) => Promise<{ isCorrect: boolean; pointsAwarded?: number; explanation?: string | null }>;
   onComplete?: () => void;
   rewardCups?: number;
 }) {
@@ -169,37 +165,29 @@ export function MinesweeperMockup({
    * Không được cộng nó vào ANSWER_POSITIONS.
    */
   const [playerOffsetY, setPlayerOffsetY] = useState(() =>
-    typeof window === 'undefined'
-      ? 0
-      : window.innerHeight * 0.26,
+    typeof window === 'undefined' ? 0 : window.innerHeight * 0.26,
   );
 
-  const initialCameraY =
-    typeof window === 'undefined'
-      ? 0
-      : -(window.innerHeight * 0.26);
+  const initialCameraY = typeof window === 'undefined' ? 0 : -(window.innerHeight * 0.26);
 
   const [camera, setCamera] = useState<Point>({
     x: 0,
     y: initialCameraY,
   });
 
-  const [previousCamera, setPreviousCamera] =
-    useState<Point>({
-      x: 0,
-      y: initialCameraY,
-    });
+  const [previousCamera, setPreviousCamera] = useState<Point>({
+    x: 0,
+    y: initialCameraY,
+  });
 
   /**
    * target = WORLD POSITION của đáp án đang chọn.
    */
   const [target, setTarget] = useState<Point | null>(null);
 
-  const [selected, setSelected] =
-    useState<number | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
 
-  const [direction, setDirection] =
-    useState<Direction>('forward');
+  const [direction, setDirection] = useState<Direction>('forward');
 
   const [frame, setFrame] = useState(0);
 
@@ -274,10 +262,7 @@ export function MinesweeperMockup({
    *
    * Chỉ có anchor của toàn bộ bãi thay đổi khi camera tiến lên.
    */
-  const points = useMemo(
-    () => createMinePositions(anchor),
-    [anchor],
-  );
+  const points = useMemo(() => createMinePositions(anchor), [anchor]);
 
   /**
    * Incoming field cũng sử dụng chính xác cùng layout.
@@ -299,9 +284,7 @@ export function MinesweeperMockup({
    */
   useLayoutEffect(() => {
     const updateLayout = () => {
-      const height =
-        arenaRef.current?.clientHeight ||
-        window.innerHeight;
+      const height = arenaRef.current?.clientHeight || window.innerHeight;
 
       const offset = height * 0.26;
 
@@ -328,16 +311,10 @@ export function MinesweeperMockup({
 
     updateLayout();
 
-    window.addEventListener(
-      'resize',
-      updateLayout,
-    );
+    window.addEventListener('resize', updateLayout);
 
     return () => {
-      window.removeEventListener(
-        'resize',
-        updateLayout,
-      );
+      window.removeEventListener('resize', updateLayout);
     };
   }, []);
 
@@ -353,8 +330,7 @@ export function MinesweeperMockup({
       setFrame((current) => current + 1);
     }, 130);
 
-    return () =>
-      window.clearInterval(interval);
+    return () => window.clearInterval(interval);
   }, [state]);
 
   /**
@@ -363,89 +339,90 @@ export function MinesweeperMockup({
    * ============================================================
    */
   useEffect(() => {
-    if (
-      state !== 'moving' ||
-      !target ||
-      selected === null
-    ) {
+    if (state !== 'moving' || !target || selected === null) {
       return;
     }
 
     const timer = window.setTimeout(() => {
       void (async () => {
-      /**
-       * Luôn reset frame trước khi chuyển state.
-       *
-       * Điều này đảm bảo sau animation nhân vật trở về
-       * frame1 thay vì giữ frame cuối của animation.
-       */
-      setFrame(0);
-
-      const result = onAnswer ? await onAnswer(question, selected) : { isCorrect: selected === question.correct, pointsAwarded: selected === question.correct ? 1 : 0, explanation: question.explanation };
-      if (result.isCorrect) {
         /**
-         * ================================
-         * ĐÚNG
-         * ================================
+         * Luôn reset frame trước khi chuyển state.
+         *
+         * Điều này đảm bảo sau animation nhân vật trở về
+         * frame1 thay vì giữ frame cuối của animation.
          */
-        setCorrectAnswers((current) => current + 1);
-        const correctSound = correctSoundRef.current;
-        if (audioOn && correctSound) {
-          correctSound.currentTime = 0;
-          void correctSound.play().catch(() => undefined);
+        setFrame(0);
+
+        const result = onAnswer
+          ? await onAnswer(question, selected)
+          : {
+              isCorrect: selected === question.correct,
+              pointsAwarded: selected === question.correct ? 1 : 0,
+              explanation: question.explanation,
+            };
+        if (result.isCorrect) {
+          /**
+           * ================================
+           * ĐÚNG
+           * ================================
+           */
+          setCorrectAnswers((current) => current + 1);
+          const correctSound = correctSoundRef.current;
+          if (audioOn && correctSound) {
+            correctSound.currentTime = 0;
+            void correctSound.play().catch(() => undefined);
+          }
+
+          /**
+           * Preview bãi mìn kế tiếp.
+           *
+           * IMPORTANT:
+           *
+           * target là WORLD POSITION của điểm đã tới.
+           *
+           * Bãi tiếp theo có anchor tại chính vị trí mà
+           * camera vừa pan tới.
+           *
+           * Không được dùng:
+           *
+           * target.y + playerOffsetY
+           *
+           * hoặc cộng offset vào từng mine.
+           */
+          if (questionIndex < questions.length - 1) {
+            const nextAnchor = {
+              x: target.x,
+              y: target.y - playerOffsetY,
+            };
+
+            setIncoming({
+              index: questionIndex + 1,
+              anchor: nextAnchor,
+            });
+          }
+
+          setState('correct');
+        } else {
+          /**
+           * ================================
+           * SAI
+           * ================================
+           *
+           * Camera quay về vị trí cũ.
+           */
+          setCamera(previousCamera);
+          const explosionSound = explosionSoundRef.current;
+          if (audioOn && explosionSound) {
+            explosionSound.currentTime = 0;
+            void explosionSound.play().catch(() => undefined);
+          }
+
+          setState('wrong');
         }
-
-        /**
-         * Preview bãi mìn kế tiếp.
-         *
-         * IMPORTANT:
-         *
-         * target là WORLD POSITION của điểm đã tới.
-         *
-         * Bãi tiếp theo có anchor tại chính vị trí mà
-         * camera vừa pan tới.
-         *
-         * Không được dùng:
-         *
-         * target.y + playerOffsetY
-         *
-         * hoặc cộng offset vào từng mine.
-         */
-        if (questionIndex < questions.length - 1) {
-          const nextAnchor = {
-            x: target.x,
-            y: target.y - playerOffsetY,
-          };
-
-          setIncoming({
-            index: questionIndex + 1,
-            anchor: nextAnchor,
-          });
-        }
-
-        setState('correct');
-      } else {
-        /**
-         * ================================
-         * SAI
-         * ================================
-         *
-         * Camera quay về vị trí cũ.
-         */
-        setCamera(previousCamera);
-        const explosionSound = explosionSoundRef.current;
-        if (audioOn && explosionSound) {
-          explosionSound.currentTime = 0;
-          void explosionSound.play().catch(() => undefined);
-        }
-
-        setState('wrong');
-      }
       })();
     }, MOVE_MS);
 
-    return () =>
-      window.clearTimeout(timer);
+    return () => window.clearTimeout(timer);
   }, [
     state,
     target,
@@ -484,8 +461,7 @@ export function MinesweeperMockup({
       } else setState('idle');
     }, WRONG_RETURN_MS);
 
-    return () =>
-      window.clearTimeout(timer);
+    return () => window.clearTimeout(timer);
   }, [state, onAnswer, onComplete, playerOffsetY, questionIndex, questions.length]);
 
   /**
@@ -500,8 +476,7 @@ export function MinesweeperMockup({
       setState('advancing');
     }, 720);
 
-    return () =>
-      window.clearTimeout(timer);
+    return () => window.clearTimeout(timer);
   }, [state]);
 
   /**
@@ -549,9 +524,7 @@ export function MinesweeperMockup({
       /**
        * Câu hỏi tiếp theo.
        */
-      setQuestionIndex(
-        (current) => current + 1,
-      );
+      setQuestionIndex((current) => current + 1);
 
       /**
        * Anchor mới của minefield.
@@ -587,15 +560,8 @@ export function MinesweeperMockup({
       setState('idle');
     }, 380);
 
-    return () =>
-      window.clearTimeout(timer);
-  }, [
-    state,
-    questionIndex,
-    target,
-    playerOffsetY,
-    onComplete,
-  ]);
+    return () => window.clearTimeout(timer);
+  }, [state, questionIndex, target, playerOffsetY, onComplete]);
 
   /**
    * ============================================================
@@ -605,8 +571,7 @@ export function MinesweeperMockup({
   const choose = (answerIndex: number) => {
     if (state !== 'idle') return;
 
-    const destination =
-      points[answerIndex];
+    const destination = points[answerIndex];
 
     /**
      * Camera destination:
@@ -623,13 +588,9 @@ export function MinesweeperMockup({
     };
 
     const delta = {
-      x:
-        cameraDestination.x -
-        camera.x,
+      x: cameraDestination.x - camera.x,
 
-      y:
-        cameraDestination.y -
-        camera.y,
+      y: cameraDestination.y - camera.y,
     };
 
     setPreviousCamera(camera);
@@ -650,12 +611,7 @@ export function MinesweeperMockup({
      * Xác định hướng chạy.
      */
     setDirection(
-      Math.abs(delta.x) >=
-        Math.abs(delta.y) * 0.5
-        ? delta.x < 0
-          ? 'left'
-          : 'right'
-        : 'forward',
+      Math.abs(delta.x) >= Math.abs(delta.y) * 0.5 ? (delta.x < 0 ? 'left' : 'right') : 'forward',
     );
 
     /**
@@ -681,9 +637,7 @@ export function MinesweeperMockup({
   };
 
   const toggleFullscreen = () => {
-    document.documentElement
-      .requestFullscreen?.()
-      .catch(() => undefined);
+    document.documentElement.requestFullscreen?.().catch(() => undefined);
   };
 
   /**
@@ -691,13 +645,10 @@ export function MinesweeperMockup({
    * LUÔN frame1.
    */
   const sprite =
-    state === 'moving'
-      ? runningSprites[direction][
-      frame % 2
-      ]
-      : '/minesweeper/frame1.png';
+    state === 'moving' ? runningSprites[direction][frame % 2] : '/minesweeper/frame1.png';
   const earnedCups = Math.round((correctAnswers * rewardCups) / questions.length);
-  const questionProgress = state === 'complete' ? 100 : Math.round((questionIndex / questions.length) * 100);
+  const questionProgress =
+    state === 'complete' ? 100 : Math.round((questionIndex / questions.length) * 100);
 
   return (
     <main className="mine-game">
@@ -708,141 +659,94 @@ export function MinesweeperMockup({
       <aside className="mine-sidebar">
         <div className="mine-hud mine-sidebar-hud">
           <div className="mine-score-hud">
-            <strong>{earnedCups} / {rewardCups}</strong>
+            <strong>
+              {earnedCups} / {rewardCups}
+            </strong>
             <span>CÚP</span>
           </div>
 
           <div className="mine-progress">
-            <span>
-              {`CÂU ${questionIndex + 1} / ${questions.length}`}
-            </span>
+            <span>{`CÂU ${questionIndex + 1} / ${questions.length}`}</span>
 
-            <div className="mine-progress-track"><span style={{ width: `${questionProgress}%` }} /></div>
+            <div className="mine-progress-track">
+              <span style={{ width: `${questionProgress}%` }} />
+            </div>
           </div>
 
           <div className="mine-tools">
-            <button
-              title="Toggle sound"
-              onClick={() =>
-                setAudioOn(
-                  (value) => !value,
-                )
-              }
-            >
-              {audioOn ? (
-                <Volume2 size={17} />
-              ) : (
-                <VolumeX size={17} />
-              )}
+            <button title="Toggle sound" onClick={() => setAudioOn((value) => !value)}>
+              {audioOn ? <Volume2 size={17} /> : <VolumeX size={17} />}
             </button>
 
-            <button
-              title="Fullscreen"
-              onClick={toggleFullscreen}
-            >
+            <button title="Fullscreen" onClick={toggleFullscreen}>
               <Maximize2 size={17} />
             </button>
           </div>
         </div>
 
-        <button
-          className="mine-back"
-          onClick={goBack}
-        >
+        <button className="mine-back" onClick={goBack}>
           <ArrowLeft size={16} />
           Quay lại
         </button>
 
         <section className="mine-panel">
           <div className="mine-count">
-            {state === 'complete'
-              ? 'HOÀN THÀNH'
-              : `CÂU ${questionIndex + 1} / ${questions.length}`}
+            {state === 'complete' ? 'HOÀN THÀNH' : `CÂU ${questionIndex + 1} / ${questions.length}`}
           </div>
 
           {state === 'complete' ? (
             <div className="mine-complete">
-              <div className="mine-complete-mark">
-                ✓
-              </div>
+              <div className="mine-complete-mark">✓</div>
 
               <h1>Vượt qua bãi mìn</h1>
 
-              <p>
-                Bạn đã hoàn thành hành trình
-                kiến thức.
-              </p>
+              <p>Bạn đã hoàn thành hành trình kiến thức.</p>
 
               <strong>
-                {earnedCups} / {rewardCups}{' '}
-                CÚP
+                {earnedCups} / {rewardCups} CÚP
               </strong>
 
-              <button
-                onClick={() =>
-                  navigate('/game')
-                }
-              >
-                Quay về
-              </button>
+              <button onClick={() => navigate('/game')}>Quay về</button>
             </div>
           ) : (
             <>
-              <h1>
-                {question.question}
-              </h1>
+              <h1>{question.question}</h1>
 
               <div className="mine-divider" />
 
               {state === 'idle' && (
                 <p className="mine-instruction">
-                  Chọn một điểm đến trên bản đồ.
-                  Nhân vật sẽ tự chạy tới đó.
+                  Chọn một điểm đến trên bản đồ. Nhân vật sẽ tự chạy tới đó.
                 </p>
               )}
 
-              {state === 'moving' && (
-                <p className="mine-instruction">
-                  Đang tiến về điểm đến...
-                </p>
-              )}
+              {state === 'moving' && <p className="mine-instruction">Đang tiến về điểm đến...</p>}
 
               {state === 'wrong' && (
                 <div className="mine-feedback wrong">
-                  <strong>
-                    Chưa chính xác
-                  </strong>
+                  <strong>Chưa chính xác</strong>
 
-                  <p>
-                    Hệ thống đã ghi nhận câu trả lời của bạn.
-                  </p>
+                  <p>Hệ thống đã ghi nhận câu trả lời của bạn.</p>
 
-                  <small>
-                    Bãi mìn phát nổ. Camera
-                    đang đưa bạn về vị trí cũ.
-                  </small>
+                  <small>Bãi mìn phát nổ. Camera đang đưa bạn về vị trí cũ.</small>
                 </div>
               )}
 
               {state === 'correct' && (
                 <div className="mine-feedback correct">
-                  <strong>
-                    Chính xác
-                  </strong>
+                  <strong>Chính xác</strong>
 
-                  <p>
-                    {question.explanation || 'Câu trả lời đã được xác thực.'}
-                  </p>
+                  <p>{question.explanation || 'Câu trả lời đã được xác thực.'}</p>
 
-                  <small>
-                    Khu vực tiếp theo đang mở ra.
-                  </small>
+                  <small>Khu vực tiếp theo đang mở ra.</small>
                 </div>
               )}
 
               <div className="mine-score">
                 <span>CÚP</span>
-                <strong>{earnedCups} / {rewardCups}</strong>
+                <strong>
+                  {earnedCups} / {rewardCups}
+                </strong>
               </div>
             </>
           )}
@@ -853,50 +757,34 @@ export function MinesweeperMockup({
           GAME FIELD
       ===================================================== */}
 
-      <section
-        className="mine-field"
-        ref={arenaRef}
-        aria-label="Bản đồ dò mìn"
-      >
+      <section className="mine-field" ref={arenaRef} aria-label="Bản đồ dò mìn">
         <div className="mine-hud">
           <div className="mine-score-hud">
-            <strong>{earnedCups} / {rewardCups}</strong>
+            <strong>
+              {earnedCups} / {rewardCups}
+            </strong>
             <span>CÚP</span>
           </div>
 
           <div className="mine-progress">
             <span>
-              CÂU {questionIndex + 1} /{' '}
-              {questions.length}
+              CÂU {questionIndex + 1} / {questions.length}
             </span>
 
-            <div className="mine-progress-track"><span style={{ width: `${questionProgress}%` }} /></div>
+            <div className="mine-progress-track">
+              <span style={{ width: `${questionProgress}%` }} />
+            </div>
           </div>
 
           <div className="mine-tools">
             <button
-              title={
-                audioOn
-                  ? 'Tắt âm thanh'
-                  : 'Bật âm thanh'
-              }
-              onClick={() =>
-                setAudioOn(
-                  (value) => !value,
-                )
-              }
+              title={audioOn ? 'Tắt âm thanh' : 'Bật âm thanh'}
+              onClick={() => setAudioOn((value) => !value)}
             >
-              {audioOn ? (
-                <Volume2 size={17} />
-              ) : (
-                <VolumeX size={17} />
-              )}
+              {audioOn ? <Volume2 size={17} /> : <VolumeX size={17} />}
             </button>
 
-            <button
-              title="Toàn màn hình"
-              onClick={toggleFullscreen}
-            >
+            <button title="Toàn màn hình" onClick={toggleFullscreen}>
               <Maximize2 size={17} />
             </button>
           </div>
@@ -914,10 +802,7 @@ export function MinesweeperMockup({
         */}
 
         <div
-          className={`mine-world ${state === 'wrong'
-              ? 'returning'
-              : ''
-            }`}
+          className={`mine-world ${state === 'wrong' ? 'returning' : ''}`}
           style={{
             transform: `translate3d(${-camera.x}px, ${-camera.y}px, 0)`,
           }}
@@ -929,60 +814,33 @@ export function MinesweeperMockup({
           ================================================= */}
 
           {state !== 'complete' &&
-            points.map(
-              (point, index) => (
-                <button
-                  key={`${questionIndex}-${index}`}
-                  className={`
+            points.map((point, index) => (
+              <button
+                key={`${questionIndex}-${index}`}
+                className={`
                     mine-marker
-                    ${selected === index
-                      ? 'chosen'
-                      : ''
-                    }
-                    ${state !== 'idle'
-                      ? 'disabled'
-                      : ''
-                    }
-                    ${state === 'correct' ||
-                      state === 'advancing'
-                      ? (
-                        state ===
-                        'correct' &&
-                        selected === index
-                      )
-                        ? 'arrived'
-                        : 'fading-out'
-                      : ''
+                    ${selected === index ? 'chosen' : ''}
+                    ${state !== 'idle' ? 'disabled' : ''}
+                    ${
+                      state === 'correct' || state === 'advancing'
+                        ? state === 'correct' && selected === index
+                          ? 'arrived'
+                          : 'fading-out'
+                        : ''
                     }
                   `}
-                  style={{
-                    left: cssPosition(
-                      point.x,
-                    ),
-                    top: cssPosition(
-                      point.y,
-                    ),
-                  }}
-                  onClick={() =>
-                    choose(index)
-                  }
-                  aria-label={`Đáp án ${String.fromCharCode(
-                    65 + index,
-                  )}: ${question.answers[index]
-                    }`}
-                >
-                  <span>
-                    {String.fromCharCode(
-                      65 + index,
-                    )}
-                  </span>
+                style={{
+                  left: cssPosition(point.x),
+                  top: cssPosition(point.y),
+                }}
+                onClick={() => choose(index)}
+                aria-label={`Đáp án ${String.fromCharCode(65 + index)}: ${question.answers[index]}`}
+              >
+                <span>{String.fromCharCode(65 + index)}</span>
 
-                  <b>
-                    {question.answers[index]}
-                  </b>
-                </button>
-              ),
-            )}
+                <b>{question.answers[index]}</b>
+              </button>
+            ))}
 
           {/* =================================================
               NEXT MINEFIELD PREVIEW
@@ -990,37 +848,21 @@ export function MinesweeperMockup({
 
           {state !== 'complete' &&
             incoming &&
-            incomingPoints.map(
-              (point, index) => (
-                <div
-                  key={`incoming-${incoming.index}-${index}`}
-                  className="mine-marker fresh disabled"
-                  style={{
-                    left: cssPosition(
-                      point.x,
-                    ),
-                    top: cssPosition(
-                      point.y,
-                    ),
-                  }}
-                  aria-hidden="true"
-                >
-                  <span>
-                    {String.fromCharCode(
-                      65 + index,
-                    )}
-                  </span>
+            incomingPoints.map((point, index) => (
+              <div
+                key={`incoming-${incoming.index}-${index}`}
+                className="mine-marker fresh disabled"
+                style={{
+                  left: cssPosition(point.x),
+                  top: cssPosition(point.y),
+                }}
+                aria-hidden="true"
+              >
+                <span>{String.fromCharCode(65 + index)}</span>
 
-                  <b>
-                    {
-                      questions[
-                        incoming.index
-                      ].answers[index]
-                    }
-                  </b>
-                </div>
-              ),
-            )}
+                <b>{questions[incoming.index].answers[index]}</b>
+              </div>
+            ))}
         </div>
 
         {/* ===================================================
@@ -1030,16 +872,9 @@ export function MinesweeperMockup({
         <img
           className={`
             mine-player
-            ${state === 'wrong'
-              ? 'is-wobbling'
-              : ''
-            }
+            ${state === 'wrong' ? 'is-wobbling' : ''}
           `}
-          src={
-            state === 'wrong'
-              ? '/minesweeper/wobble.png'
-              : sprite
-          }
+          src={state === 'wrong' ? '/minesweeper/wobble.png' : sprite}
           alt="Nhân vật dò mìn"
         />
 
@@ -1048,10 +883,7 @@ export function MinesweeperMockup({
             =================================================== */}
 
         {state === 'wrong' && (
-          <div
-            className="mine-explosion"
-            aria-hidden="true"
-          >
+          <div className="mine-explosion" aria-hidden="true">
             <span className="mine-ring" />
 
             <i />
@@ -1068,23 +900,13 @@ export function MinesweeperMockup({
             STATUS
             =================================================== */}
 
-        {state === 'moving' && (
-          <div className="mine-status">
-            Đang di chuyển
-          </div>
-        )}
+        {state === 'moving' && <div className="mine-status">Đang di chuyển</div>}
 
         {state === 'correct' && (
-          <div className="mine-status success">
-            +1&nbsp;&nbsp;Đúng! Bản đồ đang tiến lên
-          </div>
+          <div className="mine-status success">+1&nbsp;&nbsp;Đúng! Bản đồ đang tiến lên</div>
         )}
 
-        {state === 'wrong' && (
-          <div className="mine-status danger">
-            Dính mìn! Thử lại câu này
-          </div>
-        )}
+        {state === 'wrong' && <div className="mine-status danger">Dính mìn! Thử lại câu này</div>}
       </section>
     </main>
   );

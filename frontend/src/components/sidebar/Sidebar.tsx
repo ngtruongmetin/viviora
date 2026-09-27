@@ -1,5 +1,4 @@
 import {
-  Bell,
   CircleUserRound,
   FolderCog,
   Home,
@@ -9,6 +8,7 @@ import {
   Award,
   Users,
   ListChecks,
+  ClipboardCheck,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
@@ -19,7 +19,7 @@ const navigation = [
   ['/bang-tin', 'Bảng tin', Home],
   ['/tro-choi', 'Trò chơi', Trophy],
   ['/thu-vien', 'Thư viện', Users],
-  ['/thong-bao', 'Thông báo', Bell],
+  ['/nhiem-vu-tuan', 'Nhiệm vụ tuần', ClipboardCheck],
   ['/ho-so', 'Hồ sơ', CircleUserRound],
 ] as const;
 
@@ -58,19 +58,28 @@ export function Sidebar() {
           </Link>
         )}
         {(user?.role === 'TEACHER' || user?.role === 'ADMIN') && (
-          <Link className={location.pathname.startsWith('/kho-cau-hoi') ? 'selected' : ''} to="/kho-cau-hoi">
+          <Link
+            className={location.pathname.startsWith('/kho-cau-hoi') ? 'selected' : ''}
+            to="/kho-cau-hoi"
+          >
             <ListChecks size={21} />
             <span>Quản lý câu hỏi</span>
           </Link>
         )}
         {user?.role === 'ADMIN' && (
-          <Link className={location.pathname.startsWith('/quan-tri/thanh-tuu') ? 'selected' : ''} to="/quan-tri/thanh-tuu">
+          <Link
+            className={location.pathname.startsWith('/quan-tri/thanh-tuu') ? 'selected' : ''}
+            to="/quan-tri/thanh-tuu"
+          >
             <Award size={21} />
             <span>Quản lý thành tựu</span>
           </Link>
         )}
         {user?.role === 'ADMIN' && (
-          <Link className={location.pathname.startsWith('/quan-tri/tro-choi') ? 'selected' : ''} to="/quan-tri/tro-choi">
+          <Link
+            className={location.pathname.startsWith('/quan-tri/tro-choi') ? 'selected' : ''}
+            to="/quan-tri/tro-choi"
+          >
             <Gamepad2 size={21} />
             <span>Quản lý trò chơi</span>
           </Link>

@@ -106,7 +106,7 @@ function createWalkablePosition(existing: Point[] = []): Point {
   let bestDistance = -1;
   for (let attempt = 0; attempt < 1200; attempt += 1) {
     const candidate = { x: 8 + Math.random() * 84, y: 12 + Math.random() * 76 };
-    if (!canStand( candidate.x, candidate.y)) continue;
+    if (!canStand(candidate.x, candidate.y)) continue;
     const nearest = existing.length
       ? Math.min(...existing.map((point) => distance(point, candidate)))
       : Infinity;
@@ -164,7 +164,10 @@ export function TreasureHuntMockup({
   onFinish,
 }: {
   questionSet?: TreasureHuntQuestion[];
-  onAnswer?: (question: TreasureHuntQuestion, selected: boolean) => Promise<{ isCorrect: boolean; pointsAwarded?: number; explanation?: string | null }>;
+  onAnswer?: (
+    question: TreasureHuntQuestion,
+    selected: boolean,
+  ) => Promise<{ isCorrect: boolean; pointsAwarded?: number; explanation?: string | null }>;
   onComplete?: () => void;
   onFinish?: () => void;
 }) {
@@ -430,9 +433,17 @@ export function TreasureHuntMockup({
     const index = activeStage;
     void (async () => {
       const question = questionSet[index];
-      const result = onAnswer ? await onAnswer(question, selected) : { isCorrect: selected === question.answer, pointsAwarded: selected === question.answer ? 1 : 0 };
+      const result = onAnswer
+        ? await onAnswer(question, selected)
+        : {
+            isCorrect: selected === question.answer,
+            pointsAwarded: selected === question.answer ? 1 : 0,
+          };
       setFeedback(result.isCorrect ? 'correct' : 'wrong');
-      window.setTimeout(() => finishEncounter(index, result.isCorrect), result.isCorrect ? 1600 : 700);
+      window.setTimeout(
+        () => finishEncounter(index, result.isCorrect),
+        result.isCorrect ? 1600 : 700,
+      );
     })();
   };
   const toggleFullscreen = async () => {
@@ -485,10 +496,16 @@ export function TreasureHuntMockup({
                     zIndex: 10 + Math.round(monster.position.y),
                   }}
                 >
-                  <div className="th-ring" style={{ width: worldWidth * 0.05, height: worldWidth * 0.05 }} />
+                  <div
+                    className="th-ring"
+                    style={{ width: worldWidth * 0.05, height: worldWidth * 0.05 }}
+                  />
                   <div className="th-shadow" />
                   <div className="th-station-icon">
-                    <MonsterSprite index={monster.spriteIndex} size={Math.max(1, Math.round(worldWidth * 0.0287))} />
+                    <MonsterSprite
+                      index={monster.spriteIndex}
+                      size={Math.max(1, Math.round(worldWidth * 0.0287))}
+                    />
                   </div>
                   <div className={`th-tag ${monster.attempted ? 'attempted' : ''}`}>
                     <Swords size={12} /> {monster.attempted ? 'Thử lại' : `Quái vật #${index + 1}`}
@@ -657,7 +674,13 @@ export function TreasureHuntMockup({
             <img src={`${ASSET}/treasure.png`} alt="Kho báu" />
             <h2>Chúc mừng</h2>
             <p>Bạn đã hoàn thành tất cả câu hỏi và mở được kho báu.</p>
-            <button type="button" onClick={() => { setChestOpen(false); onFinish?.(); }}>
+            <button
+              type="button"
+              onClick={() => {
+                setChestOpen(false);
+                onFinish?.();
+              }}
+            >
               Tiếp tục
             </button>
           </div>

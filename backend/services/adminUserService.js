@@ -91,18 +91,22 @@ async function listUsers({ page = 1, limit = 20, search = '', role = '', status 
 }
 
 async function getUser(userId) {
-  return publicUser(await get(
-    `SELECT id, username, name, email, role, class_name, gender, specialization,
+  return publicUser(
+    await get(
+      `SELECT id, username, name, email, role, class_name, gender, specialization,
             avatar_url, bio, is_active, created_at
      FROM users WHERE id=?`,
-    [userId],
-  ));
+      [userId],
+    ),
+  );
 }
 
 async function createUser(fields) {
   const duplicate = await findDuplicateIdentity({ username: fields.username, email: fields.email });
   if (duplicate) {
-    const error = new Error(duplicate === 'username' ? 'Username đã được sử dụng.' : 'Email đã được sử dụng.');
+    const error = new Error(
+      duplicate === 'username' ? 'Username đã được sử dụng.' : 'Email đã được sử dụng.',
+    );
     error.code = 'DUPLICATE_USER';
     throw error;
   }
@@ -138,14 +142,37 @@ async function updateUser(userId, fields) {
     error.code = 'DUPLICATE_USER';
     throw error;
   }
-  const updates = ['name=$1', 'email=$2', 'role=$3', 'class_name=$4', 'gender=$5', 'specialization=$6', 'avatar_url=$7', 'bio=$8', 'is_active=$9'];
-  const params = [fields.name, fields.email, fields.role, fields.className, fields.gender, fields.specialization, fields.avatarUrl, fields.bio, fields.isActive];
+  const updates = [
+    'name=$1',
+    'email=$2',
+    'role=$3',
+    'class_name=$4',
+    'gender=$5',
+    'specialization=$6',
+    'avatar_url=$7',
+    'bio=$8',
+    'is_active=$9',
+  ];
+  const params = [
+    fields.name,
+    fields.email,
+    fields.role,
+    fields.className,
+    fields.gender,
+    fields.specialization,
+    fields.avatarUrl,
+    fields.bio,
+    fields.isActive,
+  ];
   if (fields.password) {
     updates.push('password_hash=$10');
     params.push(await bcrypt.hash(fields.password, 12));
   }
   params.push(userId);
-  const result = await pool.query(`UPDATE users SET ${updates.join(', ')} WHERE id=$${params.length} RETURNING id`, params);
+  const result = await pool.query(
+    `UPDATE users SET ${updates.join(', ')} WHERE id=$${params.length} RETURNING id`,
+    params,
+  );
   return result.rowCount ? getUser(userId) : null;
 }
 
@@ -177,13 +204,17 @@ async function deleteUser(userId, requesterId) {
       await client.query('ROLLBACK');
       return { error: 'SELF_DELETE' };
     }
-    const userResult = await client.query('SELECT id, role FROM users WHERE id=$1 FOR UPDATE', [userId]);
+    const userResult = await client.query('SELECT id, role FROM users WHERE id=$1 FOR UPDATE', [
+      userId,
+    ]);
     if (!userResult.rowCount) {
       await client.query('ROLLBACK');
       return null;
     }
     if (userResult.rows[0].role === 'ADMIN') {
-      const adminCount = await client.query("SELECT COUNT(*)::int AS count FROM users WHERE role='ADMIN' AND is_active=true");
+      const adminCount = await client.query(
+        "SELECT COUNT(*)::int AS count FROM users WHERE role='ADMIN' AND is_active=true",
+      );
       if (Number(adminCount.rows[0].count) <= 1) {
         await client.query('ROLLBACK');
         return { error: 'LAST_ADMIN' };
@@ -216,4 +247,13 @@ async function deleteUser(userId, requesterId) {
   }
 }
 
-module.exports = { createUser, deleteUser, getUser, listUsers, publicUser, roles, specializations, updateUser };
+module.exports = {
+  createUser,
+  deleteUser,
+  getUser,
+  listUsers,
+  publicUser,
+  roles,
+  specializations,
+  updateUser,
+};

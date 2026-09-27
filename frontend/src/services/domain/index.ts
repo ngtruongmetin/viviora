@@ -9,4 +9,5 @@ export { moderationApi, toFeedPost } from './moderation';
 export { questionBanksApi } from './questionBanks';
 export { gamesApi } from './games';
 export { leaderboardApi } from './leaderboard';
+export { weeklyMissionsApi } from './weeklyMissions';
 export { achievementsApi } from './achievements';

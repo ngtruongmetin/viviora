@@ -44,7 +44,10 @@ async function reset() {
     await clearApplicationData(client);
     await client.query('UPDATE users SET exp=0');
     await client.query('COMMIT');
-    const coverDirectory = path.join(process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads'), 'library-covers');
+    const coverDirectory = path.join(
+      process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads'),
+      'library-covers',
+    );
     await fs.promises.rm(coverDirectory, { recursive: true, force: true });
     console.log('Application data reset completed.');
   } catch (error) {

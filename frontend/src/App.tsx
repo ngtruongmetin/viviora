@@ -5,7 +5,9 @@ import { AchievementCelebrationProvider } from './components/achievements/Achiev
 export function App() {
   return (
     <AuthProvider>
-      <AchievementCelebrationProvider><AppRoutes /></AchievementCelebrationProvider>
+      <AchievementCelebrationProvider>
+        <AppRoutes />
+      </AchievementCelebrationProvider>
     </AuthProvider>
   );
 }

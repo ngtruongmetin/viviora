@@ -54,8 +54,17 @@ async function getBank(bankId) {
   );
   return {
     id: bank.id,
-    book: { id: bank.book_id, title: bank.book_title, author: bank.book_author, cover_url: bank.book_cover_url },
-    statistics: { total: Number(statistics.total), mc: Number(statistics.mc), tf: Number(statistics.tf) },
+    book: {
+      id: bank.book_id,
+      title: bank.book_title,
+      author: bank.book_author,
+      cover_url: bank.book_cover_url,
+    },
+    statistics: {
+      total: Number(statistics.total),
+      mc: Number(statistics.mc),
+      tf: Number(statistics.tf),
+    },
     created_at: bank.created_at,
     updated_at: bank.updated_at,
   };
@@ -74,7 +83,12 @@ async function listBanks() {
   );
   return rows.map((row) => ({
     id: row.id,
-    book: { id: row.book_id, title: row.book_title, author: row.book_author, cover_url: row.book_cover_url },
+    book: {
+      id: row.book_id,
+      title: row.book_title,
+      author: row.book_author,
+      cover_url: row.book_cover_url,
+    },
     statistics: { total: Number(row.total), mc: Number(row.mc), tf: Number(row.tf) },
     created_at: row.created_at,
     updated_at: row.updated_at,
@@ -87,7 +101,10 @@ async function getBankByBook(bookId) {
 }
 
 async function listQuestions(bankId, type) {
-  const rows = await questionRows(type ? 'q.question_bank_id=? AND q.type=?' : 'q.question_bank_id=?', type ? [bankId, type] : [bankId]);
+  const rows = await questionRows(
+    type ? 'q.question_bank_id=? AND q.type=?' : 'q.question_bank_id=?',
+    type ? [bankId, type] : [bankId],
+  );
   return rows.map(normalizeQuestion);
 }
 
@@ -101,7 +118,10 @@ function throwConflict(message) {
 async function createBank(bookId, userId) {
   const id = crypto.randomUUID();
   try {
-    await pool.query('INSERT INTO question_banks(id, book_id, created_by) SELECT $1, id, $2 FROM books WHERE id=$3', [id, userId, bookId]);
+    await pool.query(
+      'INSERT INTO question_banks(id, book_id, created_by) SELECT $1, id, $2 FROM books WHERE id=$3',
+      [id, userId, bookId],
+    );
   } catch (error) {
     if (error.code === '23505') throwConflict('Cuốn sách này đã có kho câu hỏi.');
     throw error;
@@ -123,7 +143,10 @@ async function deleteBank(bankId) {
 
 async function updateBank(bankId, bookId) {
   try {
-    const result = await pool.query('UPDATE question_banks SET book_id=$1, updated_at=CURRENT_TIMESTAMP WHERE id=$2 RETURNING id', [bookId, bankId]);
+    const result = await pool.query(
+      'UPDATE question_banks SET book_id=$1, updated_at=CURRENT_TIMESTAMP WHERE id=$2 RETURNING id',
+      [bookId, bankId],
+    );
     if (!result.rowCount) return null;
     return getBank(bankId);
   } catch (error) {
@@ -132,7 +155,16 @@ async function updateBank(bankId, bookId) {
   }
 }
 
-async function saveQuestion({ bankId, questionId, type, content, answerExplanation, options, correctAnswer, userId }) {
+async function saveQuestion({
+  bankId,
+  questionId,
+  type,
+  content,
+  answerExplanation,
+  options,
+  correctAnswer,
+  userId,
+}) {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
@@ -141,7 +173,15 @@ async function saveQuestion({ bankId, questionId, type, content, answerExplanati
       const result = await client.query(
         `UPDATE questions SET content=$1, answer_explanation=$2, correct_answer=$3, point=$4, updated_at=CURRENT_TIMESTAMP
          WHERE id=$5 AND question_bank_id=$6 AND type=$7 RETURNING id`,
-        [content, answerExplanation || null, type === 'TF' ? correctAnswer : null, 10, id, bankId, type],
+        [
+          content,
+          answerExplanation || null,
+          type === 'TF' ? correctAnswer : null,
+          10,
+          id,
+          bankId,
+          type,
+        ],
       );
       if (!result.rowCount) {
         const error = new Error('Không tìm thấy câu hỏi hoặc không thể đổi loại câu hỏi.');
@@ -149,13 +189,23 @@ async function saveQuestion({ bankId, questionId, type, content, answerExplanati
         error.code = 'QUESTION_NOT_FOUND';
         throw error;
       }
-      if (type === 'MC') await client.query('DELETE FROM question_options WHERE question_id=$1', [id]);
+      if (type === 'MC')
+        await client.query('DELETE FROM question_options WHERE question_id=$1', [id]);
     } else {
       id = crypto.randomUUID();
       const result = await client.query(
         `INSERT INTO questions(id, question_bank_id, type, content, answer_explanation, correct_answer, point, created_by)
          SELECT $1, id, $2, $3, $4, $5, $6, $7 FROM question_banks WHERE id=$8 RETURNING id`,
-        [id, type, content, answerExplanation || null, type === 'TF' ? correctAnswer : null, 10, userId, bankId],
+        [
+          id,
+          type,
+          content,
+          answerExplanation || null,
+          type === 'TF' ? correctAnswer : null,
+          10,
+          userId,
+          bankId,
+        ],
       );
       if (!result.rowCount) {
         const error = new Error('Không tìm thấy kho câu hỏi.');
@@ -172,7 +222,9 @@ async function saveQuestion({ bankId, questionId, type, content, answerExplanati
         );
       }
     }
-    await client.query('UPDATE question_banks SET updated_at=CURRENT_TIMESTAMP WHERE id=$1', [bankId]);
+    await client.query('UPDATE question_banks SET updated_at=CURRENT_TIMESTAMP WHERE id=$1', [
+      bankId,
+    ]);
     await client.query('COMMIT');
     return getQuestion(id);
   } catch (error) {
@@ -204,7 +256,16 @@ async function importQuestions({ bankId, rows, userId }) {
       await client.query(
         `INSERT INTO questions(id, question_bank_id, type, content, answer_explanation, correct_answer, point, created_by)
          VALUES($1, $2, $3, $4, $5, $6, $7, $8)`,
-        [questionId, bankId, row.type, row.question, row.explanation || null, row.type === 'TF' ? row.correctAnswer : null, 10, userId],
+        [
+          questionId,
+          bankId,
+          row.type,
+          row.question,
+          row.explanation || null,
+          row.type === 'TF' ? row.correctAnswer : null,
+          10,
+          userId,
+        ],
       );
       if (row.type === 'MC') {
         for (const [position, option] of row.options.entries()) {
@@ -215,7 +276,9 @@ async function importQuestions({ bankId, rows, userId }) {
         }
       }
     }
-    await client.query('UPDATE question_banks SET updated_at=CURRENT_TIMESTAMP WHERE id=$1', [bankId]);
+    await client.query('UPDATE question_banks SET updated_at=CURRENT_TIMESTAMP WHERE id=$1', [
+      bankId,
+    ]);
     await client.query('COMMIT');
     return getBank(bankId);
   } catch (error) {
@@ -226,4 +289,16 @@ async function importQuestions({ bankId, rows, userId }) {
   }
 }
 
-module.exports = { createBank, deleteBank, deleteQuestion, getBank, getBankByBook, getQuestion, importQuestions, listBanks, listQuestions, saveQuestion, updateBank };
+module.exports = {
+  createBank,
+  deleteBank,
+  deleteQuestion,
+  getBank,
+  getBankByBook,
+  getQuestion,
+  importQuestions,
+  listBanks,
+  listQuestions,
+  saveQuestion,
+  updateBank,
+};

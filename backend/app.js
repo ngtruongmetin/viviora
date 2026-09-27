@@ -18,6 +18,7 @@ const questions = require('./routes/questions');
 const games = require('./routes/games');
 const leaderboard = require('./routes/leaderboard');
 const adminAchievements = require('./routes/adminAchievements');
+const weeklyMissions = require('./routes/weeklyMissions');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -44,11 +45,15 @@ app.use(
 );
 app.use(
   '/uploads/avatars',
-  express.static(path.join(process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads'), 'avatars')),
+  express.static(
+    path.join(process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads'), 'avatars'),
+  ),
 );
 app.use(
   '/uploads/library-covers',
-  express.static(path.join(process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads'), 'library-covers')),
+  express.static(
+    path.join(process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads'), 'library-covers'),
+  ),
 );
 app.get('/api/health', (_req, res) =>
   res.json({ ok: true, service: 'vv-backend', database: 'postgresql' }),
@@ -67,6 +72,7 @@ app.use('/api/questions', questions);
 app.use('/api/games', games);
 app.use('/api/leaderboard', leaderboard);
 app.use('/api/admin/achievements', adminAchievements);
+app.use('/api/weekly-missions', weeklyMissions);
 app.get('/api/notifications', async (req, res, next) => {
   try {
     if (!req.session.user)
@@ -87,7 +93,9 @@ app.get('/api/notifications', async (req, res, next) => {
 app.use((error, _req, res, _next) => {
   console.error(error);
   if (error?.type === 'entity.parse.failed')
-    return res.status(400).json({ error: { code: 'INVALID_JSON', message: 'Dữ liệu gửi lên không hợp lệ.' } });
+    return res
+      .status(400)
+      .json({ error: { code: 'INVALID_JSON', message: 'Dữ liệu gửi lên không hợp lệ.' } });
   res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: 'Đã có lỗi xảy ra' } });
 });
 module.exports = app;

@@ -15,6 +15,7 @@ import { AdminLibraryPage } from '../pages/library/AdminLibraryPage';
 import { AdminCollectionPage } from '../pages/library/AdminCollectionPage';
 import { BookPage } from '../pages/library/BookPage';
 import { TrendingBooksPage } from '../pages/library/TrendingBooksPage';
+import { SearchPage } from '../pages/SearchPage';
 import { CollectionPage } from '../pages/library/CollectionPage';
 import { LibraryImportPage } from '../pages/library/LibraryImportPage';
 import { LibraryPage } from '../pages/library/LibraryPage';
@@ -30,6 +31,7 @@ import { MinesweeperMockup } from '../game/mockups/MinesweeperMockup';
 import { TreasureHuntMockup } from '../game/mockups/TreasureHuntMockup';
 import { GameManagementPage } from '../pages/game/GameManagementPage';
 import { GamePlayPage } from '../pages/game/GamePlayPage';
+import { WeeklyMissionsPage } from '../pages/WeeklyMissionsPage';
 
 function ProfileAliasRedirect() {
   const { user } = useAuth();
@@ -42,14 +44,8 @@ export function AppRoutes() {
       <Route path="/dang-nhap" element={<LoginPage />} />
       <Route path="/dang-ky" element={<RegisterPage />} />
       <Route path="/" element={<LandingPage />} />
-      <Route
-        path="/game/mockup/minesweeper"
-        element={<MinesweeperMockup />}
-      />
-      <Route
-        path="/game/mockup/treasure-hunt"
-        element={<TreasureHuntMockup />}
-      />
+      <Route path="/game/mockup/minesweeper" element={<MinesweeperMockup />} />
+      <Route path="/game/mockup/treasure-hunt" element={<TreasureHuntMockup />} />
       <Route
         path="/game/*"
         element={
@@ -65,13 +61,21 @@ export function AppRoutes() {
             <MemberLayout>
               <Routes>
                 <Route path="/bang-tin" element={<FeedPage />} />
-                <Route path="/thong-bao" element={<PlaceholderPage title="THÔNG BÁO" />} />
                 <Route path="/bang-xep-hang" element={<LeaderboardPage />} />
+                <Route path="/nhiem-vu-tuan" element={<WeeklyMissionsPage />} />
                 <Route path="/ho-so" element={<ProfileAliasRedirect />} />
                 <Route path="/nguoi-dung/:userId" element={<PublicProfilePage />} />
                 <Route path="/duyet-bai" element={<ModerationPage />} />
-                <Route path="/quan-tri/thanh-tuu" element={<RequireAdmin><AdminAchievementsPage /></RequireAdmin>} />
+                <Route
+                  path="/quan-tri/thanh-tuu"
+                  element={
+                    <RequireAdmin>
+                      <AdminAchievementsPage />
+                    </RequireAdmin>
+                  }
+                />
                 <Route path="/thu-vien" element={<LibraryPage />} />
+                <Route path="/tim-kiem" element={<SearchPage />} />
                 <Route path="/thu-vien/kho/:collectionId" element={<CollectionPage />} />
                 <Route path="/thu-vien/sach/:bookId" element={<BookPage />} />
                 <Route path="/thu-vien/sach-thinh-hanh" element={<TrendingBooksPage />} />
@@ -126,8 +130,22 @@ export function AppRoutes() {
                     </RequireAdmin>
                   }
                 />
-                <Route path="/kho-cau-hoi" element={<RequireQuestionBank><QuestionBanksPage /></RequireQuestionBank>} />
-                <Route path="/kho-cau-hoi/:bankId" element={<RequireQuestionBank><QuestionBankPage /></RequireQuestionBank>} />
+                <Route
+                  path="/kho-cau-hoi"
+                  element={
+                    <RequireQuestionBank>
+                      <QuestionBanksPage />
+                    </RequireQuestionBank>
+                  }
+                />
+                <Route
+                  path="/kho-cau-hoi/:bankId"
+                  element={
+                    <RequireQuestionBank>
+                      <QuestionBankPage />
+                    </RequireQuestionBank>
+                  }
+                />
                 <Route path="*" element={<PlaceholderPage title="KHÔNG TÌM THẤY TRANG" />} />
               </Routes>
             </MemberLayout>

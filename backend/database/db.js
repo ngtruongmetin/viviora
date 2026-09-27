@@ -34,7 +34,9 @@ async function initialize() {
     .sort();
 
   for (const filename of migrationFiles) {
-    const applied = await get('SELECT filename FROM schema_migrations WHERE filename=?', [filename]);
+    const applied = await get('SELECT filename FROM schema_migrations WHERE filename=?', [
+      filename,
+    ]);
     if (applied) continue;
 
     const client = await pool.connect();

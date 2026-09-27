@@ -13,6 +13,7 @@ export type LeaderboardEntry = {
 };
 
 export const leaderboardApi = {
-  list: (limit = 100, week: string | 'current' = 'current') => api.get<{ items: LeaderboardEntry[] }>('/leaderboard', { params: { limit, week } }),
+  list: (limit = 100, week: string | 'current' = 'current') =>
+    api.get<{ items: LeaderboardEntry[] }>('/leaderboard', { params: { limit, week } }),
   weeks: () => api.get<{ items: { week_start: string; week_end: string }[] }>('/leaderboard/weeks'),
 };

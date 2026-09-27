@@ -19,5 +19,9 @@ export const profileApi = {
     });
   },
   removeAvatar: () => api.delete<{ data: CurrentUser }>('/profile/avatar'),
-  changePassword: (data: { currentPassword: string; newPassword: string; confirmPassword: string }) => api.post('/profile/password', data),
+  changePassword: (data: {
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+  }) => api.post('/profile/password', data),
 };

@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS user_book_searches (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, book_id TEXT NOT NULL REFERENCES books(id) ON DELETE CASCADE, query TEXT NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, UNIQUE(user_id, book_id));
+CREATE INDEX IF NOT EXISTS idx_user_book_searches_user ON user_book_searches(user_id, created_at DESC);
