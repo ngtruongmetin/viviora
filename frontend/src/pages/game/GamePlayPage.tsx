@@ -71,7 +71,12 @@ export function GamePlayPage() {
     [session],
   );
   const tfQuestions = useMemo<TreasureHuntQuestion[]>(
-    () => session?.questions.map((question) => ({ id: question.id, text: question.content })) || [],
+    () =>
+      session?.questions.map((question) => ({
+        id: question.id,
+        text: question.content,
+        explanation: question.answer_explanation,
+      })) || [],
     [session],
   );
   if (error)

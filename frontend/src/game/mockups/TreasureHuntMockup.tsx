@@ -16,7 +16,12 @@ import './treasure-hunt.css';
 type Point = { x: number; y: number };
 type Direction = 'up' | 'down' | 'left' | 'right';
 type Feedback = 'correct' | 'wrong' | null;
-export type TreasureHuntQuestion = { id?: string; text: string; answer?: boolean };
+export type TreasureHuntQuestion = {
+  id?: string;
+  text: string;
+  answer?: boolean;
+  explanation?: string | null;
+};
 type MonsterState = { position: Point; spriteIndex: number; defeated: boolean; attempted: boolean };
 
 const ASSET = '/game-assets/treasure-hunt';
@@ -190,17 +195,58 @@ export function TreasureHuntMockup({
   const [activeStage, setActiveStage] = useState<number | null>(null);
   const [selected, setSelected] = useState<boolean | null>(null);
   const [feedback, setFeedback] = useState<Feedback>(null);
+  const [answerExplanation, setAnswerExplanation] = useState<string | null>(null);
   const [monsters, setMonsters] = useState<MonsterState[]>(() => createMonsterStates(questionSet));
   const [chestPosition] = useState<Point>(() => createWalkablePosition());
   const [chestOpen, setChestOpen] = useState(false);
   const [ripple, setRipple] = useState<Point | null>(null);
   const [bgmOn, setBgmOn] = useState(true);
   const [fullscreen, setFullscreen] = useState(false);
+  const bgMusicRef = useRef<HTMLAudioElement | null>(null);
+  const killSoundRef = useRef<HTMLAudioElement | null>(null);
+  const chaseSoundRef = useRef<HTMLAudioElement | null>(null);
   const isMobile = viewport.width < 600;
   const worldWidth = Math.max(WORLD_WIDTH * (isMobile ? 0.9 : 1) * WORLD_ZOOM, viewport.width);
   const worldHeight = worldWidth * WORLD_ASPECT;
   const completedCount = monsters.filter((monster) => monster.defeated).length;
   const allPassed = completedCount === questionSet.length;
+
+  useEffect(() => {
+    const bgMusic = new Audio(`${ASSET}/bgmusic.mp3`);
+    bgMusic.loop = true;
+    bgMusic.volume = 0.28;
+    const killSound = new Audio(`${ASSET}/kill.mp3`);
+    const chaseSound = new Audio(`${ASSET}/chase.mp3`);
+    killSound.volume = 0.8;
+    chaseSound.volume = 0.8;
+    bgMusicRef.current = bgMusic;
+    killSoundRef.current = killSound;
+    chaseSoundRef.current = chaseSound;
+
+    const resumeMusic = () => {
+      if (bgmOn) void bgMusic.play().catch(() => undefined);
+    };
+    document.addEventListener('pointerdown', resumeMusic, { once: true });
+    document.addEventListener('keydown', resumeMusic, { once: true });
+    void bgMusic.play().catch(() => undefined);
+    return () => {
+      document.removeEventListener('pointerdown', resumeMusic);
+      document.removeEventListener('keydown', resumeMusic);
+      bgMusic.pause();
+      killSound.pause();
+      chaseSound.pause();
+      bgMusicRef.current = null;
+      killSoundRef.current = null;
+      chaseSoundRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const bgMusic = bgMusicRef.current;
+    if (!bgMusic) return;
+    if (bgmOn) void bgMusic.play().catch(() => undefined);
+    else bgMusic.pause();
+  }, [bgmOn]);
 
   useEffect(() => {
     const update = () => {
@@ -287,6 +333,7 @@ export function TreasureHuntMockup({
   }, []);
   const onPointerDown = useCallback(
     (event: React.PointerEvent) => {
+      if (event.target instanceof Element && event.target.closest('.th-hud')) return;
       if (lockedRef.current) return;
       const next = worldPointFromEvent(event);
       if (!next) return;
@@ -300,6 +347,7 @@ export function TreasureHuntMockup({
   );
   const onPointerMove = useCallback(
     (event: React.PointerEvent) => {
+      if (event.target instanceof Element && event.target.closest('.th-hud')) return;
       if (event.buttons === 0 || lockedRef.current) return;
       if (
         pointerStartRef.current &&
@@ -426,10 +474,10 @@ export function TreasureHuntMockup({
     lockedRef.current = activeStage !== null || feedback !== null || chestOpen;
   }, [activeStage, feedback, chestOpen]);
   const flee = () => {
-    if (activeStage !== null) finishEncounter(activeStage, false);
+    if (activeStage !== null && feedback === null) finishEncounter(activeStage, false);
   };
   const answerQuestion = () => {
-    if (activeStage === null || selected === null) return;
+    if (activeStage === null || selected === null || feedback !== null) return;
     const index = activeStage;
     void (async () => {
       const question = questionSet[index];
@@ -439,12 +487,18 @@ export function TreasureHuntMockup({
             isCorrect: selected === question.answer,
             pointsAwarded: selected === question.answer ? 1 : 0,
           };
+      setAnswerExplanation(result.explanation ?? question.explanation ?? null);
+      const sound = result.isCorrect ? killSoundRef.current : chaseSoundRef.current;
+      if (bgmOn && sound) {
+        sound.currentTime = 0;
+        void sound.play().catch(() => undefined);
+      }
       setFeedback(result.isCorrect ? 'correct' : 'wrong');
-      window.setTimeout(
-        () => finishEncounter(index, result.isCorrect),
-        result.isCorrect ? 1600 : 700,
-      );
     })();
+  };
+  const continueEncounter = () => {
+    if (activeStage === null || feedback === null) return;
+    finishEncounter(activeStage, feedback === 'correct');
   };
   const toggleFullscreen = async () => {
     const target = document.querySelector('.th-game') as HTMLElement | null;
@@ -576,7 +630,7 @@ export function TreasureHuntMockup({
             >
               {fullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
             </button>
-            <button type="button" title="Thoát" onClick={() => navigate('/game')}>
+            <button type="button" title="Thoát" onClick={() => navigate('/tro-choi')}>
               <ArrowLeft size={16} />
             </button>
           </div>
@@ -596,12 +650,26 @@ export function TreasureHuntMockup({
           aria-label={`Câu hỏi ${activeStage + 1}`}
         >
           <div className="th-question-modal">
-            <button className="th-modal-close" type="button" aria-label="Đóng" onClick={flee}>
+            <button
+              className="th-modal-close"
+              type="button"
+              aria-label="Đóng"
+              onClick={flee}
+              disabled={feedback !== null}
+            >
               <X size={19} />
             </button>
             <div className="th-question-main">
               {feedback ? (
                 <div className="th-feedback">
+                  <p className="th-answer-explanation">
+                    {feedback === 'correct'
+                      ? answerExplanation || 'Câu trả lời đã được xác thực.'
+                      : 'Đừng bỏ cuộc! Hãy xem lại câu hỏi và thử sức ở thử thách tiếp theo.'}
+                  </p>
+                  <button type="button" className="th-continue-button" onClick={continueEncounter}>
+                    Tiếp tục
+                  </button>
                   <span>{feedback === 'correct' ? <Check size={54} /> : '×'}</span>
                   <h2>{feedback === 'correct' ? 'Chính xác' : 'Chưa đúng'}</h2>
                   <p>

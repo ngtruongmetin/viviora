@@ -121,6 +121,18 @@
   font-size: 13px;
   line-height: 1.4;
 }
+.mine-next-button {
+  margin-top: 16px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #2f8d45;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mine-next-button:hover { background: #26743a; }
 .mine-feedback.correct strong {
   color: #2f8d45;
 }

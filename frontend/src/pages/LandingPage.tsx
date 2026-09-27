@@ -56,10 +56,10 @@ export function LandingPage() {
           </div>
           <div className="landing-proof">
             <span>
-              <strong>8.2K+</strong> ĐẦU SÁCH
+              <strong>15.2K+</strong> ĐẦU SÁCH
             </span>
             <span>
-              <strong>55</strong> THÀNH TỰU
+              <strong>47</strong> THÀNH TỰU
             </span>
             <span>
               <strong>24/7</strong> KHÁM PHÁ
@@ -205,7 +205,7 @@ export function LandingPage() {
           <div>
             <Sparkles size={24} />
             <strong>THÀNH TỰU</strong>
-            <span>55 cột mốc để theo đuổi.</span>
+            <span>47 cột mốc để theo đuổi.</span>
           </div>
         </div>
       </section>

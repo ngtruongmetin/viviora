@@ -186,6 +186,7 @@ export function MinesweeperMockup({
   const [target, setTarget] = useState<Point | null>(null);
 
   const [selected, setSelected] = useState<number | null>(null);
+  const [answerExplanation, setAnswerExplanation] = useState<string | null>(null);
 
   const [direction, setDirection] = useState<Direction>('forward');
 
@@ -199,10 +200,6 @@ export function MinesweeperMockup({
   /**
    * Bãi mìn kế tiếp chỉ dùng cho animation preview.
    */
-  const [incoming, setIncoming] = useState<{
-    index: number;
-    anchor: Point;
-  } | null>(null);
 
   const cameraInitialized = useRef(false);
 
@@ -267,12 +264,6 @@ export function MinesweeperMockup({
   /**
    * Incoming field cũng sử dụng chính xác cùng layout.
    */
-  const incomingPoints = useMemo(() => {
-    if (!incoming) return [];
-
-    return createMinePositions(incoming.anchor);
-  }, [incoming]);
-
   /**
    * ============================================================
    * INITIAL CAMERA
@@ -389,18 +380,7 @@ export function MinesweeperMockup({
            *
            * hoặc cộng offset vào từng mine.
            */
-          if (questionIndex < questions.length - 1) {
-            const nextAnchor = {
-              x: target.x,
-              y: target.y - playerOffsetY,
-            };
-
-            setIncoming({
-              index: questionIndex + 1,
-              anchor: nextAnchor,
-            });
-          }
-
+          setAnswerExplanation(result.explanation ?? question.explanation ?? null);
           setState('correct');
         } else {
           /**
@@ -469,15 +449,28 @@ export function MinesweeperMockup({
    * CORRECT -> ADVANCING
    * ============================================================
    */
-  useEffect(() => {
-    if (state !== 'correct') return;
+  const nextQuestion = () => {
+    if (state !== 'correct' || !target) return;
+    if (questionIndex === questions.length - 1) {
+      setTarget(null);
+      setSelected(null);
+      setFrame(0);
+      setState('complete');
+      onComplete?.();
+      return;
+    }
 
-    const timer = window.setTimeout(() => {
-      setState('advancing');
-    }, 720);
-
-    return () => window.clearTimeout(timer);
-  }, [state]);
+    const nextCamera = { x: target.x, y: target.y - playerOffsetY };
+    setQuestionIndex((current) => current + 1);
+    setAnchor(nextCamera);
+    setCamera(nextCamera);
+    setPreviousCamera(nextCamera);
+    setTarget(null);
+    setSelected(null);
+    setAnswerExplanation(null);
+    setFrame(0);
+    setState('idle');
+  };
 
   /**
    * ============================================================
@@ -496,7 +489,6 @@ export function MinesweeperMockup({
       if (questionIndex === questions.length - 1) {
         setTarget(null);
         setSelected(null);
-        setIncoming(null);
         setFrame(0);
         setState('complete');
         onComplete?.();
@@ -547,8 +539,6 @@ export function MinesweeperMockup({
       /**
        * Xóa preview.
        */
-      setIncoming(null);
-
       setTarget(null);
       setSelected(null);
 
@@ -706,7 +696,7 @@ export function MinesweeperMockup({
                 {earnedCups} / {rewardCups} CÚP
               </strong>
 
-              <button onClick={() => navigate('/game')}>Quay về</button>
+              <button onClick={() => navigate('/tro-choi')}>Quay về</button>
             </div>
           ) : (
             <>
@@ -734,9 +724,12 @@ export function MinesweeperMockup({
 
               {state === 'correct' && (
                 <div className="mine-feedback correct">
+                  <button className="mine-next-button" onClick={nextQuestion}>
+                    {questionIndex === questions.length - 1 ? 'Xem kết quả' : 'Câu tiếp theo'}
+                  </button>
                   <strong>Chính xác</strong>
 
-                  <p>{question.explanation || 'Câu trả lời đã được xác thực.'}</p>
+                  <p>{answerExplanation || question.explanation || 'Câu trả lời đã được xác thực.'}</p>
 
                   <small>Khu vực tiếp theo đang mở ra.</small>
                 </div>
@@ -846,23 +839,6 @@ export function MinesweeperMockup({
               NEXT MINEFIELD PREVIEW
           ================================================= */}
 
-          {state !== 'complete' &&
-            incoming &&
-            incomingPoints.map((point, index) => (
-              <div
-                key={`incoming-${incoming.index}-${index}`}
-                className="mine-marker fresh disabled"
-                style={{
-                  left: cssPosition(point.x),
-                  top: cssPosition(point.y),
-                }}
-                aria-hidden="true"
-              >
-                <span>{String.fromCharCode(65 + index)}</span>
-
-                <b>{questions[incoming.index].answers[index]}</b>
-              </div>
-            ))}
         </div>
 
         {/* ===================================================

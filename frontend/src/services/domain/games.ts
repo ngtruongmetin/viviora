@@ -23,6 +23,7 @@ export type GameQuestion = {
   type: GameQuestionType;
   content: string;
   point: number;
+  answer_explanation?: string | null;
   options: { id: string; label: string; position: number }[];
 };
 export type GameSession = {

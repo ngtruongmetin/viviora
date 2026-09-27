@@ -3163,6 +3163,11 @@ img.user-avatar {
   gap: 15px;
   padding: 15px 13px;
 }
+.rail-nav a:hover {
+  color: #fff;
+  background: var(--blue);
+  box-shadow: 4px 4px 0 var(--ink);
+}
 .rail-nav a.selected {
   color: #fff;
   background: var(--blue);
@@ -6054,6 +6059,7 @@ img.user-avatar {
   background: #10150f;
 }
 .game-play-context {
+  display: none;
   position: fixed;
   top: 14px;
   left: 50%;

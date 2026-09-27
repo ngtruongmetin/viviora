@@ -1051,6 +1051,23 @@
 .th-modal-backdrop.is-correct .th-modal-monster {
   background: radial-gradient(ellipse at 50% 40%, rgba(90, 100, 110, 0.23), transparent 70%);
 }
+.th-answer-explanation {
+  margin: 14px auto 18px;
+  max-width: 34rem;
+  color: #5e513d;
+  line-height: 1.5;
+}
+.th-continue-button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 22px;
+  background: #8a5a2b;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.th-continue-button:hover { background: #70471f; }
 .th-treasure-modal > button:last-child {
   font-size: 0;
 }
@@ -1133,6 +1150,7 @@
 .th-hud-title {
   top: 12px;
   left: 12px;
+  min-width: 145px;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -1149,11 +1167,11 @@
   font-weight: 800;
 }
 .th-hud-progress {
-  left: 50%;
-  top: 12px;
+  left: 12px;
+  top: 66px;
   width: min(240px, 30vw);
   height: 8px;
-  transform: translateX(-50%);
+  transform: none;
   overflow: hidden;
   border-radius: 7px;
   background: #0009;
@@ -1213,7 +1231,8 @@
     left: 10px;
   }
   .th-hud-progress {
-    top: 10px;
+    top: 60px;
+    left: 10px;
   }
   .th-viewport {
     border: 0;
