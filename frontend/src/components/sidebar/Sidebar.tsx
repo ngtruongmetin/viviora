@@ -40,7 +40,8 @@ export function Sidebar() {
           <Link
             className={
               location.pathname === to ||
-              (to === '/thu-vien' && location.pathname.startsWith('/thu-vien'))
+              (to === '/thu-vien' && location.pathname.startsWith('/thu-vien')) ||
+              (to === '/ho-so' && location.pathname.startsWith('/nguoi-dung/'))
                 ? 'selected'
                 : ''
             }
