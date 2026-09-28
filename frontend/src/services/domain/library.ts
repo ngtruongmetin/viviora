@@ -31,6 +31,7 @@ export const libraryApi = {
   searchBooks: (search: string) =>
     api.get<{
       items: Book[];
+      games: { id: string; title: string; description?: string | null; question_type: string; question_count: number; reward_cups: number; cup_earned_today?: boolean; book_id: string; book_title: string; book_author?: string | null; book_cover_url?: string | null }[];
       achievementEvents?: import('../../components/achievements/AchievementCelebrationProvider').AchievementEventPayload;
     }>('/library/books', { params: { search, limit: 12 } }),
   trendingBooks: (limit = 3) =>

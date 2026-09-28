@@ -1,9 +1,10 @@
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
-import { BookOpen, Plus, Send } from 'lucide-react';
+import { BookOpen, Gamepad2, Plus, Send } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import toast from 'react-hot-toast';
 import { PostCard } from '../../components/community/PostCard';
-import { feedApi, libraryApi } from '../../services/domain';
+import { feedApi, gamesApi, libraryApi } from '../../services/domain';
+import type { Game } from '../../services/domain/games';
 import { useIntersectionSentinel } from '../../hooks/useIntersectionSentinel';
 import type { Book, FeedPost } from '../../types/models';
 import { useAuth } from '../../auth/AuthContext';
@@ -16,20 +17,23 @@ function Composer() {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState('');
-  const [type, setType] = useState<'TEXT' | 'BOOK_REVIEW'>('TEXT');
+  const [type, setType] = useState<'TEXT' | 'BOOK_REVIEW' | 'GAME_REVIEW'>('TEXT');
   const [bookSearch, setBookSearch] = useState('');
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [gameSearch, setGameSearch] = useState('');
+  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const booksQuery = useQuery({
     queryKey: ['composer-books', bookSearch],
     queryFn: () => libraryApi.searchBooks(bookSearch).then((response) => response.data.items),
     enabled: type === 'BOOK_REVIEW' && bookSearch.trim().length >= 2,
   });
+  const gamesQuery = useQuery({ queryKey: ['composer-games', gameSearch], queryFn: () => gamesApi.list().then((response) => response.data.items.filter((game) => game.title.toLowerCase().includes(gameSearch.toLowerCase())).slice(0, 8)), enabled: type === 'GAME_REVIEW' && gameSearch.trim().length >= 2 });
   const publish = async () => {
-    if (!content.trim() || (type === 'BOOK_REVIEW' && !selectedBook)) return;
+    if (!content.trim() || (type === 'BOOK_REVIEW' && !selectedBook) || (type === 'GAME_REVIEW' && !selectedGame)) return;
     const response = await feedApi.createPost({
       type,
       content: content.trim(),
-      bookId: selectedBook?.id || null,
+      bookId: selectedBook?.id || null, gameId: selectedGame?.id || null,
     });
     if (response.data.data.achievementEvents)
       announceAchievement(response.data.data.achievementEvents);
@@ -57,6 +61,7 @@ function Composer() {
     setOpen(false);
     setContent('');
     setSelectedBook(null);
+    setSelectedGame(null); setGameSearch('');
     setBookSearch('');
     setType('TEXT');
   };
@@ -76,6 +81,7 @@ function Composer() {
             >
               BÀI VIẾT
             </button>
+            <button type="button" className={type === 'GAME_REVIEW' ? 'selected' : ''} onClick={() => { setType('GAME_REVIEW'); setSelectedBook(null); }}><Gamepad2 size={16} /> ĐÁNH GIÁ GAME</button>
             <button
               type="button"
               className={type === 'BOOK_REVIEW' ? 'selected' : ''}
@@ -123,6 +129,7 @@ function Composer() {
               )}
             </div>
           )}
+          {type === 'GAME_REVIEW' && <div className="feed-composer-book-picker"><input value={gameSearch} onChange={(event) => setGameSearch(event.target.value)} placeholder="Tìm game để đánh giá..." />{gamesQuery.data?.map((game) => <button type="button" key={game.id} onClick={() => { setSelectedGame(game); setGameSearch(''); }}><span>{game.title}<small>{game.book.title}</small></span></button>)}{selectedGame && <div className="feed-composer-selected-book"><span>{selectedGame.title}<small>{selectedGame.book.title}</small></span></div>}</div>}
           <div className="feed-composer-actions">
             <button className="button secondary" onClick={() => setOpen(false)}>
               HỦY

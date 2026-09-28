@@ -188,7 +188,8 @@ router.get('/books', async (req, res, next) => {
       String(req.query.search || '').trim(),
       items,
     );
-    const payload = { items };
+    const games = await libraryService.searchGames(req.query.search, req.session.user?.id || null);
+    const payload = { items, games };
     if (req.session.user?.id && items.length) {
       const { evaluateUser } = require('../services/achievementService');
       payload.achievementEvents = await evaluateUser(req.session.user.id);

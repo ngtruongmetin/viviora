@@ -72,6 +72,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const register = async (data: RegisterInput) => {
     const response = await authApi.register(data);
     setUser(response.data.data);
+    if (response.data.data.achievementEvents)
+      announceAchievement(response.data.data.achievementEvents);
   };
 
   return (

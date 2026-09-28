@@ -17,7 +17,7 @@ export const feedApi = {
         leveledUp?: boolean;
       };
     }>(`/posts/${postId}/reactions`),
-  createPost: (data: { type: string; content: string; title?: string; bookId?: string | null }) =>
+  createPost: (data: { type: string; content: string; title?: string; bookId?: string | null; gameId?: string | null }) =>
     api.post<{
       data: {
         id: string;

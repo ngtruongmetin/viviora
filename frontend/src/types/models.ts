@@ -84,7 +84,7 @@ export interface ManagedUserListResponse {
 
 export interface FeedPost {
   id: string;
-  type: 'TEXT' | 'BOOK_REVIEW' | 'VIDEO_REVIEW' | 'POLL' | 'ACHIEVEMENT';
+  type: 'TEXT' | 'BOOK_REVIEW' | 'GAME_REVIEW' | 'VIDEO_REVIEW' | 'POLL' | 'ACHIEVEMENT';
   title?: string;
   content: string;
   created_at: string;
@@ -108,6 +108,7 @@ export interface FeedPost {
       cover_url?: string | null;
     };
   };
+  game?: { id: string; title: string; question_type: string; question_count: number; reward_cups: number; book: { title: string; author?: string | null; cover_url?: string | null } };
   poll?: { question: string; options: { id: string; label: string; votes: { id: string }[] }[] };
 }
 

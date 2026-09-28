@@ -59,9 +59,10 @@ async function getGame(id) {
   return shapeGame(await get(`${gameSelect} WHERE g.id=?`, [id]));
 }
 
-async function listGames() {
-  const rows = await all(`${gameSelect} ORDER BY g.updated_at DESC, g.id DESC`);
-  return Promise.all(rows.map(shapeGame));
+async function listGames(userId = null) {
+  const select = gameSelect.replace('SELECT g.*,', `SELECT g.*, ${userId ? "EXISTS(SELECT 1 FROM user_game_rewards today_reward WHERE today_reward.game_id=g.id AND today_reward.user_id=? AND today_reward.earned_on=(CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Ho_Chi_Minh')::date)" : 'FALSE'} AS earned_today,`);
+  const rows = await all(`${select} ORDER BY g.updated_at DESC, g.id DESC`, userId ? [userId] : []);
+  return Promise.all(rows.map(async (row) => ({ ...(await shapeGame(row)), cup_earned_today: Boolean(row.earned_today) })));
 }
 
 async function questionBankCounts(bookId) {

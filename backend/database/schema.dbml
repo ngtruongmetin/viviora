@@ -99,7 +99,7 @@ Table question_options {
 Table posts {
   id text [pk]
   author_id text [not null]
-  type text [not null, note: 'TEXT | BOOK_REVIEW | VIDEO_REVIEW | POLL | ACHIEVEMENT']
+  type text [not null, note: 'TEXT | BOOK_REVIEW | GAME_REVIEW | VIDEO_REVIEW | POLL | ACHIEVEMENT']
   status text [not null, default: 'APPROVED', note: 'PENDING | APPROVED | REJECTED']
   title text
   content text [not null]
@@ -133,6 +133,18 @@ Table post_library_books {
   }
 
   Note: 'Current book attachment used by the library and feed.'
+}
+
+Table post_games {
+  post_id text [pk]
+  game_id text
+  game_title text [not null]
+  question_type text [not null]
+  question_count integer [not null]
+  reward_cups integer [not null]
+  book_title text
+  book_author text
+  book_cover_url text
 }
 
 Table comments {
@@ -361,6 +373,7 @@ Table post_books {
 Ref: users.id < posts.author_id
 Ref: posts.id < post_media.post_id [delete: cascade]
 Ref: posts.id - post_library_books.post_id [delete: cascade]
+Ref: posts.id - post_games.post_id [delete: cascade]
 Ref: books.id < post_library_books.book_id [delete: set null]
 Ref: posts.id < comments.post_id [delete: cascade]
 Ref: users.id < comments.author_id

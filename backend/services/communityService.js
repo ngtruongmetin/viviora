@@ -22,12 +22,14 @@ async function listPosts({ viewerId = null, authorId = null, cursor = null, limi
             (SELECT COUNT(*)::int FROM comments c WHERE c.post_id=p.id) AS "commentCount",
             plb.book_id AS "bookId", plb.book_title AS "bookTitle", plb.book_author AS "bookAuthor",
             plb.book_cover_url AS "bookCoverUrl", plb.book_category AS "bookCategory",
+            pg.game_id AS "gameId", pg.game_title AS "gameTitle", pg.question_type AS "gameQuestionType", pg.question_count AS "gameQuestionCount", pg.reward_cups AS "gameRewardCups", pg.book_title AS "gameBookTitle", pg.book_author AS "gameBookAuthor", pg.book_cover_url AS "gameBookCoverUrl",
             COALESCE((SELECT json_agg(json_build_object('id', pm.id, 'url', pm.url, 'kind', pm.kind, 'alt', pm.alt) ORDER BY pm.id)
                       FROM post_media pm WHERE pm.post_id=p.id), '[]'::json) AS media,
             po.id AS "pollId", po.question AS "pollQuestion",
             COALESCE((SELECT json_agg(json_build_object('id', opt.id, 'label', opt.label, 'votes', (SELECT COUNT(*)::int FROM poll_votes pv WHERE pv.option_id=opt.id)) ORDER BY opt.position) FROM poll_options opt WHERE opt.poll_id=po.id), '[]'::json) AS "pollOptions"
      FROM posts p JOIN users u ON u.id=p.author_id
      LEFT JOIN post_library_books plb ON plb.post_id=p.id
+     LEFT JOIN post_games pg ON pg.post_id=p.id
      LEFT JOIN polls po ON po.post_id=p.id
      WHERE ${where}
      ORDER BY p.created_at DESC, p.id DESC LIMIT $${params.length}`,
@@ -50,6 +52,7 @@ async function listPosts({ viewerId = null, authorId = null, cursor = null, limi
           },
         }
       : undefined,
+    game: row.gameTitle ? { id: row.gameId, title: row.gameTitle, question_type: row.gameQuestionType, question_count: Number(row.gameQuestionCount), reward_cups: Number(row.gameRewardCups), book: { title: row.gameBookTitle, author: row.gameBookAuthor, cover_url: row.gameBookCoverUrl } } : undefined,
     poll: row.pollId
       ? {
           id: row.pollId,

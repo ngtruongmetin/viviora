@@ -56,7 +56,7 @@ export function LandingPage() {
           </div>
           <div className="landing-proof">
             <span>
-              <strong>15.2K+</strong> ĐẦU SÁCH
+              <strong>17.2K+</strong> ĐẦU SÁCH
             </span>
             <span>
               <strong>47</strong> THÀNH TỰU

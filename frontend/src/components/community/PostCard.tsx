@@ -52,6 +52,8 @@ export function PostCard({
       ? 'feed-band-yellow'
       : post.type === 'BOOK_REVIEW'
         ? 'feed-band-red'
+        : post.type === 'GAME_REVIEW'
+          ? 'feed-band-yellow'
         : 'feed-band-purple';
 
   const reaction = useMutation({
@@ -162,6 +164,8 @@ export function PostCard({
             ? 'BÀI ĐĂNG BÌNH CHỌN'
             : post.type === 'BOOK_REVIEW'
               ? 'ĐÁNH GIÁ SÁCH'
+              : post.type === 'GAME_REVIEW'
+                ? 'ĐÁNH GIÁ GAME'
               : 'BÀI ĐĂNG'}
         </span>
         <time dateTime={post.created_at}>{formatDate(post.created_at)}</time>
@@ -219,6 +223,11 @@ export function PostCard({
               <h3>{post.book.book.title}</h3>
               <p>{post.book.book.author || 'Chưa rõ tác giả'}</p>
             </div>
+          </Link>
+        )}
+        {post.game && (
+          <Link className="feed-book-attachment" to={`/tro-choi/${post.game.id}/choi`}>
+            <div className="feed-book-copy"><span className="feed-book-label">GAME ĐƯỢC ĐÁNH GIÁ</span><h3>{post.game.title}</h3><p>{post.game.book.title} · {post.game.question_type} · {post.game.reward_cups} CUP</p></div>
           </Link>
         )}
 

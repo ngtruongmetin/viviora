@@ -145,6 +145,17 @@ async function searchBooks(query = {}) {
   );
 }
 
+async function searchGames(search = '', userId = null) {
+  const term = String(search || '').trim().slice(0, 120);
+  const like = `%${term}%`;
+  return all(`SELECT g.id, g.title, g.description, g.question_type, g.question_count, g.reward_cups,
+      ${userId ? "EXISTS(SELECT 1 FROM user_game_rewards ugr WHERE ugr.game_id=g.id AND ugr.user_id=? AND ugr.earned_on=(CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Ho_Chi_Minh')::date)" : 'FALSE'} AS cup_earned_today,
+      b.id AS book_id, b.title AS book_title, b.author AS book_author, b.cover_url AS book_cover_url
+    FROM games g JOIN books b ON b.id=g.book_id
+    WHERE g.title ILIKE ? OR COALESCE(g.description,'') ILIKE ? OR b.title ILIKE ?
+    ORDER BY lower(g.title), g.id LIMIT 12`, userId ? [userId, like, like, like] : [like, like, like]);
+}
+
 async function recordBookSearch(userId, query, books) {
   if (!userId || !query || !books?.length) return;
   const client = await pool.connect();
@@ -439,6 +450,7 @@ module.exports = {
   listCollectionCategories,
   listCollections,
   searchBooks,
+  searchGames,
   recordBookSearch,
   setBookFlag,
   setReadingStatus,

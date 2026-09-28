@@ -5834,6 +5834,10 @@ img.user-avatar {
   font: 10px 'Space Mono';
   color: #6c5a1e;
 }
+.game-reward.claimed { border-color: #9b9b9b; background: #e7e7e7; color: #666; }
+.game-reward.claimed svg { color: #737373; }
+.game-reward.claimed strong,
+.game-reward.claimed span { color: #666; }
 .game-form-grid label,
 .game-modal-copy label {
   display: grid;
@@ -5967,6 +5971,19 @@ img.user-avatar {
   color: #586070;
   font: 12px/1.45 'Space Mono';
 }
+.search-section-title { margin: 28px 0 14px; padding-bottom: 8px; border-bottom: 3px solid var(--ink); font: 18px 'Anton'; letter-spacing: .04em; }
+.search-game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.search-game-card { text-decoration: none; color: var(--ink); transition: transform .15s ease, box-shadow .15s ease; }
+.search-game-card:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+.search-game-content { padding: 18px; }
+.search-game-kicker { color: #596273; font: 11px 'Space Mono'; font-weight: 700; letter-spacing: .08em; }
+.search-game-content h2 { margin: 12px 0 5px; font: 30px/1 'Anton'; text-transform: uppercase; }
+.search-game-book { margin: 0; color: #596273; font: 12px/1.4 'Space Mono'; }
+.search-game-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; padding: 11px 13px; border: 2px solid #c59f00; background: #fff4b9; font: 12px 'Space Mono'; }
+.search-game-meta strong { font: 20px 'Anton'; }
+.search-game-meta.claimed { border-color: #9b9b9b; background: #e7e7e7; color: #666; }
+.search-game-meta.claimed strong { color: #666; }
+@media (max-width: 720px) { .search-game-grid { grid-template-columns: 1fr; } }
 .game-card > footer {
   display: flex;
   justify-content: flex-end;

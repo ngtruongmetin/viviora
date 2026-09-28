@@ -17,6 +17,7 @@ export type Game = {
   created_by_name?: string | null;
   created_at: string;
   updated_at: string;
+  cup_earned_today?: boolean;
 };
 export type GameQuestion = {
   id: string;

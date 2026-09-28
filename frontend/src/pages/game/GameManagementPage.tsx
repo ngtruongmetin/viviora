@@ -348,10 +348,10 @@ export function GameManagementPage({ management = false }: { management?: boolea
                     <p>{game.book.title}</p>
                   </div>
                 </div>
-                <div className="game-reward">
+                <div className={`game-reward ${game.cup_earned_today ? 'claimed' : ''}`}>
                   <Trophy size={19} />
                   <strong>{game.reward_cups} CUP</strong>
-                  <span>Hoàn thành toàn bộ game để nhận</span>
+                  <span>{game.cup_earned_today ? 'Đã nhận hôm nay' : 'Hoàn thành toàn bộ game để nhận'}</span>
                 </div>
                 <div className="game-metrics">
                   <div>

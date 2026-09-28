@@ -21,9 +21,9 @@ function fail(res, error) {
   });
 }
 
-router.get('/', async (_req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    res.json({ items: await gameService.listGames() });
+    res.json({ items: await gameService.listGames(req.session.user?.id || null) });
   } catch (error) {
     next(error);
   }

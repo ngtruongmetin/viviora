@@ -8,7 +8,7 @@ const { listPosts } = require('../services/communityService');
 const { evaluateUser } = require('../services/achievementService');
 
 const router = express.Router();
-const postTypes = ['TEXT', 'BOOK_REVIEW', 'VIDEO_REVIEW', 'POLL', 'ACHIEVEMENT'];
+const postTypes = ['TEXT', 'BOOK_REVIEW', 'GAME_REVIEW', 'VIDEO_REVIEW', 'POLL', 'ACHIEVEMENT'];
 const createSchema = z.object({
   type: z.enum(postTypes).default('TEXT'),
   title: z.preprocess(
@@ -24,6 +24,7 @@ const createSchema = z.object({
     (value) => (value === '' || value === undefined ? null : value),
     z.string().uuid('Sách được chọn không hợp lệ.').nullable(),
   ),
+  gameId: z.preprocess((value) => (value === '' || value === undefined ? null : value), z.string().uuid('Game không hợp lệ.').nullable()),
   question: z.preprocess(
     (value) => (value === '' || value === undefined ? null : value),
     z.string().trim().max(500).nullable(),
@@ -62,6 +63,8 @@ router.post('/', requireLogin, async (req, res, next) => {
           message: 'Chỉ bài đánh giá sách mới có thể gắn đầu sách.',
         },
       });
+    if (data.type === 'GAME_REVIEW' && !data.gameId) return res.status(400).json({ error: { code: 'GAME_REQUIRED', message: 'Đánh giá game phải gắn với một game.' } });
+    if (data.type !== 'GAME_REVIEW' && data.gameId) return res.status(400).json({ error: { code: 'VALIDATION_ERROR', message: 'Chỉ bài đánh giá game mới có thể gắn game.' } });
     if (data.type === 'POLL' && (!data.question || data.options.length < 2))
       return res.status(400).json({
         error: {
@@ -72,6 +75,7 @@ router.post('/', requireLogin, async (req, res, next) => {
 
     await client.query('BEGIN');
     let book = null;
+    let game = null;
     if (data.type === 'BOOK_REVIEW') {
       const result = await client.query(
         'SELECT id, title, author, cover_url, category FROM books WHERE id=$1',
@@ -84,6 +88,11 @@ router.post('/', requireLogin, async (req, res, next) => {
           error: { code: 'BOOK_NOT_FOUND', message: 'Không tìm thấy đầu sách để đánh giá.' },
         });
       }
+    }
+    if (data.type === 'GAME_REVIEW') {
+      const result = await client.query(`SELECT g.id, g.title, g.question_type, g.question_count, g.reward_cups, b.title AS book_title, b.author AS book_author, b.cover_url AS book_cover_url FROM games g JOIN books b ON b.id=g.book_id WHERE g.id=$1`, [data.gameId]);
+      game = result.rows[0] || null;
+      if (!game) { await client.query('ROLLBACK'); return res.status(404).json({ error: { code: 'GAME_NOT_FOUND', message: 'Không tìm thấy game để đánh giá.' } }); }
     }
     const id = crypto.randomUUID();
     const pending = req.session.user.role === 'STUDENT';
@@ -103,6 +112,7 @@ router.post('/', requireLogin, async (req, res, next) => {
         'INSERT INTO post_library_books(post_id, book_id, book_title, book_author, book_cover_url, book_category) VALUES($1,$2,$3,$4,$5,$6)',
         [id, book.id, book.title, book.author, book.cover_url, book.category],
       );
+    if (game) await client.query('INSERT INTO post_games(post_id, game_id, game_title, question_type, question_count, reward_cups, book_title, book_author, book_cover_url) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)', [id, game.id, game.title, game.question_type, game.question_count, game.reward_cups, game.book_title, game.book_author, game.book_cover_url]);
     if (data.type === 'POLL') {
       const pollId = crypto.randomUUID();
       await client.query('INSERT INTO polls(id, post_id, question) VALUES($1,$2,$3)', [
