@@ -8,6 +8,7 @@
     "db:migrate": "node scripts/migrate.js",
     "db:reset": "node scripts/reset.js",
     "db:seed": "node scripts/seed.js",
+    "students:import": "node scripts/importStudents.js",
     "achievements:recalculate": "node scripts/recalculateAchievements.js",
     "test": "node --test test/*.test.js",
     "lint": "eslint .",

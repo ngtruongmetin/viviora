@@ -36,7 +36,7 @@ const registerSchema = z
       (value) => (value === '' || value === null || value === undefined ? null : value),
       z.string().trim().email('Email không hợp lệ.').max(320).nullable(),
     ),
-    password: z.string().min(8, 'Mật khẩu phải có ít nhất 8 ký tự.').max(200),
+    password: z.string().min(3, 'Mật khẩu phải có ít nhất 3 ký tự.').max(200),
     confirmPassword: z.string(),
     role: z.enum(['STUDENT', 'TEACHER']),
     className: z.preprocess(

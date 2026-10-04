@@ -10,5 +10,9 @@
     "test": "npm --prefix backend test",
     "lint": "npm --prefix backend run lint && npm --prefix frontend run lint",
     "build": "npm --prefix frontend run build"
+  },
+  "dependencies": {
+    "vietnamese-name-generator": "^0.13.1",
+    "xlsx": "^0.18.5"
   }
 }

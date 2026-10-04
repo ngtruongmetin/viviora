@@ -29,7 +29,7 @@ const schema = z
       .max(80)
       .regex(/^[A-Za-z0-9._-]+$/, 'Username chỉ gồm chữ, số, dấu chấm, gạch ngang hoặc gạch dưới'),
     email: z.string().email('Email không hợp lệ').optional().or(z.literal('')),
-    password: z.string().min(8, 'Mật khẩu tối thiểu 8 ký tự'),
+    password: z.string().min(3, 'Mật khẩu tối thiểu 3 ký tự'),
     confirmPassword: z.string(),
     role: z.enum(['STUDENT', 'TEACHER']),
     className: z.string().optional(),
