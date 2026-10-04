@@ -4,8 +4,13 @@ const path = require('path');
 const XLSX = require('xlsx');
 const { generateGenZNickname } = require('vietnamese-name-generator');
 
-const inputPath = path.join(__dirname, 'dshs.xlsx');
-const outputPath = path.join(__dirname, 'nickname.xlsx');
+function argumentValue(flag, fallback) {
+  const index = process.argv.indexOf(flag);
+  return index >= 0 && process.argv[index + 1] ? process.argv[index + 1] : fallback;
+}
+
+const inputPath = path.resolve(argumentValue('--input', 'dshs.xlsx'));
+const outputPath = path.resolve(argumentValue('--output', 'nickname.xlsx'));
 const MAX_RETRIES = 10_000;
 
 function normalizeName(value) {
@@ -82,7 +87,7 @@ function createNickname(fullName, gender, identityHash, usedNicknames) {
 }
 
 function validateOutput(expectedCount) {
-  if (!fs.existsSync(outputPath)) throw new Error('Khong tim thay nickname.xlsx sau khi ghi.');
+  if (!fs.existsSync(outputPath)) throw new Error(`Khong tim thay file output sau khi ghi: ${outputPath}`);
 
   const workbook = XLSX.readFile(outputPath);
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -104,7 +109,7 @@ function validateOutput(expectedCount) {
 }
 
 function main() {
-  if (!fs.existsSync(inputPath)) throw new Error('Khong tim thay dshs.xlsx trong thu muc hien tai.');
+  if (!fs.existsSync(inputPath)) throw new Error(`Khong tim thay file input: ${inputPath}`);
 
   const workbook = XLSX.readFile(inputPath, { cellDates: true });
   const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -159,7 +164,7 @@ function main() {
   console.log(`Da tao: ${outputRows.length - 1} nickname`);
   console.log(`Bo qua: ${skippedCount} dong`);
   console.log(`Nickname trung da xu ly: ${collisionCount}`);
-  console.log('File dau ra: nickname.xlsx');
+  console.log(`File dau ra: ${outputPath}`);
 }
 
 try {
