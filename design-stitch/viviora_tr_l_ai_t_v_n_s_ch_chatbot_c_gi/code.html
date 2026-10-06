@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.neo-shadow{box-shadow:4px 4px 0px #000000;}.neo-shadow-sm{box-shadow:2px 2px 0px #000000;}.bg-grid-dots{background-image:radial-gradient(#1b1b1b 1px,transparent 1px);background-size:20px 20px;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"primary-container":"#2d5bff","surface-container-high":"#e8e8e8","error-container":"#ffdad6","primary-fixed":"#dde1ff","on-tertiary-container":"#ffece8","secondary":"#626200","surface-tint":"#104af0","on-background":"#1b1b1b","tertiary-container":"#ce3000","primary":"#0040df","tertiary-fixed-dim":"#ffb4a2","on-primary-fixed-variant":"#0035bd","surface-bright":"#f9f9f9","surface-dim":"#dadada","on-primary-fixed":"#001355","on-tertiary-fixed":"#3c0700","outline-variant":"#c4c5d9","primary-fixed-dim":"#b8c3ff","inverse-primary":"#b8c3ff","on-error":"#ffffff","surface":"#f9f9f9","background":"#f9f9f9","on-secondary-fixed-variant":"#494900","secondary-container":"#e7e700","on-primary":"#ffffff","tertiary-fixed":"#ffdad2","surface-variant":"#e2e2e2","surface-container":"#eeeeee","outline":"#747688","surface-container-lowest":"#ffffff","on-primary-container":"#efefff","on-tertiary":"#ffffff","on-surface-variant":"#434656","on-secondary":"#ffffff","on-secondary-container":"#666600","error":"#ba1a1a","secondary-fixed":"#eaea00","inverse-on-surface":"#f1f1f1","on-secondary-fixed":"#1d1d00","on-error-container":"#93000a","tertiary":"#a32400","surface-container-highest":"#e2e2e2","on-tertiary-fixed-variant":"#8a1d00","on-surface":"#1b1b1b","inverse-surface":"#303030","surface-container-low":"#f3f3f3","secondary-fixed-dim":"#cdcd00"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin-desktop":"40px","margin-mobile":"16px","shadow-offset":"4px","unit":"4px","border-width":"3px","gutter":"16px"},"fontFamily":{"display-xl":["Anton"],"headline-lg":["Anton"],"body-lg":["Archivo Narrow"],"metadata":["Archivo Narrow"],"body-md":["Archivo Narrow"],"headline-md":["Anton"],"label-mono":["Space Mono"],"headline-lg-mobile":["Anton"]},"fontSize":{"display-xl":["80px",{"lineHeight":"80px","fontWeight":"400"}],"headline-lg":["48px",{"lineHeight":"48px","fontWeight":"400"}],"body-lg":["20px",{"lineHeight":"30px","fontWeight":"400"}],"metadata":["14px",{"lineHeight":"18px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"28px","fontWeight":"400"}],"label-mono":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"700"}],"headline-lg-mobile":["32px",{"lineHeight":"32px","fontWeight":"400"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface bg-grid-dots min-h-screen"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest border-r-[3px] border-on-surface z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-20 border-b-[3px] border-on-surface px-6 flex items-center justify-between bg-secondary-container"><div class="flex items-center gap-2"><div class="w-9 h-9 bg-primary border-[3px] border-on-surface neo-shadow flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[22px]">auto_stories</span></div><span class="font-headline-md text-headline-md tracking-wider uppercase text-on-surface">VIVIORA</span></div><span class="font-label-mono text-label-mono px-2 py-0.5 bg-surface-container-lowest border-[2px] border-on-surface uppercase">EDU-OS</span></div><div class="p-4 border-b-[3px] border-on-surface bg-surface-container-low"><div class="text-label-mono font-label-mono text-on-surface-variant uppercase flex items-center justify-between"><span>Chế độ đọc</span><span class="w-2.5 h-2.5 bg-primary rounded-full animate-pulse"></span></div><div class="font-headline-md text-headline-md uppercase text-primary mt-1">MẠNG XÃ HỘI SÁCH</div></div><nav class="flex flex-col gap-2 p-4" data-active-classes="bg-primary-container text-on-primary-container neo-shadow translate-x-1"><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="trang-chu" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Trang chủ</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="thu-vien" href="#"><span class="material-symbols-outlined text-[20px]">local_library</span><span>Thư viện</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="kho-cau-hoi" href="#"><span class="material-symbols-outlined text-[20px]">quiz</span><span>Kho câu hỏi</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="quan-ly-tro-choi" href="#"><span class="material-symbols-outlined text-[20px]">sports_esports</span><span>Quản lý trò chơi</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="tu-van-ai-doc-gia" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>Tư vấn AI</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="quan-tri-cau-hinh-ai" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span>Cấu hình AI</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="quan-tri-he-thong" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Quản trị hệ thống</span></a></nav></div><div class="p-4 border-t-[3px] border-on-surface bg-surface-container-low"><div class="p-3 border-[3px] border-on-surface bg-surface-container-lowest neo-shadow"><div class="flex items-center justify-between mb-1"><span class="font-label-mono text-label-mono text-on-surface-variant uppercase">TOKEN USAGE</span><span class="font-label-mono text-label-mono font-bold text-primary">82%</span></div><div class="w-full h-3 border-[2px] border-on-surface bg-surface-container-high"><div class="h-full bg-secondary-container w-[82%] border-r-[2px] border-on-surface"></div></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-20 bg-surface-container-lowest border-b-[3px] border-on-surface z-40 flex items-center justify-between px-8"><div class="flex items-center gap-4 flex-1 max-w-xl"><div class="relative w-full"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface text-[20px]">search</span><input class="w-full bg-surface-container-lowest border-[3px] border-on-surface pl-10 pr-4 py-2 font-body-md text-body-md text-on-surface placeholder:text-on-surface/60 focus:outline-none focus:ring-0 focus:neo-shadow transition-all" placeholder="Tìm kiếm tựa sách, chủ đề AI, tác giả hoặc bộ đề..." type="text"/></div></div><div class="flex items-center gap-4"><div class="hidden md:flex items-center gap-2 px-3 py-1.5 border-[3px] border-on-surface bg-secondary-container neo-shadow-sm"><span class="material-symbols-outlined text-[18px] text-on-surface">school</span><span class="font-label-mono text-label-mono uppercase text-on-surface">VAI TRÒ: GIÁO VIÊN / ADMIN</span></div><div class="flex items-center gap-2"><button class="w-10 h-10 border-[3px] border-on-surface bg-surface-container-lowest neo-shadow-sm flex items-center justify-center hover:bg-surface-container-high active:translate-x-0.5 active:translate-y-0.5"><span class="material-symbols-outlined text-on-surface text-[20px]">notifications</span></button><button class="w-10 h-10 border-[3px] border-on-surface bg-surface-container-lowest neo-shadow-sm flex items-center justify-center hover:bg-surface-container-high active:translate-x-0.5 active:translate-y-0.5"><span class="material-symbols-outlined text-on-surface text-[20px]">help</span></button></div><div class="flex items-center gap-3 pl-3 border-l-[3px] border-on-surface"><div class="text-right hidden sm:block"><div class="font-headline-md text-[18px] uppercase text-on-surface leading-tight">Thầy Minh Tuấn</div><div class="font-label-mono text-label-mono text-primary font-bold">Ban Giảng Dạy Ngữ Văn</div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full p-6 md:p-8 gap-8">
+<div class="w-full border-[3px] border-on-surface bg-surface-container-lowest neo-shadow overflow-hidden relative">
+<div class="h-3 w-full flex">
+<div class="h-full w-2/3 bg-primary"></div>
+<div class="h-full w-1/3 bg-secondary-container"></div>
+</div>
+<div class="p-6 md:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-surface-container-lowest">
+<div class="flex flex-col gap-2 max-w-3xl">
+<div class="flex items-center gap-3">
+<span class="px-2.5 py-1 bg-secondary-container border-[2px] border-on-surface font-label-mono text-label-mono uppercase font-bold text-on-surface">EDU-AI V3.2 ONLINE</span>
+<span class="flex items-center gap-1.5 font-label-mono text-label-mono text-primary font-bold">
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></span>
+            KHO NGUYÊN BẢN VIVIORA
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg uppercase tracking-wide text-on-surface">
+          VIVIORA AI BOOK BOT <span class="text-primary">/</span> TRỢ LÝ TƯ VẤN SÁCH THÔNG MINH
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant font-medium">
+          Hỏi AI để tìm cuốn sách phù hợp với lứa tuổi, sở thích, tâm trạng hoặc đề cương học tập trong toàn bộ thư viện số Viviora.
+        </p>
+</div>
+<div class="flex flex-wrap sm:flex-nowrap items-center gap-3 self-start lg:self-center">
+<button class="px-5 py-3 border-[3px] border-on-surface bg-secondary-container text-on-surface font-headline-md text-headline-md uppercase neo-shadow hover:bg-secondary-fixed active:translate-x-1 active:translate-y-1 transition-all flex items-center gap-2" id="btnNewChat">
+<span class="material-symbols-outlined text-[22px] font-bold">add_box</span>
+          + CUỘC TRÒ CHUYỆN MỚI
+        </button>
+<button class="px-4 py-3 border-[3px] border-on-surface bg-surface-container-lowest text-on-surface font-headline-md text-headline-md uppercase neo-shadow hover:bg-surface-container-high active:translate-x-1 active:translate-y-1 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[22px] text-primary">bolt</span>
+          CHẾ ĐỘ TƯ VẤN NHANH
+        </button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-4 xl:col-span-3 flex flex-col gap-6">
+<div class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow flex flex-col overflow-hidden">
+<div class="h-2 w-full bg-primary"></div>
+<div class="p-4 border-b-[3px] border-on-surface bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">history</span>
+<span class="font-headline-md text-headline-md uppercase text-on-surface">LỊCH SỬ TƯ VẤN</span>
+</div>
+<span class="font-label-mono text-label-mono px-2 py-0.5 border-[2px] border-on-surface bg-surface-container-lowest">4 PHIÊN</span>
+</div>
+<div class="p-4 border-b-[3px] border-on-surface bg-surface-container-lowest">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface text-[18px]">search</span>
+<input class="w-full bg-surface border-[2px] border-on-surface pl-9 pr-3 py-1.5 font-label-mono text-label-mono text-on-surface focus:outline-none focus:neo-shadow-sm transition-all placeholder:text-on-surface/50" placeholder="Lọc hội thoại cũ..." type="text"/>
+</div>
+</div>
+<div class="flex flex-col divide-y-[2px] divide-on-surface">
+<button class="p-3.5 text-left bg-primary-fixed border-l-4 border-l-primary hover:bg-primary-fixed-dim transition-colors group flex items-start justify-between">
+<div>
+<div class="font-headline-md text-[16px] uppercase text-on-surface group-hover:text-primary transition-colors">Truyện phiêu lưu kỳ ảo</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant mt-0.5">Vừa xong • 3 sách đề xuất</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-primary">arrow_forward_ios</span>
+</button>
+<button class="p-3.5 text-left bg-surface-container-lowest hover:bg-surface-container-high transition-colors group flex items-start justify-between">
+<div>
+<div class="font-headline-md text-[16px] uppercase text-on-surface group-hover:text-primary transition-colors">Gợi ý sách khoa học lớp 8</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant mt-0.5">Hôm qua • 2 bộ đề quiz</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward_ios</span>
+</button>
+<button class="p-3.5 text-left bg-surface-container-lowest hover:bg-surface-container-high transition-colors group flex items-start justify-between">
+<div>
+<div class="font-headline-md text-[16px] uppercase text-on-surface group-hover:text-primary transition-colors">Sách học giỏi Văn 9</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant mt-0.5">3 ngày trước • Phân tích thơ</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward_ios</span>
+</button>
+<button class="p-3.5 text-left bg-surface-container-lowest hover:bg-surface-container-high transition-colors group flex items-start justify-between">
+<div>
+<div class="font-headline-md text-[16px] uppercase text-on-surface group-hover:text-primary transition-colors">Sách chữa lành tâm hồn</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant mt-0.5">04/10 • Dành cho cuối tuần</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward_ios</span>
+</button>
+</div>
+</div>
+<div class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow p-5 flex flex-col gap-3">
+<div class="flex items-center gap-2 border-b-[2px] border-on-surface pb-2">
+<span class="material-symbols-outlined text-[20px] text-tertiary">tips_and_updates</span>
+<span class="font-headline-md text-headline-md uppercase text-on-surface">CÂU HỎI MẪU (PROMPT)</span>
+</div>
+<p class="font-metadata text-metadata text-on-surface-variant">Nhấp nhanh để điền câu lệnh tư vấn:</p>
+<div class="flex flex-col gap-2">
+<button class="prompt-pill text-left px-3 py-2 border-[2px] border-on-surface bg-surface hover:bg-secondary-container font-label-mono text-label-mono text-on-surface transition-all flex items-center justify-between">
+<span>"Tìm sách theo tâm trạng mệt mỏi"</span>
+<span class="material-symbols-outlined text-[16px]">touch_app</span>
+</button>
+<button class="prompt-pill text-left px-3 py-2 border-[2px] border-on-surface bg-surface hover:bg-secondary-container font-label-mono text-label-mono text-on-surface transition-all flex items-center justify-between">
+<span>"Sách bổ trợ Toán 9 logic hay"</span>
+<span class="material-symbols-outlined text-[16px]">touch_app</span>
+</button>
+<button class="prompt-pill text-left px-3 py-2 border-[2px] border-on-surface bg-surface hover:bg-secondary-container font-label-mono text-label-mono text-on-surface transition-all flex items-center justify-between">
+<span>"Top 5 sách bán chạy nhất tuần"</span>
+<span class="material-symbols-outlined text-[16px]">touch_app</span>
+</button>
+<button class="prompt-pill text-left px-3 py-2 border-[2px] border-on-surface bg-surface hover:bg-secondary-container font-label-mono text-label-mono text-on-surface transition-all flex items-center justify-between">
+<span>"Sách dễ đọc dưới 200 trang"</span>
+<span class="material-symbols-outlined text-[16px]">touch_app</span>
+</button>
+</div>
+</div>
+<div class="border-[3px] border-on-surface bg-secondary-container neo-shadow p-5 flex flex-col gap-3">
+<div class="flex items-center justify-between border-b-[2px] border-on-surface pb-2">
+<span class="font-headline-md text-headline-md uppercase text-on-surface">HỒ SƠ ĐỘC GIẢ</span>
+<span class="font-label-mono text-label-mono bg-on-surface text-surface-container-lowest px-2 py-0.5">PRO PROFILE</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 border-[2px] border-on-surface bg-primary text-on-primary flex items-center justify-center font-headline-md text-[20px]">
+            LV12
+          </div>
+<div>
+<div class="font-headline-md text-[18px] uppercase text-on-surface">HỌC SINH TÍCH CỰC</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant font-bold">Cấp độ đọc: Level 12 / 50</div>
+</div>
+</div>
+<div class="w-full bg-surface border-[2px] border-on-surface h-3">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-2 border-t-[2px] border-on-surface font-label-mono text-label-mono">
+<div class="p-2 bg-surface-container-lowest border-[2px] border-on-surface">
+<div class="text-on-surface-variant">ĐÃ TƯ VẤN:</div>
+<div class="font-headline-md text-[18px] text-primary">24 CUỐN</div>
+</div>
+<div class="p-2 bg-surface-container-lowest border-[2px] border-on-surface">
+<div class="text-on-surface-variant">ĐÃ LƯU TỦ:</div>
+<div class="font-headline-md text-[18px] text-tertiary">8 CUỐN</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-8 xl:col-span-9 flex flex-col border-[3px] border-on-surface bg-surface-container-lowest neo-shadow min-h-[750px] relative">
+<div class="h-3 w-full flex">
+<div class="h-full w-1/4 bg-tertiary"></div>
+<div class="h-full w-2/4 bg-primary"></div>
+<div class="h-full w-1/4 bg-secondary-container"></div>
+</div>
+<div class="p-4 border-b-[3px] border-on-surface bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 border-[2px] border-on-surface bg-primary flex items-center justify-center text-on-primary font-bold">
+            AI
+          </div>
+<div>
+<div class="font-headline-md text-headline-md uppercase text-on-surface">VIVIORA ENGINE CO-READER</div>
+<div class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-600 inline-block"></span>
+              KẾT NỐI: CSDL THƯ VIỆN BẢN QUYỀN
+            </div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 border-[2px] border-on-surface bg-surface hover:bg-surface-container-high font-label-mono text-label-mono flex items-center gap-1" title="Lưu phiên chat">
+<span class="material-symbols-outlined text-[16px]">bookmark_add</span>
+<span class="hidden sm:inline">LƯU CUỘC TRÒ CHUYỆN</span>
+</button>
+<button class="w-8 h-8 border-[2px] border-on-surface bg-surface hover:bg-error-container hover:text-error flex items-center justify-center transition-colors" title="Xóa lịch sử">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex-1 p-4 md:p-6 flex flex-col gap-6 overflow-y-auto max-h-[620px]" id="chatStream">
+<div class="flex items-start gap-4 max-w-3xl">
+<div class="w-10 h-10 border-[3px] border-on-surface bg-secondary-container neo-shadow-sm flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[24px]">smart_toy</span>
+</div>
+<div class="flex flex-col gap-3">
+<div class="border-[3px] border-on-surface bg-surface p-4 neo-shadow-sm flex flex-col gap-2">
+<div class="font-label-mono text-label-mono text-primary font-bold uppercase tracking-wider flex items-center gap-1.5">
+<span>VIVIORA BOT</span>
+<span class="text-on-surface-variant">• 09:30 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                Chào bạn! Mình là AI trợ lý đọc sách của Viviora. Mình có thể quét hơn 15.000 đầu sách học đường được phân loại kỹ lưỡng theo độ tuổi, chương trình học phổ thông và sở thích cá nhân.
+              </p>
+<p class="font-body-md text-body-md text-on-surface font-medium">
+                Bạn muốn khám phá nhanh thể loại nào hôm nay?
+              </p>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 border-[2px] border-on-surface bg-surface-container-lowest hover:bg-primary hover:text-on-primary transition-all font-label-mono text-label-mono uppercase neo-shadow-sm">
+                📚 VĂN HỌC CỔ ĐIỂN
+              </button>
+<button class="px-3 py-1.5 border-[2px] border-on-surface bg-surface-container-lowest hover:bg-primary hover:text-on-primary transition-all font-label-mono text-label-mono uppercase neo-shadow-sm">
+                🚀 KHOA HỌC VŨ TRỤ
+              </button>
+<button class="px-3 py-1.5 border-[2px] border-on-surface bg-surface-container-lowest hover:bg-primary hover:text-on-primary transition-all font-label-mono text-label-mono uppercase neo-shadow-sm">
+                🌱 KỸ NĂNG SỐNG &amp; TÂM LÝ
+              </button>
+</div>
+</div>
+</div>
+<div class="flex items-start justify-end gap-4 max-w-3xl self-end">
+<div class="flex flex-col items-end gap-1">
+<div class="border-[3px] border-on-surface bg-primary text-on-primary p-4 neo-shadow-sm max-w-xl">
+<div class="font-label-mono text-label-mono text-primary-fixed font-bold uppercase mb-1 text-right">
+                ĐỘC GIẢ (BẠN) • 09:32 AM
+              </div>
+<p class="font-body-md text-body-md leading-relaxed text-left text-on-primary">
+                Em đang học lớp 9, thích đọc truyện trinh thám pha chút khoa học viễn tưởng, có cuốn nào hay trong thư viện trường mình không ạ?
+              </p>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">ĐÃ GỬI &amp; ĐÃ ĐỌC</span>
+</div>
+<div class="w-10 h-10 border-[3px] border-on-surface bg-surface-container-lowest neo-shadow-sm flex-shrink-0 flex items-center justify-center font-headline-md text-primary">
+            ME
+          </div>
+</div>
+<div class="flex items-start gap-4 max-w-4xl">
+<div class="w-10 h-10 border-[3px] border-on-surface bg-secondary-container neo-shadow-sm flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[24px]">smart_toy</span>
+</div>
+<div class="flex flex-col gap-4 w-full">
+<div class="border-[3px] border-on-surface bg-surface p-4 neo-shadow-sm">
+<div class="font-label-mono text-label-mono text-primary font-bold uppercase tracking-wider mb-2">
+                PHÂN TÍCH TỪ VIVIORA AI
+              </div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                Tuyệt vời! Ở lứa tuổi Lớp 9, bạn đã có tư duy logic phản biện rất tốt. Sự kết hợp giữa <strong>Trinh Thám Suy Luận</strong> và <strong>Khoa Học Viễn Tưởng</strong> sẽ giúp kích thích trí tò mò mà không bị nhàm chán. Trong kho sách thư viện Viviora, mình tìm thấy một tựa sách cực kỳ phù hợp:
+              </p>
+</div>
+<div class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow overflow-hidden">
+<div class="h-2 w-full bg-secondary-container"></div>
+<div class="p-5 flex flex-col md:flex-row gap-5">
+<div class="w-full md:w-44 flex-shrink-0 flex flex-col gap-2">
+<div class="relative w-full aspect-[3/4] border-[3px] border-on-surface bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Bìa sách đồ họa phong cách Neo-Brutalist hiện đại, tựa đề Chiến Hạm Không Gian Toán Học với hình vẽ phi thuyền không gian hình học đa giác, màu xanh dương electric blue và vàng dạ quang, nền đen sắc nét tương phản cao." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeErkSleQQCJqjIQkj4zkfZTsjEuJCgBA-nb9J959IUqnMTZQ1KGORUYnawVxhSpM7qStrCj8CKP53ZRia2JyeOavAdcaZTIDk74F3-rsbWuUUfp-BupwQ0pgmO4hEp_ZdkPRFXT2akXUTZ43f-PmDM2cdW5tudkJJh79I-eB9HeteOSF0BJg_wHSPfNux2O4y23PMUmbLwuIo33K3OvuRornjju837lv6NGIctB8ScHBL4u3pGYjWzw"/>
+<span class="absolute top-2 left-2 bg-on-surface text-surface-container-lowest font-label-mono text-label-mono px-2 py-0.5 border border-surface">HOT PICK</span>
+</div>
+<div class="font-label-mono text-label-mono text-center text-on-surface-variant">MÃ SÁCH: #VV-SCI-904</div>
+</div>
+<div class="flex-1 flex flex-col justify-between gap-4">
+<div class="flex flex-col gap-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2 py-0.5 bg-primary-fixed text-on-primary-fixed border border-on-surface font-label-mono text-label-mono uppercase font-bold">KHOA HỌC VIỄN TƯỞNG</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface border border-on-surface font-label-mono text-label-mono uppercase">TRINH THÁM HỌC ĐƯỜNG</span>
+<span class="px-2 py-0.5 bg-secondary-container text-on-surface border border-on-surface font-label-mono text-label-mono uppercase font-bold">PHÙ HỢP: LỚP 8-10</span>
+</div>
+<h2 class="font-headline-lg text-[28px] uppercase tracking-normal text-on-surface leading-tight mt-1">
+                      CHIẾN HẠM KHÔNG GIAN TOÁN HỌC
+                    </h2>
+<div class="font-body-md text-body-md text-on-surface-variant font-semibold">
+                      Tác giả: GS. Nguyễn Khải Minh • NXB Tri Thức Trẻ • Độ dài: 248 Trang
+                    </div>
+<div class="p-3 bg-surface-container-low border-[2px] border-on-surface mt-1">
+<div class="font-label-mono text-label-mono text-tertiary font-bold uppercase mb-0.5">LÝ DO AI ĐỀ XUẤT:</div>
+<p class="font-body-md text-body-md text-on-surface">
+                        Cốt truyện xoay quanh vụ án biến mất bí ẩn của phi hành đoàn trên trạm quỹ đạo Alpha. Nhân vật chính (15 tuổi) phải dùng các định lý hình học và giải mã mật mã để truy tìm thủ phạm trước khi nguồn oxy cạn kiệt. Vừa hồi hộp nghẹt thở, vừa ứng dụng kiến thức Toán - Lý lớp 9 thực tế.
+                      </p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-2.5 pt-2">
+<button class="px-4 py-2 bg-primary text-on-primary border-[2px] border-on-surface font-headline-md text-[16px] uppercase neo-shadow-sm hover:bg-primary-container active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">bookmark_add</span>
+                      + THÊM VÀO KHO SÁCH
+                    </button>
+<button class="px-4 py-2 bg-surface-container-lowest text-on-surface border-[2px] border-on-surface font-headline-md text-[16px] uppercase neo-shadow-sm hover:bg-surface-container-high active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">chrome_reader_mode</span>
+                      ĐỌC THỬ CHƯƠNG 1
+                    </button>
+<button class="px-4 py-2 bg-secondary-container text-on-surface border-[2px] border-on-surface font-headline-md text-[16px] uppercase neo-shadow-sm hover:bg-secondary-fixed active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">sports_esports</span>
+                      CHƠI MINIGAME SÁCH
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 pt-1">
+<div class="font-label-mono text-label-mono text-on-surface-variant uppercase font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">reply_all</span>
+                CÂU HỎI TIẾP THEO BẠN CÓ THỂ MUỐN HỎI:
+              </div>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 border-[2px] border-on-surface bg-surface-container-low hover:bg-surface-container-high font-label-mono text-label-mono text-on-surface transition-all flex items-center gap-1">
+<span>"Tác giả cuốn này còn sách nào tương tự không?"</span>
+<span class="material-symbols-outlined text-[14px]">send</span>
+</button>
+<button class="px-3 py-1.5 border-[2px] border-on-surface bg-surface-container-low hover:bg-surface-container-high font-label-mono text-label-mono text-on-surface transition-all flex items-center gap-1">
+<span>"Tìm cuốn cùng thể loại nhưng dưới 150 trang"</span>
+<span class="material-symbols-outlined text-[14px]">send</span>
+</button>
+<button class="px-3 py-1.5 border-[2px] border-on-surface bg-surface-container-low hover:bg-surface-container-high font-label-mono text-label-mono text-on-surface transition-all flex items-center gap-1">
+<span>"Bộ đề thi trắc nghiệm của sách này có khó không?"</span>
+<span class="material-symbols-outlined text-[14px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 md:p-6 border-t-[3px] border-on-surface bg-surface-container-lowest flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 border-[2px] border-on-surface bg-surface-container-low hover:bg-secondary-container font-label-mono text-label-mono text-on-surface flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+              LỌC SỞ THÍCH
+            </button>
+<button class="px-2.5 py-1 border-[2px] border-on-surface bg-surface-container-low hover:bg-secondary-container font-label-mono text-label-mono text-on-surface flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+              CHỌN CẤP LỚP (LỚP 9)
+            </button>
+<button class="hidden sm:flex px-2.5 py-1 border-[2px] border-on-surface bg-surface-container-low hover:bg-secondary-container font-label-mono text-label-mono text-on-surface items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">lightbulb</span>
+              PROMPT MẪU
+            </button>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant hidden md:inline">ENTER ĐỂ GỬI • ESC ĐỂ XÓA</span>
+</div>
+<div class="flex items-stretch gap-3">
+<div class="relative flex-1">
+<textarea class="w-full bg-surface border-[3px] border-on-surface p-3 font-body-md text-body-md text-on-surface focus:outline-none focus:neo-shadow transition-all resize-none placeholder:text-on-surface/50" id="chatInput" placeholder="Nhập sở thích, tâm trạng hoặc đề tài học tập để Viviora AI gợi ý chính xác nhất..." rows="2"></textarea>
+<div class="absolute right-3 bottom-3 flex items-center gap-2">
+<button class="w-8 h-8 rounded-none border-[2px] border-on-surface bg-surface hover:bg-surface-container-high flex items-center justify-center text-on-surface" title="Thu âm giọng nói">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+</button>
+</div>
+</div>
+<button class="px-6 md:px-8 border-[3px] border-on-surface bg-primary text-on-primary font-headline-md text-headline-md uppercase neo-shadow hover:bg-primary-container active:translate-x-1 active:translate-y-1 transition-all flex flex-col items-center justify-center gap-1 flex-shrink-0" id="sendBtn">
+<span class="material-symbols-outlined text-[26px]">arrow_upward</span>
+<span class="text-[14px]">GỬI TIN</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const stream = document.getElementById('chatStream');
+    const promptPills = document.querySelectorAll('.prompt-pill');
+
+    promptPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const text = pill.querySelector('span').innerText.replace(/["']/g, '');
+        input.value = text;
+        input.focus();
+      });
+    });
+
+    function appendMessage() {
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      const userDiv = document.createElement('div');
+      userDiv.className = 'flex items-start justify-end gap-4 max-w-3xl self-end';
+      userDiv.innerHTML = `
+        <div class="flex flex-col items-end gap-1">
+          <div class="border-[3px] border-on-surface bg-primary text-on-primary p-4 neo-shadow-sm max-w-xl">
+            <div class="font-label-mono text-label-mono text-primary-fixed font-bold uppercase mb-1 text-right">
+              ĐỘC GIẢ (BẠN) • VỪA XONG
+            </div>
+            <p class="font-body-md text-body-md leading-relaxed text-left text-on-primary">${escapeHtml(msg)}</p>
+          </div>
+          <span class="font-label-mono text-label-mono text-on-surface-variant">ĐANG XỬ LÝ...</span>
+        </div>
+        <div class="w-10 h-10 border-[3px] border-on-surface bg-surface-container-lowest neo-shadow-sm flex-shrink-0 flex items-center justify-center font-headline-md text-primary">
+          ME
+        </div>
+      `;
+      stream.appendChild(userDiv);
+      input.value = '';
+      stream.scrollTop = stream.scrollHeight;
+
+      setTimeout(() => {
+        const botDiv = document.createElement('div');
+        botDiv.className = 'flex items-start gap-4 max-w-3xl';
+        botDiv.innerHTML = `
+          <div class="w-10 h-10 border-[3px] border-on-surface bg-secondary-container neo-shadow-sm flex-shrink-0 flex items-center justify-center">
+            <span class="material-symbols-outlined text-on-surface text-[24px]">smart_toy</span>
+          </div>
+          <div class="flex flex-col gap-3">
+            <div class="border-[3px] border-on-surface bg-surface p-4 neo-shadow-sm flex flex-col gap-2">
+              <div class="font-label-mono text-label-mono text-primary font-bold uppercase tracking-wider flex items-center gap-1.5">
+                <span>VIVIORA BOT</span>
+                <span class="text-on-surface-variant">• VỪA XONG</span>
+              </div>
+              <p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                Hệ thống đã nhận diện yêu cầu: "<em>${escapeHtml(msg)}</em>". Đang tra cứu cơ sở dữ liệu sách tương thích tại Viviora Hub...
+              </p>
+            </div>
+          </div>
+        `;
+        stream.appendChild(botDiv);
+        stream.scrollTop = stream.scrollHeight;
+      }, 700);
+    }
+
+    sendBtn.addEventListener('click', appendMessage);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        appendMessage();
+      }
+    });
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, (m) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      }[m]));
+    }
+  });
+</script></main></div></body></html>

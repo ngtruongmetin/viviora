@@ -176,6 +176,20 @@ ensure_env() {
   chmod 600 "$ENV_FILE"
 }
 
+ensure_ai_secret() {
+  local secret_dir="$REPO_ROOT/deploy/secrets" secret_file="$REPO_ROOT/deploy/secrets/ai_config_key"
+  if ((DRY_RUN)); then
+    log "Would ensure Docker secret at deploy/secrets/ai_config_key."
+    return
+  fi
+  install -d -m 0700 "$secret_dir"
+  if [[ ! -s "$secret_file" ]]; then
+    umask 077
+    random_secret > "$secret_file"
+  fi
+  chmod 0400 "$secret_file"
+}
+
 check_dns() {
   [[ "$MODE" == "host" ]] || return 0
   ((DRY_RUN)) && { log "Would verify DNS for $DOMAIN against this VPS public IP."; return 0; }
@@ -290,6 +304,7 @@ main() {
   ensure_docker
   if [[ "$MODE" == "host" ]]; then apt_install nginx; fi
   ensure_env
+  ensure_ai_secret
   deploy_compose
   wait_for_backend
   if [[ "$MODE" == "host" ]]; then

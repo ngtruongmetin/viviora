@@ -32,6 +32,8 @@ import { TreasureHuntMockup } from '../game/mockups/TreasureHuntMockup';
 import { GameManagementPage } from '../pages/game/GameManagementPage';
 import { GamePlayPage } from '../pages/game/GamePlayPage';
 import { WeeklyMissionsPage } from '../pages/WeeklyMissionsPage';
+import { AiAdvisorPage } from '../pages/ai/AiAdvisorPage';
+import { AiAdminPage } from '../pages/ai/AiAdminPage';
 
 function ProfileAliasRedirect() {
   const { user } = useAuth();
@@ -63,6 +65,7 @@ export function AppRoutes() {
                 <Route path="/bang-tin" element={<FeedPage />} />
                 <Route path="/bang-xep-hang" element={<LeaderboardPage />} />
                 <Route path="/nhiem-vu-tuan" element={<WeeklyMissionsPage />} />
+                <Route path="/tu-van-ai" element={<AiAdvisorPage />} />
                 <Route path="/ho-so" element={<ProfileAliasRedirect />} />
                 <Route path="/nguoi-dung/:userId" element={<PublicProfilePage />} />
                 <Route path="/duyet-bai" element={<ModerationPage />} />
@@ -113,6 +116,10 @@ export function AppRoutes() {
                       <LibraryImportPage />
                     </RequireAdmin>
                   }
+                />
+                <Route
+                  path="/quan-tri/cau-hinh-ai"
+                  element={<RequireAdmin><AiAdminPage /></RequireAdmin>}
                 />
                 <Route
                   path="/quan-tri/thanh-vien"

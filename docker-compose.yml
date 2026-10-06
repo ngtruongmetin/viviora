@@ -43,6 +43,10 @@ services:
     volumes:
       - ./backend/uploads:/app/uploads
       - ./backend/backups:/app/backups
+    secrets:
+      - source: ai_config_key
+        target: ai_config_key
+        mode: 0400
     depends_on:
       vv-postgres:
         condition: service_healthy
@@ -64,3 +68,7 @@ services:
     depends_on:
       vv-backend:
         condition: service_healthy
+
+secrets:
+  ai_config_key:
+    file: ./deploy/secrets/ai_config_key

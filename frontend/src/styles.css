@@ -11,6 +11,76 @@
   --green: #168a4a;
   --ink: #111;
 }
+
+/* AI book advisor */
+.ai-advisor-page, .ai-admin-page { display: grid; gap: 24px; }
+.ai-hero { min-height: 185px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px 32px; background: #fff; border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); position: relative; overflow: hidden; }
+.ai-hero::after { content: ''; position: absolute; width: 135px; height: 135px; right: -55px; bottom: -55px; border: 3px solid var(--ink); background: var(--yellow); transform: rotate(25deg); }
+.ai-hero > * { z-index: 1; }
+.ai-hero h1 { margin: 5px 0 8px; font: 48px/.95 'Anton'; color: var(--blue); text-transform: uppercase; }
+.ai-hero p { max-width: 690px; margin: 0; font-size: 19px; line-height: 1.4; }
+.ai-hero > svg { color: var(--blue); flex: 0 0 auto; }
+.ai-advisor-layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 20px; align-items: start; }
+.ai-history, .ai-chat, .ai-config-panel, .ai-stat { border: 3px solid var(--ink); background: #fff; box-shadow: 4px 4px 0 var(--ink); }
+.ai-history { padding: 14px; display: grid; gap: 14px; }
+.ai-history .button { justify-content: center; }
+.ai-history-list { display: grid; gap: 8px; max-height: 530px; overflow: auto; }
+.ai-history-list > button { position: relative; display: grid; gap: 3px; width: 100%; min-height: 61px; padding: 9px 30px 9px 10px; border: 2px solid var(--ink); background: #fff; text-align: left; cursor: pointer; }
+.ai-history-list > button.active { background: var(--yellow); box-shadow: 2px 2px 0 var(--ink); }
+.ai-history-list span { font: 16px/1 'Anton'; text-transform: uppercase; }
+.ai-history-list small { overflow: hidden; color: #555; text-overflow: ellipsis; white-space: nowrap; }
+.ai-history-list i { position: absolute; top: 8px; right: 7px; display: grid; place-items: center; color: var(--red); font-style: normal; }
+.ai-chat { min-height: 620px; display: flex; flex-direction: column; }
+.ai-chat-head { display: flex; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 3px solid var(--ink); background: var(--yellow); }
+.ai-chat-head strong { font: 22px/1 'Anton'; text-transform: uppercase; }
+.ai-chat-head span { align-self: center; padding: 3px 6px; border: 2px solid var(--ink); background: #fff; font: 11px 'Space Mono'; }
+.ai-message-list { flex: 1; min-height: 360px; max-height: 590px; overflow: auto; padding: 20px; display: grid; align-content: start; gap: 18px; background-image: radial-gradient(#d5d5d5 1px, transparent 1px); background-size: 18px 18px; }
+.ai-message { max-width: min(720px, 94%); padding: 13px 15px; border: 3px solid var(--ink); background: #fff; box-shadow: 3px 3px 0 var(--ink); }
+.ai-message.user { justify-self: end; background: #dde1ff; }
+.ai-message b { display: block; margin-bottom: 6px; color: var(--blue); font: 12px 'Space Mono'; }
+.ai-message.user b { color: #111; }
+.ai-message p { white-space: pre-wrap; margin: 0; font-size: 17px; line-height: 1.45; }
+.ai-message-markdown > :first-child { margin-top: 0; }
+.ai-message-markdown > :last-child { margin-bottom: 0; }
+.ai-message-markdown h1, .ai-message-markdown h2, .ai-message-markdown h3 { margin: 14px 0 7px; font-family: 'Anton'; line-height: 1; text-transform: uppercase; }
+.ai-message-markdown h1 { font-size: 27px; }.ai-message-markdown h2 { font-size: 23px; }.ai-message-markdown h3 { font-size: 19px; }
+.ai-message-markdown ul, .ai-message-markdown ol { margin: 9px 0; padding-left: 22px; }.ai-message-markdown li { margin: 4px 0; }
+.ai-message-markdown a { color: var(--blue); font-weight: 700; }.ai-message-markdown table { width: 100%; margin: 10px 0; border-collapse: collapse; font-size: 14px; }.ai-message-markdown th, .ai-message-markdown td { border: 1px solid var(--ink); padding: 5px; text-align: left; }
+.ai-empty { display: grid; justify-items: center; gap: 9px; padding: 75px 25px; color: #555; text-align: center; }
+.ai-empty svg { color: var(--blue); }
+.ai-prompts { padding: 0 16px 12px; display: flex; flex-wrap: wrap; gap: 7px; }
+.ai-prompts button { padding: 6px 8px; border: 2px solid var(--ink); background: #fff; font: 11px 'Space Mono'; cursor: pointer; }
+.ai-prompts button:hover { background: var(--yellow); }
+.ai-composer { display: flex; gap: 10px; padding: 14px; border-top: 3px solid var(--ink); background: #f1f1f1; }
+.ai-composer textarea { min-height: 58px; flex: 1; resize: vertical; border: 3px solid var(--ink); padding: 10px; font: 16px 'Archivo Narrow'; }
+.ai-composer .button { width: 55px; padding: 0; justify-content: center; }
+.ai-book-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 9px; margin-top: 13px; }
+.ai-book-cards a { display: grid; gap: 3px; border: 2px solid var(--ink); padding: 7px; background: #fff; color: var(--ink); text-decoration: none; }
+.ai-book-cards a.has-cover { grid-template-columns: 34px 1fr; column-gap: 8px; }
+.ai-book-cover { grid-row: span 2; width: 34px; height: 42px; object-fit: cover; }
+.ai-book-cards strong { font: 14px/1.05 'Anton'; text-transform: uppercase; }
+.ai-book-cards small { align-self: end; line-height: 1.1; }
+.ai-stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; }
+.ai-stat { display: grid; grid-template-columns: 40px 1fr; align-items: center; min-height: 90px; padding: 12px; }
+.ai-stat > span { grid-row: span 2; color: var(--blue); }
+.ai-stat small { font: 11px 'Space Mono'; }
+.ai-stat strong { font: 29px/1 'Anton'; }
+.ai-config-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 21px; align-items: start; }
+.ai-config-panel { padding: 20px; display: grid; gap: 15px; }
+.ai-config-panel header { display: flex; align-items: center; gap: 10px; border-bottom: 3px solid var(--ink); padding-bottom: 11px; }
+.ai-config-panel header span { padding: 4px 7px; background: var(--blue); color: #fff; border: 2px solid var(--ink); font: 12px 'Space Mono'; }
+.ai-config-panel h2 { margin: 0; font: 25px/1 'Anton'; }
+.ai-config-panel label { display: grid; gap: 6px; font: 13px 'Space Mono'; }
+.ai-config-panel label small { color: #666; }
+.ai-config-panel input, .ai-config-panel select, .ai-config-panel textarea { width: 100%; box-sizing: border-box; border: 3px solid var(--ink); padding: 9px; background: #fff; font: 16px 'Archivo Narrow'; }
+.ai-config-panel textarea { resize: vertical; }
+.ai-inline { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ai-switch { grid-template-columns: auto 1fr; align-items: center; cursor: pointer; }
+.ai-switch input { width: 20px; height: 20px; }
+.ai-note { display: flex; align-items: flex-start; gap: 8px; margin: 0; color: #454545; }
+.ai-admin-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 3px; }
+@media (max-width: 850px) { .ai-advisor-layout, .ai-config-grid { grid-template-columns: 1fr; } .ai-history-list { max-height: 170px; } .ai-hero h1 { font-size: 37px; } }
+@media (max-width: 560px) { .ai-hero { padding: 20px; } .ai-hero > svg { display: none; } .ai-stat-grid { grid-template-columns: 1fr; } .ai-message-list { padding: 13px; } .ai-inline { grid-template-columns: 1fr; } }
 .achievement-celebration-backdrop {
   position: fixed;
   inset: 0;

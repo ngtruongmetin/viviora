@@ -145,6 +145,10 @@ export interface Book {
   reading_status?: 'WANT_TO_READ' | 'READING' | 'COMPLETED' | null;
   progress?: number;
   minutes?: number;
+  game_count?: number;
+  review_count?: number;
+  reader_count?: number;
+  trending_score?: number;
 }
 
 export interface LibraryImportPreview {

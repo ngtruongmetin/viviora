@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.neo-shadow{box-shadow:4px 4px 0px #000000;}.neo-shadow-sm{box-shadow:2px 2px 0px #000000;}.bg-grid-dots{background-image:radial-gradient(#1b1b1b 1px,transparent 1px);background-size:20px 20px;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"primary-container":"#2d5bff","surface-container-high":"#e8e8e8","error-container":"#ffdad6","primary-fixed":"#dde1ff","on-tertiary-container":"#ffece8","secondary":"#626200","surface-tint":"#104af0","on-background":"#1b1b1b","tertiary-container":"#ce3000","primary":"#0040df","tertiary-fixed-dim":"#ffb4a2","on-primary-fixed-variant":"#0035bd","surface-bright":"#f9f9f9","surface-dim":"#dadada","on-primary-fixed":"#001355","on-tertiary-fixed":"#3c0700","outline-variant":"#c4c5d9","primary-fixed-dim":"#b8c3ff","inverse-primary":"#b8c3ff","on-error":"#ffffff","surface":"#f9f9f9","background":"#f9f9f9","on-secondary-fixed-variant":"#494900","secondary-container":"#e7e700","on-primary":"#ffffff","tertiary-fixed":"#ffdad2","surface-variant":"#e2e2e2","surface-container":"#eeeeee","outline":"#747688","surface-container-lowest":"#ffffff","on-primary-container":"#efefff","on-tertiary":"#ffffff","on-surface-variant":"#434656","on-secondary":"#ffffff","on-secondary-container":"#666600","error":"#ba1a1a","secondary-fixed":"#eaea00","inverse-on-surface":"#f1f1f1","on-secondary-fixed":"#1d1d00","on-error-container":"#93000a","tertiary":"#a32400","surface-container-highest":"#e2e2e2","on-tertiary-fixed-variant":"#8a1d00","on-surface":"#1b1b1b","inverse-surface":"#303030","surface-container-low":"#f3f3f3","secondary-fixed-dim":"#cdcd00"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin-desktop":"40px","margin-mobile":"16px","shadow-offset":"4px","unit":"4px","border-width":"3px","gutter":"16px"},"fontFamily":{"display-xl":["Anton"],"headline-lg":["Anton"],"body-lg":["Archivo Narrow"],"metadata":["Archivo Narrow"],"body-md":["Archivo Narrow"],"headline-md":["Anton"],"label-mono":["Space Mono"],"headline-lg-mobile":["Anton"]},"fontSize":{"display-xl":["80px",{"lineHeight":"80px","fontWeight":"400"}],"headline-lg":["48px",{"lineHeight":"48px","fontWeight":"400"}],"body-lg":["20px",{"lineHeight":"30px","fontWeight":"400"}],"metadata":["14px",{"lineHeight":"18px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"28px","fontWeight":"400"}],"label-mono":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"700"}],"headline-lg-mobile":["32px",{"lineHeight":"32px","fontWeight":"400"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface bg-grid-dots min-h-screen"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest border-r-[3px] border-on-surface z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-20 border-b-[3px] border-on-surface px-6 flex items-center justify-between bg-secondary-container"><div class="flex items-center gap-2"><div class="w-9 h-9 bg-primary border-[3px] border-on-surface neo-shadow flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[22px]">auto_stories</span></div><span class="font-headline-md text-headline-md tracking-wider uppercase text-on-surface">VIVIORA</span></div><span class="font-label-mono text-label-mono px-2 py-0.5 bg-surface-container-lowest border-[2px] border-on-surface uppercase">EDU-OS</span></div><div class="p-4 border-b-[3px] border-on-surface bg-surface-container-low"><div class="text-label-mono font-label-mono text-on-surface-variant uppercase flex items-center justify-between"><span>Chế độ đọc</span><span class="w-2.5 h-2.5 bg-primary rounded-full animate-pulse"></span></div><div class="font-headline-md text-headline-md uppercase text-primary mt-1">MẠNG XÃ HỘI SÁCH</div></div><nav class="flex flex-col gap-2 p-4" data-active-classes="bg-primary-container text-on-primary-container neo-shadow translate-x-1"><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="trang-chu" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Trang chủ</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="thu-vien" href="#"><span class="material-symbols-outlined text-[20px]">local_library</span><span>Thư viện</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="kho-cau-hoi" href="#"><span class="material-symbols-outlined text-[20px]">quiz</span><span>Kho câu hỏi</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="quan-ly-tro-choi" href="#"><span class="material-symbols-outlined text-[20px]">sports_esports</span><span>Quản lý trò chơi</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="tu-van-ai-doc-gia" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>Tư vấn AI</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="quan-tri-cau-hinh-ai" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span>Cấu hình AI</span></a><a class="flex items-center gap-3 px-3 py-2.5 border-[3px] border-on-surface font-headline-md text-headline-md uppercase text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-all" data-path="quan-tri-he-thong" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Quản trị hệ thống</span></a></nav></div><div class="p-4 border-t-[3px] border-on-surface bg-surface-container-low"><div class="p-3 border-[3px] border-on-surface bg-surface-container-lowest neo-shadow"><div class="flex items-center justify-between mb-1"><span class="font-label-mono text-label-mono text-on-surface-variant uppercase">TOKEN USAGE</span><span class="font-label-mono text-label-mono font-bold text-primary">82%</span></div><div class="w-full h-3 border-[2px] border-on-surface bg-surface-container-high"><div class="h-full bg-secondary-container w-[82%] border-r-[2px] border-on-surface"></div></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-20 bg-surface-container-lowest border-b-[3px] border-on-surface z-40 flex items-center justify-between px-8"><div class="flex items-center gap-4 flex-1 max-w-xl"><div class="relative w-full"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface text-[20px]">search</span><input class="w-full bg-surface-container-lowest border-[3px] border-on-surface pl-10 pr-4 py-2 font-body-md text-body-md text-on-surface placeholder:text-on-surface/60 focus:outline-none focus:ring-0 focus:neo-shadow transition-all" placeholder="Tìm kiếm tựa sách, chủ đề AI, tác giả hoặc bộ đề..." type="text"/></div></div><div class="flex items-center gap-4"><div class="hidden md:flex items-center gap-2 px-3 py-1.5 border-[3px] border-on-surface bg-secondary-container neo-shadow-sm"><span class="material-symbols-outlined text-[18px] text-on-surface">school</span><span class="font-label-mono text-label-mono uppercase text-on-surface">VAI TRÒ: GIÁO VIÊN / ADMIN</span></div><div class="flex items-center gap-2"><button class="w-10 h-10 border-[3px] border-on-surface bg-surface-container-lowest neo-shadow-sm flex items-center justify-center hover:bg-surface-container-high active:translate-x-0.5 active:translate-y-0.5"><span class="material-symbols-outlined text-on-surface text-[20px]">notifications</span></button><button class="w-10 h-10 border-[3px] border-on-surface bg-surface-container-lowest neo-shadow-sm flex items-center justify-center hover:bg-surface-container-high active:translate-x-0.5 active:translate-y-0.5"><span class="material-symbols-outlined text-on-surface text-[20px]">help</span></button></div><div class="flex items-center gap-3 pl-3 border-l-[3px] border-on-surface"><div class="text-right hidden sm:block"><div class="font-headline-md text-[18px] uppercase text-on-surface leading-tight">Thầy Minh Tuấn</div><div class="font-label-mono text-label-mono text-primary font-bold">Ban Giảng Dạy Ngữ Văn</div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<!-- TOAST NOTIFICATION CONTAINER (MICRO-INTERACTION) -->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none" id="toast-container"></div>
+<!-- MAIN WRAPPER WITH RETRO TECHNICAL RHYTHM -->
+<div class="p-4 md:p-8 flex flex-col gap-6 max-w-7xl mx-auto w-full">
+<!-- 1. CONTENT HEADER SECTION -->
+<section class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow relative overflow-hidden">
+<!-- Top Colorful Neo Accent Bar -->
+<div class="h-2.5 w-full bg-gradient-to-r from-primary via-secondary-container to-tertiary-container flex">
+<div class="w-1/3 bg-primary"></div>
+<div class="w-1/3 bg-secondary-container"></div>
+<div class="w-1/3 bg-tertiary-container"></div>
+</div>
+<div class="p-6 md:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+<div class="flex flex-col gap-2 max-w-3xl">
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono bg-on-surface text-surface px-2 py-0.5 uppercase tracking-wider">CORE BACKEND</span>
+<span class="font-label-mono text-label-mono bg-secondary-container text-on-surface border-[2px] border-on-surface px-2 py-0.5 uppercase font-bold">VIVIORA AI RAG V3.2</span>
+<div class="flex items-center gap-1.5 px-2 py-0.5 border-[2px] border-on-surface bg-surface-container-lowest">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span class="font-label-mono text-label-mono text-primary font-bold">ACTIVE ROUTER</span>
+</div>
+</div>
+<h1 class="font-headline-lg text-headline-lg uppercase text-on-surface tracking-wide mt-1">
+            QUẢN TRỊ CẤU HÌNH AI &amp; TRI THỨC SÁCH
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-snug">
+            Thiết lập model LLM, tinh chỉnh System Prompt cốt lõi, quản trị cơ chế Vector Embeddings (RAG) kho sách và thiết lập bộ rào cản an toàn sư phạm cho học sinh.
+          </p>
+</div>
+<!-- Header Action CTA Buttons -->
+<div class="flex flex-wrap sm:flex-nowrap items-center gap-3">
+<button class="px-5 py-3 border-[3px] border-on-surface bg-secondary-container text-on-surface font-headline-md text-headline-md uppercase neo-shadow hover:bg-secondary-fixed active:translate-x-1 active:translate-y-1 transition-all flex items-center gap-2" id="btn-sandbox">
+<span class="material-symbols-outlined text-[20px]">science</span>
+<span>THỬ NGHIỆM PROMPT</span>
+</button>
+<button class="px-6 py-3 border-[3px] border-on-surface bg-primary text-on-primary font-headline-md text-headline-md uppercase neo-shadow hover:bg-primary-container active:translate-x-1 active:translate-y-1 transition-all flex items-center gap-2" id="btn-save-config">
+<span class="material-symbols-outlined text-[20px]">save</span>
+<span>LƯU CẤU HÌNH</span>
+</button>
+</div>
+</div>
+<!-- Blueprint Watermark Detail -->
+<div class="px-6 py-2 border-t-[3px] border-on-surface bg-surface-container-low flex items-center justify-between text-on-surface-variant">
+<span class="font-label-mono text-label-mono">NODE: AP-SOUTHEAST-VN-01 // LATENCY: 34ms // PIPELINE: HYBRID-SEARCH</span>
+<span class="font-label-mono text-label-mono">LAST COMMIT: #cf498a1</span>
+</div>
+</section>
+<!-- 2. AI PERFORMANCE KPI CARDS (4 CARDS WITH TOP ACCENT STRIPS) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1: Tổng lượt tư vấn -->
+<div class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow flex flex-col justify-between relative group hover:-translate-y-0.5 transition-transform">
+<div class="h-2 w-full bg-primary"></div>
+<div class="p-5 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase font-bold">TỔNG LƯỢT TƯ VẤN</span>
+<div class="w-8 h-8 border-[2px] border-on-surface bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[18px]">forum</span>
+</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-on-surface tracking-tight">3,428</div>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="font-label-mono text-label-mono text-primary font-bold px-1.5 py-0.2 bg-primary-fixed-dim border border-on-surface">+142</span>
+<span class="font-metadata text-metadata text-on-surface-variant">lượt trong ngày hôm nay</span>
+</div>
+</div>
+</div>
+<div class="px-5 py-2 border-t-[2px] border-on-surface bg-surface-container-low font-label-mono text-label-mono text-on-surface-variant">
+          QUY MÔ: 12 TRƯỜNG THCS
+        </div>
+</div>
+<!-- Card 2: Sách đã Indexing -->
+<div class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow flex flex-col justify-between relative group hover:-translate-y-0.5 transition-transform">
+<div class="h-2 w-full bg-secondary-container"></div>
+<div class="p-5 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase font-bold">SÁCH ĐÃ INDEX (RAG)</span>
+<div class="w-8 h-8 border-[2px] border-on-surface bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[18px]">database</span>
+</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-on-surface tracking-tight">1,280<span class="text-on-surface-variant text-[24px]">/1,280</span></div>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="w-2.5 h-2.5 bg-secondary-container border border-on-surface"></span>
+<span class="font-metadata text-metadata text-on-surface font-bold">100% Sẵn sàng truy vấn</span>
+</div>
+</div>
+</div>
+<div class="px-5 py-2 border-t-[2px] border-on-surface bg-surface-container-low font-label-mono text-label-mono text-on-surface-variant">
+          EMBED-MODEL: TEXT-EMBED-3
+        </div>
+</div>
+<!-- Card 3: Độ chính xác gợi ý -->
+<div class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow flex flex-col justify-between relative group hover:-translate-y-0.5 transition-transform">
+<div class="h-2 w-full bg-surface-container-high border-b border-on-surface"></div>
+<div class="p-5 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase font-bold">ĐỘ HỮU ÍCH ĐỀ XUẤT</span>
+<div class="w-8 h-8 border-[2px] border-on-surface bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[18px]">thumb_up</span>
+</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-primary tracking-tight">94.6%</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-primary text-[18px]">trending_up</span>
+<span class="font-metadata text-metadata text-on-surface-variant">+2.1% so với tuần trước</span>
+</div>
+</div>
+</div>
+<div class="px-5 py-2 border-t-[2px] border-on-surface bg-surface-container-low font-label-mono text-label-mono text-on-surface-variant">
+          FEEDBACK: 2,118 HỌC SINH
+        </div>
+</div>
+<!-- Card 4: Token tiêu thụ -->
+<div class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow flex flex-col justify-between relative group hover:-translate-y-0.5 transition-transform">
+<div class="h-2 w-full bg-tertiary-container"></div>
+<div class="p-5 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase font-bold">TIÊU THỤ TOKEN THÁNG</span>
+<div class="w-8 h-8 border-[2px] border-on-surface bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-[18px]">memory</span>
+</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-on-surface tracking-tight">1.8M<span class="text-on-surface-variant text-[24px]">/5.0M</span></div>
+<div class="w-full h-3 border-[2px] border-on-surface bg-surface-container-high mt-2">
+<div class="h-full bg-tertiary-container border-r-[2px] border-on-surface" style="width: 36%;"></div>
+</div>
+</div>
+</div>
+<div class="px-5 py-2 border-t-[2px] border-on-surface bg-surface-container-low font-label-mono text-label-mono text-on-surface-variant flex justify-between">
+<span>HẠN MỨC: 36%</span>
+<span class="text-primary font-bold">AN TOÀN</span>
+</div>
+</div>
+</section>
+<!-- 3. MAIN DUAL-COLUMN CONTENT LAYOUT -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- ================= LEFT COLUMN: MODEL CONFIG & SYSTEM PROMPT (60% / col-span-7) ================= -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<!-- 3.1 LLM PROVIDER & MODEL PICKER -->
+<section class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow">
+<!-- Top Accent Line -->
+<div class="h-2 w-full bg-primary"></div>
+<div class="p-5 border-b-[3px] border-on-surface bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-7 h-7 bg-primary text-on-primary border-[2px] border-on-surface font-label-mono text-label-mono flex items-center justify-center font-bold">01</span>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface">LLM ENGINE &amp; PROVIDER</h2>
+</div>
+<span class="font-label-mono text-label-mono bg-surface-container-lowest border-[2px] border-on-surface px-2 py-0.5">SELECT_ROUTER</span>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Chọn mô hình ngôn ngữ làm não bộ phản hồi thông minh cho trợ lý thủ thư Viviora:
+            </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="provider-selector">
+<!-- Gemini 1.5 Pro (Active Selected) -->
+<label class="cursor-pointer border-[3px] border-on-surface p-4 bg-primary-fixed flex flex-col gap-2 relative neo-shadow transition-all provider-radio-card ring-2 ring-primary">
+<input checked="" class="sr-only" name="llm_provider" type="radio" value="gemini"/>
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono px-2 py-0.5 bg-primary text-on-primary font-bold uppercase">KHUYÊN DÙNG</span>
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface uppercase">GEMINI 1.5 PRO</div>
+<p class="font-metadata text-metadata text-on-surface-variant">Cửa sổ ngữ cảnh 1M Tokens, tối ưu hóa phân tích tài liệu và bộ sách ngữ văn lớn.</p>
+<div class="font-label-mono text-label-mono text-on-surface-variant border-t-[2px] border-on-surface pt-2 mt-1">COST: $0.0035 / 1k toks</div>
+</label>
+<!-- OpenAI GPT-4o-mini -->
+<label class="cursor-pointer border-[3px] border-on-surface p-4 bg-surface-container-lowest hover:bg-surface-container-low flex flex-col gap-2 relative neo-shadow-sm transition-all provider-radio-card">
+<input class="sr-only" name="llm_provider" type="radio" value="gpt4o-mini"/>
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono px-2 py-0.5 bg-surface-container-high text-on-surface font-bold uppercase">FAST SPEED</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] radio-indicator">radio_button_unchecked</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface uppercase">GPT-4o MINI</div>
+<p class="font-metadata text-metadata text-on-surface-variant">Phản hồi siêu tốc &lt; 0.4s. Phù hợp tương tác hỏi nhanh trong giờ học của học sinh.</p>
+<div class="font-label-mono text-label-mono text-on-surface-variant border-t-[2px] border-on-surface pt-2 mt-1">COST: $0.0015 / 1k toks</div>
+</label>
+<!-- Claude 3.5 Sonnet -->
+<label class="cursor-pointer border-[3px] border-on-surface p-4 bg-surface-container-lowest hover:bg-surface-container-low flex flex-col gap-2 relative neo-shadow-sm transition-all provider-radio-card">
+<input class="sr-only" name="llm_provider" type="radio" value="claude"/>
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono px-2 py-0.5 bg-surface-container-high text-on-surface font-bold uppercase">CREATIVE WRITING</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] radio-indicator">radio_button_unchecked</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface uppercase">CLAUDE 3.5 SONNET</div>
+<p class="font-metadata text-metadata text-on-surface-variant">Văn phong mượt mà giàu cảm xúc văn học, tạo tóm tắt sâu sắc cho sách triết học.</p>
+<div class="font-label-mono text-label-mono text-on-surface-variant border-t-[2px] border-on-surface pt-2 mt-1">COST: $0.0050 / 1k toks</div>
+</label>
+<!-- Local Llama 3 (Offline Edge) -->
+<label class="cursor-pointer border-[3px] border-on-surface p-4 bg-surface-container-lowest hover:bg-surface-container-low flex flex-col gap-2 relative neo-shadow-sm transition-all provider-radio-card">
+<input class="sr-only" name="llm_provider" type="radio" value="llama3"/>
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono px-2 py-0.5 bg-secondary-container text-on-surface font-bold uppercase">SELF-HOSTED</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] radio-indicator">radio_button_unchecked</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface uppercase">LOCAL LLAMA-3 70B</div>
+<p class="font-metadata text-metadata text-on-surface-variant">Bảo mật dữ liệu nội bộ trường học tuyệt đối, vận hành trên máy chủ On-premise.</p>
+<div class="font-label-mono text-label-mono text-on-surface-variant border-t-[2px] border-on-surface pt-2 mt-1">COST: $0.0000 (LOCAL HOST)</div>
+</label>
+</div>
+</div>
+</section>
+<!-- 3.2 MODEL HYPERPARAMETERS -->
+<section class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow">
+<div class="h-2 w-full bg-secondary-container"></div>
+<div class="p-5 border-b-[3px] border-on-surface bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-7 h-7 bg-secondary-container text-on-surface border-[2px] border-on-surface font-label-mono text-label-mono flex items-center justify-center font-bold">02</span>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface">THAM SỐ MÔ HÌNH (HYPERPARAMETERS)</h2>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">TUNING ENGINE</span>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- Slider 1: Temperature -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div>
+<label class="font-headline-md text-[18px] uppercase text-on-surface" for="slider-temp">TEMPERATURE (ĐỘ SÁNG TẠO)</label>
+<p class="font-metadata text-metadata text-on-surface-variant">Khuyến nghị 0.3 - 0.5 để bám sát dữ liệu RAG kho sách, tránh ảo giác.</p>
+</div>
+<span class="px-3 py-1 bg-surface-container-lowest border-[2px] border-on-surface font-label-mono text-label-mono font-bold text-primary" id="temp-val">0.40</span>
+</div>
+<input class="w-full h-3 bg-surface-container-high border-[2px] border-on-surface appearance-none cursor-pointer accent-primary" id="slider-temp" max="1.0" min="0.0" step="0.05" type="range" value="0.40"/>
+<div class="flex justify-between font-label-mono text-label-mono text-on-surface-variant">
+<span>0.0 (Chính xác tuyệt đối)</span>
+<span>0.5 (Cân bằng)</span>
+<span>1.0 (Rất bay bổng)</span>
+</div>
+</div>
+<!-- Slider 2: Max Tokens -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div>
+<label class="font-headline-md text-[18px] uppercase text-on-surface" for="slider-tokens">MAX OUTPUT TOKENS</label>
+<p class="font-metadata text-metadata text-on-surface-variant">Giới hạn độ dài phản hồi một lượt cho mỗi câu trả lời của AI.</p>
+</div>
+<span class="px-3 py-1 bg-surface-container-lowest border-[2px] border-on-surface font-label-mono text-label-mono font-bold text-on-surface" id="tokens-val">1,024</span>
+</div>
+<input class="w-full h-3 bg-surface-container-high border-[2px] border-on-surface appearance-none cursor-pointer accent-on-surface" id="slider-tokens" max="4096" min="256" step="128" type="range" value="1024"/>
+<div class="flex justify-between font-label-mono text-label-mono text-on-surface-variant">
+<span>256 (Tóm tắt ngắn)</span>
+<span>1,024 (Chuẩn bài giảng)</span>
+<span>4,096 (Chuyên sâu)</span>
+</div>
+</div>
+<!-- Slider 3: Top_P -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div>
+<label class="font-headline-md text-[18px] uppercase text-on-surface" for="slider-topp">TOP_P (NUCLEUS SAMPLING)</label>
+<p class="font-metadata text-metadata text-on-surface-variant">Kiểm soát ngưỡng xác suất tích lũy của các từ kế tiếp.</p>
+</div>
+<span class="px-3 py-1 bg-surface-container-lowest border-[2px] border-on-surface font-label-mono text-label-mono font-bold text-on-surface" id="topp-val">0.85</span>
+</div>
+<input class="w-full h-3 bg-surface-container-high border-[2px] border-on-surface appearance-none cursor-pointer accent-secondary" id="slider-topp" max="1.0" min="0.1" step="0.05" type="range" value="0.85"/>
+</div>
+</div>
+</section>
+<!-- 3.3 CORE SYSTEM PROMPT -->
+<section class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow">
+<div class="h-2 w-full bg-primary-container"></div>
+<div class="p-5 border-b-[3px] border-on-surface bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-7 h-7 bg-primary-container text-on-primary border-[2px] border-on-surface font-label-mono text-label-mono flex items-center justify-center font-bold">03</span>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface">SYSTEM PROMPT (LỜI NHẮC CỐT LÕI)</h2>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2 py-1 bg-surface-container-lowest border-[2px] border-on-surface font-label-mono text-label-mono uppercase hover:bg-surface-container-high" id="btn-reset-prompt">KHÔI PHỤC MẪU</button>
+</div>
+</div>
+<div class="p-6 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-metadata text-metadata text-on-surface-variant">Định nghĩa danh tính, phong cách giao tiếp và nguyên tắc bắt buộc:</span>
+<span class="font-label-mono text-label-mono text-primary font-bold">MONOSPACE EDITOR</span>
+</div>
+<div class="relative">
+<textarea class="w-full p-4 border-[3px] border-on-surface bg-surface-container-low font-label-mono text-[13px] leading-relaxed text-on-surface focus:outline-none focus:neo-shadow transition-all resize-y" id="system-prompt-input" rows="8">Bạn là Thủ thư ảo thông minh của nền tảng giáo dục đọc sách Viviora.
+Nhiệm vụ của bạn là đồng hành, gợi ý và tư vấn sách cho học sinh từ lớp 6 đến lớp 9 cùng các thầy cô giáo bộ môn.
+
+CÁC NGUYÊN TẮC BẮT BUỘC (CRITICAL GUARDRAILS):
+1. CHỈ ĐƯỢC đề xuất những cuốn sách, tác phẩm hoặc tư liệu thực sự tồn tại trong Kho Tri Thức Viviora (dữ liệu RAG Context được cung cấp bên dưới). Tuyệt đối không tự bịa đặt tựa sách hoặc tác giả.
+2. Với mỗi cuốn sách được gợi ý, phải luôn nêu rõ:
+   - Tên sách chính xác &amp; Tác giả.
+   - Thể loại &amp; Độ tuổi khuyến nghị (VD: Phù hợp từ 12 tuổi).
+   - Đoạn trích dẫn hoặc thông điệp cốt lõi (1-2 câu).
+   - Lý do phù hợp với sở thích hoặc câu hỏi của học sinh.
+3. Luôn giữ phong cách sư phạm, ân cần, nhiệt huyết, dùng từ ngữ trong sáng và khích lệ tư duy phản biện.
+4. Nếu học sinh hỏi về các chủ đề vượt ngoài phạm vi đọc sách hoặc chứa nội dung nhạy cảm, nhẹ nhàng từ chối và hướng sự tập trung về việc đọc sách tích cực.</textarea>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono text-label-mono pt-1">
+<span>ĐỘ DÀI: 894 KÝ TỰ / ~215 TOKENS</span>
+<span class="text-tertiary font-bold">ENFORCED AS STRICT SYSTEM ROLE</span>
+</div>
+</div>
+</section>
+<!-- 3.4 GUARDRAILS & CONTENT SAFETY RULES -->
+<section class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow">
+<div class="h-2 w-full bg-tertiary-container"></div>
+<div class="p-5 border-b-[3px] border-on-surface bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="w-7 h-7 bg-tertiary-container text-on-tertiary border-[2px] border-on-surface font-label-mono text-label-mono flex items-center justify-center font-bold">04</span>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface">QUY TẮC AN TOÀN &amp; LỌC NỘI DUNG SƯ PHẠM</h2>
+</div>
+<span class="font-label-mono text-label-mono bg-error-container text-on-error-container px-2 py-0.5 border border-on-surface font-bold">SAFETY: STRICT</span>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+<label class="p-3 border-[2px] border-on-surface bg-surface-container-low flex items-start gap-3 cursor-pointer hover:bg-surface-container transition-all">
+<input checked="" class="mt-1 w-4 h-4 rounded-none accent-primary border-2 border-on-surface" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-headline-md text-[16px] uppercase text-on-surface leading-tight">CHẶN NỘI DUNG NHẠY CẢM / BẠO LỰC</span>
+<span class="font-metadata text-metadata text-on-surface-variant mt-1">Tự động ngắt phản hồi nếu phát hiện prompt vi phạm chuẩn mực học đường.</span>
+</div>
+</label>
+<label class="p-3 border-[2px] border-on-surface bg-surface-container-low flex items-start gap-3 cursor-pointer hover:bg-surface-container transition-all">
+<input checked="" class="mt-1 w-4 h-4 rounded-none accent-primary border-2 border-on-surface" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-headline-md text-[16px] uppercase text-on-surface leading-tight">KHÓA SÁCH NGOÀI ĐỘ TUỔI HỌC SINH</span>
+<span class="font-metadata text-metadata text-on-surface-variant mt-1">Căn cứ vào khối lớp của tài khoản để giới hạn các đầu sách phù hợp.</span>
+</div>
+</label>
+<label class="p-3 border-[2px] border-on-surface bg-surface-container-low flex items-start gap-3 cursor-pointer hover:bg-surface-container transition-all">
+<input checked="" class="mt-1 w-4 h-4 rounded-none accent-primary border-2 border-on-surface" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-headline-md text-[16px] uppercase text-on-surface leading-tight">ƯU TIÊN SÁCH CÓ MINIGAME TƯƠNG TÁC</span>
+<span class="font-metadata text-metadata text-on-surface-variant mt-1">Gợi ý kèm bộ quiz trắc nghiệm để học sinh tích lũy điểm thưởng Viviora.</span>
+</div>
+</label>
+<label class="p-3 border-[2px] border-on-surface bg-surface-container-low flex items-start gap-3 cursor-pointer hover:bg-surface-container transition-all">
+<input checked="" class="mt-1 w-4 h-4 rounded-none accent-primary border-2 border-on-surface" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-headline-md text-[16px] uppercase text-on-surface leading-tight">TỰ ĐỘNG CHUẨN HÓA TIẾNG VIỆT</span>
+<span class="font-metadata text-metadata text-on-surface-variant mt-1">Dịch thuật ngữ quốc tế sang Tiếng Việt chuẩn mực sư phạm quốc gia.</span>
+</div>
+</label>
+</div>
+</section>
+</div>
+<!-- ================= RIGHT COLUMN: RAG KNOWLEDGE BASE & EMBEDDINGS (40% / col-span-5) ================= -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- 3.5 VECTOR DATABASE STATUS & SYNC -->
+<section class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow">
+<div class="h-2 w-full bg-secondary-container"></div>
+<div class="p-5 border-b-[3px] border-on-surface bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]">hub</span>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface">TRẠNG THÁI VECTOR DB</h2>
+</div>
+<span class="font-label-mono text-label-mono px-2 py-0.5 bg-secondary-container border border-on-surface font-bold">ONLINE</span>
+</div>
+<div class="p-6 flex flex-col gap-5">
+<!-- Database Info Meta Box -->
+<div class="border-[2px] border-on-surface bg-surface-container-low p-4 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase">DATABASE INDEX</span>
+<span class="font-label-mono text-label-mono font-bold text-on-surface bg-surface-container-lowest border border-on-surface px-2 py-0.5">viviora-books-v2</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase">ENGINE RUNTIME</span>
+<span class="font-label-mono text-label-mono text-on-surface">Qdrant / Chroma Cloud Node</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase">DIMENSION VECTORS</span>
+<span class="font-label-mono text-label-mono text-on-surface">1536-dim (Cosine Similarity)</span>
+</div>
+<div class="flex items-center justify-between border-t border-on-surface pt-2 mt-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase">LẦN ĐỒNG BỘ CUỐI</span>
+<span class="font-label-mono text-label-mono text-primary font-bold">10 phút trước</span>
+</div>
+</div>
+<!-- Sync CTA and Progress Indicator -->
+<div class="flex flex-col gap-2">
+<button class="w-full py-3.5 border-[3px] border-on-surface bg-primary text-on-primary font-headline-md text-headline-md uppercase neo-shadow hover:bg-primary-container active:translate-x-1 active:translate-y-1 transition-all flex items-center justify-center gap-2" id="btn-sync-kb">
+<span class="material-symbols-outlined text-[20px]" id="sync-icon">sync</span>
+<span id="sync-text">ĐỒNG BỘ LẠI TOÀN BỘ KHO SÁCH</span>
+</button>
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono text-label-mono">
+<span>TIẾN TRÌNH QUÉT: 100%</span>
+<span>CHUNKS: 48,920 ĐOẠN TRÍCH</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3.6 RAG TOPIC DISTRIBUTION (COLLAPSED BREAKDOWN) -->
+<section class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow">
+<div class="h-2 w-full bg-primary"></div>
+<div class="p-5 border-b-[3px] border-on-surface bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface text-[22px]">category</span>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface">PHÂN BỔ CHỦ ĐỀ RAG</h2>
+</div>
+<span class="font-label-mono text-label-mono text-primary font-bold">3 DANH MỤC</span>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<!-- Category 1 -->
+<div class="border-[2px] border-on-surface p-3 bg-surface-container-lowest">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-primary border border-on-surface"></span>
+<span class="font-headline-md text-[16px] uppercase text-on-surface">VĂN HỌC &amp; NGHỆ THUẬT</span>
+</div>
+<span class="font-label-mono text-label-mono font-bold text-on-surface">510 cuốn</span>
+</div>
+<div class="w-full h-2.5 border border-on-surface bg-surface-container-high">
+<div class="h-full bg-primary" style="width: 40%;"></div>
+</div>
+<div class="flex justify-between font-metadata text-metadata text-on-surface-variant mt-1.5">
+<span>Truyện ngắn, Thơ ca, Danh tác thế giới</span>
+<span>40% Kho</span>
+</div>
+</div>
+<!-- Category 2 -->
+<div class="border-[2px] border-on-surface p-3 bg-surface-container-lowest">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-secondary-container border border-on-surface"></span>
+<span class="font-headline-md text-[16px] uppercase text-on-surface">SÁCH GIÁO KHOA &amp; THAM KHẢO</span>
+</div>
+<span class="font-label-mono text-label-mono font-bold text-on-surface">450 cuốn</span>
+</div>
+<div class="w-full h-2.5 border border-on-surface bg-surface-container-high">
+<div class="h-full bg-secondary-container" style="width: 35%;"></div>
+</div>
+<div class="flex justify-between font-metadata text-metadata text-on-surface-variant mt-1.5">
+<span>Chương trình GDPT mới (Lớp 6, 7, 8, 9)</span>
+<span>35% Kho</span>
+</div>
+</div>
+<!-- Category 3 -->
+<div class="border-[2px] border-on-surface p-3 bg-surface-container-lowest">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-tertiary-container border border-on-surface"></span>
+<span class="font-headline-md text-[16px] uppercase text-on-surface">KHOA HỌC &amp; KỸ THUẬT</span>
+</div>
+<span class="font-label-mono text-label-mono font-bold text-on-surface">320 cuốn</span>
+</div>
+<div class="w-full h-2.5 border border-on-surface bg-surface-container-high">
+<div class="h-full bg-tertiary-container" style="width: 25%;"></div>
+</div>
+<div class="flex justify-between font-metadata text-metadata text-on-surface-variant mt-1.5">
+<span>Vũ trụ, Sinh học, Công nghệ AI, STEM</span>
+<span>25% Kho</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3.7 AUDIT LOGS & REPORTED FLAGS -->
+<section class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow">
+<div class="h-2 w-full bg-on-surface"></div>
+<div class="p-5 border-b-[3px] border-on-surface bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface text-[22px]">history</span>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface">NHẬT KÝ &amp; KIỂM DUYỆT (AUDIT)</h2>
+</div>
+<button class="font-label-mono text-label-mono uppercase text-primary font-bold hover:underline">XEM TẤT CẢ</button>
+</div>
+<div class="p-4 flex flex-col gap-3">
+<!-- Log Entry 1: Hợp lệ -->
+<div class="border-[2px] border-on-surface p-3 bg-surface-container-low flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-surface-variant">LỚP 8A2 • 14:22:05</span>
+<span class="px-2 py-0.5 bg-surface-container-lowest border border-on-surface font-label-mono text-[11px] text-primary font-bold">HỢP LỆ / GỢI Ý TỐT</span>
+</div>
+<p class="font-metadata text-metadata text-on-surface line-clamp-1">
+<span class="font-bold">Học sinh hỏi:</span> "Em muốn tìm sách về lịch sử Việt Nam thế kỷ 18 có minh họa đẹp?"
+              </p>
+<div class="font-label-mono text-[11px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">book</span>
+<span>Đã gợi ý: "Đại Việt Sử Ký Toàn Thư (Bản minh họa)"</span>
+</div>
+</div>
+<!-- Log Entry 2: Cần kiểm duyệt -->
+<div class="border-[2px] border-on-surface p-3 bg-error-container/30 border-error flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-error-container">LỚP 7B1 • 13:50:18</span>
+<span class="px-2 py-0.5 bg-tertiary text-on-tertiary font-label-mono text-[11px] font-bold">CẦN KIỂM DUYỆT</span>
+</div>
+<p class="font-metadata text-metadata text-on-surface line-clamp-1">
+<span class="font-bold">Prompt cảnh báo:</span> "Cho em cách hack coin trong trò chơi đọc sách này với..."
+              </p>
+<div class="font-label-mono text-[11px] text-error font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+<span>AI chặn thành công • Kích hoạt guardrail 01</span>
+</div>
+</div>
+<!-- Log Entry 3: Hợp lệ -->
+<div class="border-[2px] border-on-surface p-3 bg-surface-container-low flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-surface-variant">GV NGUYỄN HOA • 11:15:40</span>
+<span class="px-2 py-0.5 bg-surface-container-lowest border border-on-surface font-label-mono text-[11px] text-primary font-bold">TRỢ GIẢNG TỐT</span>
+</div>
+<p class="font-metadata text-metadata text-on-surface line-clamp-1">
+<span class="font-bold">Giáo viên hỏi:</span> "Tạo 5 câu hỏi trắc nghiệm sau khi đọc Dế Mèn Phiêu Lưu Ký..."
+              </p>
+<div class="font-label-mono text-[11px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">quiz</span>
+<span>Đã sinh bộ câu hỏi Quiz ID #8491</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- 4. BOTTOM AUDIT STAMP & SYSTEM METRICS FOOTER -->
+<div class="border-[3px] border-on-surface bg-surface-container-low p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[28px]">verified_user</span>
+<div>
+<div class="font-headline-md text-[16px] uppercase text-on-surface">VIVIORA AI SAFETY &amp; PEDAGOGICAL COMPLIANCE</div>
+<div class="font-metadata text-metadata text-on-surface-variant">Được kiểm định bởi Hội đồng Chuyên môn Sư phạm &amp; Ban Giám hiệu Nhà trường</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono px-3 py-1 bg-surface-container-lowest border-[2px] border-on-surface">SHA-256: 7e29a9b1c</span>
+<span class="font-label-mono text-label-mono px-3 py-1 bg-secondary-container text-on-surface border-[2px] border-on-surface font-bold">STATUS: OK</span>
+</div>
+</div>
+</div>
+<!-- INTERACTION MODAL: SANDBOX TEST PROMPT (INITIALLY HIDDEN) -->
+<div class="fixed inset-0 bg-on-surface/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="sandbox-modal">
+<div class="border-[3px] border-on-surface bg-surface-container-lowest neo-shadow max-w-2xl w-full flex flex-col overflow-hidden">
+<!-- Modal Header -->
+<div class="h-2 w-full bg-secondary-container"></div>
+<div class="p-5 border-b-[3px] border-on-surface bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface text-[22px]">science</span>
+<h3 class="font-headline-md text-headline-md uppercase text-on-surface">THỬ NGHIỆM PROMPT (AI SANDBOX)</h3>
+</div>
+<button class="w-8 h-8 border-[2px] border-on-surface bg-surface-container-lowest neo-shadow-sm flex items-center justify-center hover:bg-surface-container-high font-bold text-on-surface" id="btn-close-sandbox">
+          ✕
+        </button>
+</div>
+<!-- Modal Body -->
+<div class="p-6 flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<label class="font-label-mono text-label-mono text-on-surface-variant uppercase font-bold">CÂU HỎI MÔ PHỎNG CỦA HỌC SINH:</label>
+<input class="p-3 border-[3px] border-on-surface bg-surface-container-lowest font-body-md text-on-surface focus:outline-none focus:neo-shadow" id="sandbox-input" type="text" value="Thầy thủ thư ơi, em thích truyện phiêu lưu thám hiểm ngoài vũ trụ thì đọc cuốn nào?"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-mono text-label-mono text-on-surface-variant uppercase font-bold">PHẢN HỒI THỰC TẾ CỦA AI (ÁP DỤNG SYSTEM PROMPT VỪA CHỈNH):</label>
+<div class="p-4 border-[3px] border-on-surface bg-surface-container-low font-body-md text-[15px] text-on-surface leading-relaxed min-h-[140px]" id="sandbox-output">
+<p class="font-bold text-primary mb-1">Chào em! Dựa trên kho sách Viviora dành cho lứa tuổi của em:</p>
+<p class="mb-2">Thầy gợi ý cuốn <span class="font-bold underline">"Bầu Trời Đêm Và Những Bí Ẩn Vũ Trụ" (Tác giả: GS. Trịnh Xuân Thuận)</span>. Sách kể về hành trình khám phá những chòm sao kỳ vĩ, nguồn gốc thời gian và các thiên hà xa xôi.</p>
+<p class="text-on-surface-variant italic">"Trích dẫn: Mỗi ngôi sao sáng trên bầu trời là một bài thơ về sự sống được viết bằng ngôn ngữ ánh sáng."</p>
+<p class="mt-2 text-primary font-bold text-label-mono font-label-mono">👉 Sách có kèm Minigame 10 câu hỏi đố vui tích 50 điểm thưởng Viviora!</p>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-4 border-t-[3px] border-on-surface bg-surface-container-low flex justify-between items-center">
+<span class="font-label-mono text-label-mono text-on-surface-variant">RAG MATCH: 98.4% (CHROMA)</span>
+<button class="px-5 py-2.5 border-[3px] border-on-surface bg-secondary-container text-on-surface font-headline-md text-[18px] uppercase neo-shadow hover:bg-secondary-fixed active:translate-x-0.5 active:translate-y-0.5" id="btn-run-simulation">
+          CHẠY LẠI THỬ NGHIỆM
+        </button>
+</div>
+</div>
+</div>
+<!-- SCRIPT FOR UI INTERACTIONS -->
+<script>
+    (function initVivioraAdmin() {
+      // Helper function to create Toast
+      function showToast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = `p-4 border-[3px] border-on-surface neo-shadow text-on-surface font-label-mono text-label-mono uppercase flex items-center gap-3 transition-all duration-300 pointer-events-auto ${
+          type === 'success' ? 'bg-secondary-container' : 'bg-primary text-on-primary'
+        }`;
+        
+        toast.innerHTML = `
+          <span class="material-symbols-outlined text-[20px] font-bold">${type === 'success' ? 'check_circle' : 'info'}</span>
+          <span>${message}</span>
+        `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(10px)';
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+
+      // 1. Slider Value Trackers
+      const tempSlider = document.getElementById('slider-temp');
+      const tempVal = document.getElementById('temp-val');
+      if (tempSlider && tempVal) {
+        tempSlider.addEventListener('input', (e) => {
+          tempVal.textContent = parseFloat(e.target.value).toFixed(2);
+        });
+      }
+
+      const tokensSlider = document.getElementById('slider-tokens');
+      const tokensVal = document.getElementById('tokens-val');
+      if (tokensSlider && tokensVal) {
+        tokensSlider.addEventListener('input', (e) => {
+          tokensVal.textContent = Number(e.target.value).toLocaleString('vi-VN');
+        });
+      }
+
+      const toppSlider = document.getElementById('slider-topp');
+      const toppVal = document.getElementById('topp-val');
+      if (toppSlider && toppVal) {
+        toppSlider.addEventListener('input', (e) => {
+          toppVal.textContent = parseFloat(e.target.value).toFixed(2);
+        });
+      }
+
+      // 2. Provider Radio Card Styling
+      const providerCards = document.querySelectorAll('.provider-radio-card');
+      providerCards.forEach(card => {
+        card.addEventListener('click', () => {
+          providerCards.forEach(c => {
+            c.classList.remove('bg-primary-fixed', 'ring-2', 'ring-primary');
+            c.classList.add('bg-surface-container-lowest');
+            const ind = c.querySelector('.radio-indicator');
+            if (ind) ind.textContent = 'radio_button_unchecked';
+          });
+
+          card.classList.remove('bg-surface-container-lowest');
+          card.classList.add('bg-primary-fixed', 'ring-2', 'ring-primary');
+          const activeRadio = card.querySelector('input[type="radio"]');
+          if (activeRadio) activeRadio.checked = true;
+          
+          showToast(`ĐÃ CHUYỂN ENGINE SANG: ${card.querySelector('.font-headline-md').innerText}`, 'info');
+        });
+      });
+
+      // 3. Save Config Action
+      const btnSave = document.getElementById('btn-save-config');
+      if (btnSave) {
+        btnSave.addEventListener('click', () => {
+          btnSave.innerHTML = `<span class="material-symbols-outlined text-[20px] animate-spin">refresh</span><span>ĐANG LƯU...</span>`;
+          btnSave.disabled = true;
+
+          setTimeout(() => {
+            btnSave.innerHTML = `<span class="material-symbols-outlined text-[20px]">save</span><span>LƯU CẤU HÌNH</span>`;
+            btnSave.disabled = false;
+            showToast('ĐÃ LƯU &amp; CẬP NHẬT CẤU HÌNH AI TOÀN HỆ THỐNG THÀNH CÔNG!');
+          }, 700);
+        });
+      }
+
+      // 4. Reset Prompt Action
+      const btnResetPrompt = document.getElementById('btn-reset-prompt');
+      const systemPromptArea = document.getElementById('system-prompt-input');
+      if (btnResetPrompt && systemPromptArea) {
+        btnResetPrompt.addEventListener('click', () => {
+          showToast('ĐÃ KHÔI PHỤC SYSTEM PROMPT VỀ MẶC ĐỊNH SƯ PHẠM', 'info');
+        });
+      }
+
+      // 5. Sync Knowledge Base Action
+      const btnSync = document.getElementById('btn-sync-kb');
+      const syncIcon = document.getElementById('sync-icon');
+      const syncText = document.getElementById('sync-text');
+
+      if (btnSync && syncIcon && syncText) {
+        btnSync.addEventListener('click', () => {
+          syncIcon.classList.add('animate-spin');
+          syncText.textContent = 'ĐANG ĐỒNG BỘ 1,280 ĐẦU SÁCH...';
+          btnSync.classList.add('pointer-events-none', 'opacity-90');
+
+          setTimeout(() => {
+            syncIcon.classList.remove('animate-spin');
+            syncText.textContent = 'ĐỒNG BỘ LẠI TOÀN BỘ KHO SÁCH';
+            btnSync.classList.remove('pointer-events-none', 'opacity-90');
+            showToast('HOÀN TẤT ĐỒNG BỘ: 48,920 VECTOR CHUNKS SẴN SÀNG!');
+          }, 1500);
+        });
+      }
+
+      // 6. Sandbox Modal Controls
+      const modal = document.getElementById('sandbox-modal');
+      const btnSandbox = document.getElementById('btn-sandbox');
+      const btnCloseSandbox = document.getElementById('btn-close-sandbox');
+      const btnSimulate = document.getElementById('btn-run-simulation');
+      const sandboxOutput = document.getElementById('sandbox-output');
+
+      if (btnSandbox && modal) {
+        btnSandbox.addEventListener('click', () => {
+          modal.classList.remove('hidden');
+        });
+      }
+
+      if (btnCloseSandbox && modal) {
+        btnCloseSandbox.addEventListener('click', () => {
+          modal.classList.add('hidden');
+        });
+      }
+
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.classList.add('hidden');
+        });
+      }
+
+      if (btnSimulate && sandboxOutput) {
+        btnSimulate.addEventListener('click', () => {
+          sandboxOutput.innerHTML = `<div class="flex items-center gap-2 text-primary font-label-mono"><span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Đang truy vấn vector context và tạo lời khuyên...</span></div>`;
+          setTimeout(() => {
+            sandboxOutput.innerHTML = `
+              <p class="font-bold text-primary mb-1">Thủ thư Viviora AI (Mô phỏng):</p>
+              <p class="mb-2">Gợi ý tuyệt vời cho học sinh thích phiêu lưu: Cuốn <span class="font-bold underline">"Hai Vạn Dặm Dưới Đáy Biển" (Jules Verne)</span> hoặc <span class="font-bold underline">"Xuyên Vào Lòng Đất"</span>. Cả hai đều thuộc danh mục Khoa học &amp; Văn học được số hóa đầy đủ trên Viviora.</p>
+              <p class="text-on-surface-variant italic">"Trích: Biển cả là tất cả. Nó bao phủ bảy phần mười quả cầu địa cầu... và hơi thở của nó thanh khiết vô ngần."</p>
+              <p class="mt-2 text-secondary font-bold text-label-mono font-label-mono">✨ Độ tương đồng ngữ nghĩa: 99.2% • Thời gian đáp ứng: 310ms</p>
+            `;
+          }, 800);
+        });
+      }
+    })();
+  </script>
+</div></main></div></body></html>

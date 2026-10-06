@@ -9,6 +9,8 @@ import {
   Users,
   ListChecks,
   ClipboardCheck,
+  Bot,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
@@ -52,6 +54,10 @@ export function Sidebar() {
             <span>{label}</span>
           </Link>
         ))}
+        <Link className={location.pathname.startsWith('/tu-van-ai') ? 'selected' : ''} to="/tu-van-ai">
+          <Bot size={21} />
+          <span>Chatbot tư vấn</span>
+        </Link>
         {(user?.role === 'TEACHER' || user?.role === 'ADMIN') && (
           <Link className={location.pathname === '/duyet-bai' ? 'selected' : ''} to="/duyet-bai">
             <Users size={21} />
@@ -101,6 +107,12 @@ export function Sidebar() {
           >
             <ShieldCheck size={21} />
             <span>Quản lý thành viên</span>
+          </Link>
+        )}
+        {user?.role === 'ADMIN' && (
+          <Link className={location.pathname.startsWith('/quan-tri/cau-hinh-ai') ? 'selected' : ''} to="/quan-tri/cau-hinh-ai">
+            <SlidersHorizontal size={21} />
+            <span>Cấu hình AI</span>
           </Link>
         )}
       </nav>

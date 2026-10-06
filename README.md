@@ -36,6 +36,12 @@ docker compose up --build
 
 Nếu host đã dùng một cổng, đổi `FRONTEND_PORT`, `BACKEND_PORT` hoặc `POSTGRES_PORT` trong `.env`.
 
+## AI tư vấn sách
+
+AI truy vấn trực tiếp metadata catalog bằng tool calling, chỉ đưa tối đa 8 đầu sách phù hợp vào context và stream phản hồi theo SSE. Không có vector database hay toàn bộ catalog trong prompt.
+
+Trong production, tạo Docker secret cục bộ tại `deploy/secrets/ai_config_key` (thư mục này đã bị git ignore), chứa một chuỗi ngẫu nhiên dài. Compose deploy mount secret này vào `/run/secrets/ai_config_key`; API key provider được mã hóa trong PostgreSQL và chỉ cấu hình qua `/quan-tri/cau-hinh-ai`. Không lưu API key trong `.env`.
+
 Migration và seed là hai thao tác độc lập. Container chỉ chạy migration; seed phải được gọi rõ ràng:
 
 ```bash
