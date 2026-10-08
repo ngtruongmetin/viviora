@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft,
   Check,
+  Heart,
   Maximize2,
   Minimize2,
   MousePointer2,
@@ -166,15 +167,19 @@ export function TreasureHuntMockup({
   questionSet = defaultQuestions,
   onAnswer,
   onComplete,
+  onGameOver,
   onFinish,
+  remainingLives = 3,
 }: {
   questionSet?: TreasureHuntQuestion[];
   onAnswer?: (
     question: TreasureHuntQuestion,
     selected: boolean,
-  ) => Promise<{ isCorrect: boolean; pointsAwarded?: number; explanation?: string | null }>;
+  ) => Promise<{ isCorrect: boolean; pointsAwarded?: number; explanation?: string | null; gameOver?: boolean }>;
   onComplete?: () => void;
+  onGameOver?: () => void;
   onFinish?: () => void;
+  remainingLives?: number;
 }) {
   const navigate = useNavigate();
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -196,6 +201,7 @@ export function TreasureHuntMockup({
   const [selected, setSelected] = useState<boolean | null>(null);
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [answerExplanation, setAnswerExplanation] = useState<string | null>(null);
+  const [gameOver, setGameOver] = useState(false);
   const [monsters, setMonsters] = useState<MonsterState[]>(() => createMonsterStates(questionSet));
   const [chestPosition] = useState<Point>(() => createWalkablePosition());
   const [chestOpen, setChestOpen] = useState(false);
@@ -488,6 +494,7 @@ export function TreasureHuntMockup({
             pointsAwarded: selected === question.answer ? 1 : 0,
           };
       setAnswerExplanation(result.explanation ?? question.explanation ?? null);
+      setGameOver(Boolean(result.gameOver));
       const sound = result.isCorrect ? killSoundRef.current : chaseSoundRef.current;
       if (bgmOn && sound) {
         sound.currentTime = 0;
@@ -498,6 +505,10 @@ export function TreasureHuntMockup({
   };
   const continueEncounter = () => {
     if (activeStage === null || feedback === null) return;
+    if (gameOver) {
+      onGameOver?.();
+      return;
+    }
     finishEncounter(activeStage, feedback === 'correct');
   };
   const toggleFullscreen = async () => {
@@ -614,6 +625,7 @@ export function TreasureHuntMockup({
             <span>
               Đã hoàn thành {completedCount}/{questionSet.length}
             </span>
+            <span><Heart size={14} fill="currentColor" /> {remainingLives} / 3 mạng</span>
           </div>
           <div className="th-hud th-hud-actions">
             <button
@@ -633,9 +645,6 @@ export function TreasureHuntMockup({
             <button type="button" title="Thoát" onClick={() => navigate('/tro-choi')}>
               <ArrowLeft size={16} />
             </button>
-          </div>
-          <div className="th-hud th-hud-progress">
-            <span style={{ width: `${(completedCount / questionSet.length) * 100}%` }} />
           </div>
           <div className="th-hud th-hud-help">
             <MousePointer2 size={14} /> WASD / Arrow / click-to-move

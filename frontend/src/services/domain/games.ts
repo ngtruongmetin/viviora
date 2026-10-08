@@ -32,6 +32,8 @@ export type GameSession = {
   game: Game;
   questions: GameQuestion[];
   completedAt?: string | null;
+  remainingLives: number;
+  outcome: 'WON' | 'LOST' | null;
   result?: GameResult | null;
 };
 export type GameResult = {
@@ -49,6 +51,8 @@ export type GameResult = {
   total_questions: number;
   started_at: string;
   completed_at: string | null;
+  remaining_lives: number;
+  outcome: 'WON' | 'LOST' | null;
   achievementEvents?: {
     unlocked?: { code: string; name: string; condition_text: string; exp_reward: number }[];
     previousLevel?: number;
@@ -103,6 +107,8 @@ export const gamesApi = {
         isCorrect: boolean;
         pointsAwarded: number;
         explanation?: string | null;
+        remainingLives: number;
+        gameOver: boolean;
       };
     }>(`/games/sessions/${sessionId}/answer`, { questionId, selectedAnswer }),
   complete: (sessionId: string) =>

@@ -318,6 +318,9 @@
   content: 'CUP';
   font-size: 9px;
 }
+.mine-lives-hud span::after {
+  content: 'MẠNG';
+}
 .mine-progress {
   text-align: center;
 }

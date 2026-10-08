@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, Maximize2, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, Heart, Maximize2, Volume2, VolumeX } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './minesweeper.css';
 
@@ -132,15 +132,19 @@ export function MinesweeperMockup({
   questionSet = defaultQuestions,
   onAnswer,
   onComplete,
+  onGameOver,
   rewardCups = 10,
+  remainingLives = 3,
 }: {
   questionSet?: MinesweeperQuestion[];
   onAnswer?: (
     question: MinesweeperQuestion,
     selectedIndex: number,
-  ) => Promise<{ isCorrect: boolean; pointsAwarded?: number; explanation?: string | null }>;
+  ) => Promise<{ isCorrect: boolean; pointsAwarded?: number; explanation?: string | null; gameOver?: boolean }>;
   onComplete?: () => void;
+  onGameOver?: () => void;
   rewardCups?: number;
+  remainingLives?: number;
 }) {
   const navigate = useNavigate();
 
@@ -187,6 +191,7 @@ export function MinesweeperMockup({
 
   const [selected, setSelected] = useState<number | null>(null);
   const [answerExplanation, setAnswerExplanation] = useState<string | null>(null);
+  const [gameOver, setGameOver] = useState(false);
 
   const [direction, setDirection] = useState<Direction>('forward');
 
@@ -398,6 +403,7 @@ export function MinesweeperMockup({
           }
 
           setState('wrong');
+          setGameOver(Boolean(result.gameOver));
         }
       })();
     }, MOVE_MS);
@@ -434,7 +440,9 @@ export function MinesweeperMockup({
       setTarget(null);
       setSelected(null);
       setFrame(0);
-      if (onAnswer) {
+      if (gameOver) {
+        onGameOver?.();
+      } else if (onAnswer) {
         // A wrong answer retries the same field. Keep its world anchor and
         // camera so the player and answer markers stay in the same coordinate space.
         setState('idle');
@@ -442,7 +450,7 @@ export function MinesweeperMockup({
     }, WRONG_RETURN_MS);
 
     return () => window.clearTimeout(timer);
-  }, [state, onAnswer, onComplete, playerOffsetY, questionIndex, questions.length]);
+  }, [state, gameOver, onAnswer, onComplete, onGameOver, playerOffsetY, questionIndex, questions.length]);
 
   /**
    * ============================================================
@@ -636,7 +644,7 @@ export function MinesweeperMockup({
    */
   const sprite =
     state === 'moving' ? runningSprites[direction][frame % 2] : '/minesweeper/frame1.png';
-  const earnedCups = Math.round((correctAnswers * rewardCups) / questions.length);
+  const earnedCups = state === 'complete' && correctAnswers === questions.length ? rewardCups : 0;
   const questionProgress =
     state === 'complete' ? 100 : Math.round((questionIndex / questions.length) * 100);
 
@@ -653,6 +661,11 @@ export function MinesweeperMockup({
               {earnedCups} / {rewardCups}
             </strong>
             <span>CÚP</span>
+          </div>
+
+          <div className="mine-score-hud mine-lives-hud">
+            <strong><Heart size={16} fill="currentColor" /> {remainingLives} / 3</strong>
+            <span>MẠNG</span>
           </div>
 
           <div className="mine-progress">
@@ -757,6 +770,11 @@ export function MinesweeperMockup({
               {earnedCups} / {rewardCups}
             </strong>
             <span>CÚP</span>
+          </div>
+
+          <div className="mine-score-hud mine-lives-hud">
+            <strong><Heart size={16} fill="currentColor" /> {remainingLives} / 3</strong>
+            <span>MẠNG</span>
           </div>
 
           <div className="mine-progress">

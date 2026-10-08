@@ -210,6 +210,8 @@ async function startSession(gameId, userId) {
       game,
       questions: rows.rows.map(safeQuestion),
       completedAt: null,
+      remainingLives: 3,
+      outcome: null,
       result: null,
     };
   } catch (error) {
@@ -222,7 +224,7 @@ async function startSession(gameId, userId) {
 
 async function getSession(sessionId, userId) {
   const row = await get(
-    `${gameSelect.replace('SELECT g.*', 'SELECT gs.id AS session_id, gs.completed_at, gs.score, gs.total_points, gs.correct_count, gs.total_questions, gs.started_at, g.*')} 
+    `${gameSelect.replace('SELECT g.*', 'SELECT gs.id AS session_id, gs.completed_at, gs.score, gs.total_points, gs.correct_count, gs.total_questions, gs.remaining_lives, gs.outcome, gs.started_at, g.*')}
     JOIN game_sessions gs ON gs.game_id=g.id
     WHERE gs.id=? AND gs.user_id=?`,
     [sessionId, userId],
@@ -245,6 +247,8 @@ async function getSession(sessionId, userId) {
     game: await shapeGame(row),
     questions: questions.map(safeQuestion),
     completedAt: row.completed_at,
+    remainingLives: Number(row.remaining_lives),
+    outcome: row.outcome,
     result: null,
   };
   if (row.completed_at) session.result = await resultFor(sessionId, userId);
@@ -272,7 +276,7 @@ async function answer(sessionId, userId, questionId, selectedAnswer) {
     await client.query('BEGIN');
     const row = (
       await client.query(
-        `SELECT gs.id, gs.completed_at, g.question_type, gsq.question_id,
+        `SELECT gs.id, gs.completed_at, gs.remaining_lives, g.question_type, gsq.question_id,
       q.type, q.point, q.correct_answer, q.answer_explanation,
       COALESCE((SELECT json_agg(json_build_object('id', qo.id, 'is_correct', qo.is_correct)) FROM question_options qo WHERE qo.question_id=q.id), '[]'::json) AS options,
       gsq.selected_answer, gsq.is_correct FROM game_sessions gs JOIN games g ON g.id=gs.game_id
@@ -283,7 +287,7 @@ async function answer(sessionId, userId, questionId, selectedAnswer) {
     ).rows[0];
     if (!row)
       throw gameError('SESSION_QUESTION_NOT_FOUND', 'Câu hỏi không thuộc phiên chơi này.', 404);
-    if (row.completed_at) throw gameError('SESSION_COMPLETED', 'Phiên chơi đã hoàn thành.', 409);
+    if (row.completed_at) throw gameError('SESSION_COMPLETED', 'Phiên chơi đã kết thúc.', 409);
     if (row.selected_answer !== null && row.is_correct)
       throw gameError('DUPLICATE_ANSWER', 'Câu hỏi này đã được trả lời đúng.', 409);
     if (row.type === 'MC') {
@@ -309,11 +313,23 @@ async function answer(sessionId, userId, questionId, selectedAnswer) {
       'UPDATE game_session_questions SET selected_answer=$1, is_correct=$2, points_awarded=$3, answered_at=CURRENT_TIMESTAMP WHERE session_id=$4 AND question_id=$5',
       [String(selectedAnswer), correct, points, sessionId, questionId],
     );
-    // Wrong attempts remain retryable; only a correct answer is committed as final.
+    let remainingLives = Number(row.remaining_lives);
+    let gameOver = false;
+    // Wrong attempts remain retryable while the player has lives remaining.
     if (!correct) {
       await client.query(
         'UPDATE game_session_questions SET selected_answer=NULL, is_correct=NULL, points_awarded=0, answered_at=NULL WHERE session_id=$1 AND question_id=$2',
         [sessionId, questionId],
+      );
+      remainingLives = Math.max(0, remainingLives - 1);
+      gameOver = remainingLives === 0;
+      await client.query(
+        `UPDATE game_sessions
+         SET remaining_lives=$1,
+             completed_at=CASE WHEN $2 THEN CURRENT_TIMESTAMP ELSE completed_at END,
+             outcome=CASE WHEN $2 THEN 'LOST' ELSE outcome END
+         WHERE id=$3`,
+        [remainingLives, gameOver, sessionId],
       );
     }
     await client.query(
@@ -326,6 +342,8 @@ async function answer(sessionId, userId, questionId, selectedAnswer) {
       isCorrect: correct,
       pointsAwarded: points,
       explanation: row.answer_explanation || null,
+      remainingLives,
+      gameOver,
     };
   } catch (error) {
     await client.query('ROLLBACK');
@@ -360,7 +378,7 @@ async function complete(sessionId, userId) {
         'Hãy trả lời tất cả câu hỏi trước khi hoàn thành.',
         400,
       );
-    await client.query('UPDATE game_sessions SET completed_at=CURRENT_TIMESTAMP WHERE id=$1', [
+    await client.query("UPDATE game_sessions SET completed_at=CURRENT_TIMESTAMP, outcome='WON' WHERE id=$1", [
       sessionId,
     ]);
     const reward = await client.query(
@@ -411,6 +429,8 @@ async function resultFor(sessionId, userId) {
     correct_count: Number(session.correct_count),
     answered_count: answers.filter((answer) => answer.selected_answer !== null).length,
     total_questions: Number(session.total_questions),
+    remaining_lives: Number(session.remaining_lives),
+    outcome: session.outcome,
     started_at: session.started_at,
     completed_at: session.completed_at,
     answers,

@@ -18,11 +18,13 @@ export function GamePlayPage() {
   const [error, setError] = useState('');
   const [result, setResult] = useState<GameResult | null>(null);
   const [pendingTreasureResult, setPendingTreasureResult] = useState<GameResult | null>(null);
+  const [remainingLives, setRemainingLives] = useState(3);
   useEffect(() => {
     let cancelled = false;
     setSession(null);
     setResult(null);
     setPendingTreasureResult(null);
+    setRemainingLives(3);
     setError('');
     const load = sessionId ? gamesApi.session(sessionId) : gamesApi.start(gameId);
     load
@@ -34,6 +36,7 @@ export function GamePlayPage() {
           return;
         }
         setSession(data);
+        setRemainingLives(data.remainingLives);
         if (data.result) setResult(data.result);
       })
       .catch((requestError) => {
@@ -48,6 +51,7 @@ export function GamePlayPage() {
     async (question: GameQuestion, selected: string | boolean) => {
       if (!session) return { isCorrect: false, pointsAwarded: 0 };
       const response = await gamesApi.answer(session.sessionId, question.id, selected);
+      setRemainingLives(response.data.data.remainingLives);
       return response.data.data;
     },
     [session],
@@ -60,6 +64,11 @@ export function GamePlayPage() {
     if (session.game.question_type === 'MC') setResult(response.data.data);
     else setPendingTreasureResult(response.data.data);
   }, [session, result]);
+  const showGameOver = useCallback(async () => {
+    if (!session) return;
+    const response = await gamesApi.result(session.sessionId);
+    setResult(response.data.data);
+  }, [session]);
   const mcQuestions = useMemo<MinesweeperQuestion[]>(
     () =>
       session?.questions.map((question) => ({
@@ -93,18 +102,19 @@ export function GamePlayPage() {
   if (result)
     return (
       <div className="state-card game-result">
-        <span className="eyebrow">GAME HOÀN THÀNH</span>
-        <h1>{result.total_questions} CÂU HỎI</h1>
-        <p>Bạn đã hoàn thành toàn bộ câu hỏi của game.</p>
+        <span className="eyebrow">KẾT QUẢ GAME</span>
+        <h1>{result.outcome === 'WON' ? 'HOÀN THÀNH' : 'HẾT MẠNG'}</h1>
         <div className={`game-result-reward ${result.cup_earned ? 'earned' : ''}`}>
           <Trophy size={30} />
           <strong>
-            {result.cup_awarded ? `${result.reward_cups} CÚP NHẬN ĐƯỢC` : '0 CÚP NHẬN ĐƯỢC'}
+            {result.cup_awarded ? `+${result.reward_cups} CÚP` : '0 CÚP'}
           </strong>
           <span>
             {result.cup_awarded
-              ? 'Phần thưởng đã được ghi nhận vào hồ sơ.'
-              : 'Bạn đã nhận cúp của game này hôm nay.'}
+              ? 'Đã cộng vào hồ sơ'
+              : result.outcome === 'WON'
+                ? 'Đã nhận cúp hôm nay'
+                : 'Bạn đã dùng hết 3 mạng'}
           </span>
         </div>
         <button className="button primary" onClick={() => navigate('/tro-choi')}>
@@ -122,6 +132,7 @@ export function GamePlayPage() {
         <MinesweeperMockup
           questionSet={mcQuestions}
           rewardCups={session.game.reward_cups}
+          remainingLives={remainingLives}
           onAnswer={(question, index) =>
             answer(
               session.questions.find((item) => item.id === question.id) as GameQuestion,
@@ -129,10 +140,12 @@ export function GamePlayPage() {
             )
           }
           onComplete={complete}
+          onGameOver={showGameOver}
         />
       ) : (
         <TreasureHuntMockup
           questionSet={tfQuestions}
+          remainingLives={remainingLives}
           onAnswer={(question, selected) =>
             answer(
               session.questions.find((item) => item.id === question.id) as GameQuestion,
@@ -140,6 +153,7 @@ export function GamePlayPage() {
             )
           }
           onComplete={complete}
+          onGameOver={showGameOver}
           onFinish={() => {
             if (pendingTreasureResult) setResult(pendingTreasureResult);
           }}
