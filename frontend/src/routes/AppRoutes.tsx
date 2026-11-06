@@ -34,6 +34,8 @@ import { GamePlayPage } from '../pages/game/GamePlayPage';
 import { WeeklyMissionsPage } from '../pages/WeeklyMissionsPage';
 import { AiAdvisorPage } from '../pages/ai/AiAdvisorPage';
 import { AiAdminPage } from '../pages/ai/AiAdminPage';
+import { SurveyPage } from '../pages/survey/SurveyPage';
+import { AdminSurveyPage } from '../pages/survey/AdminSurveyPage';
 
 function ProfileAliasRedirect() {
   const { user } = useAuth();
@@ -63,6 +65,8 @@ export function AppRoutes() {
             <MemberLayout>
               <Routes>
                 <Route path="/bang-tin" element={<FeedPage />} />
+                <Route path="/khao-sat" element={<SurveyPage />} />
+                <Route path="/quan-tri/khao-sat" element={<RequireAdmin><AdminSurveyPage /></RequireAdmin>} />
                 <Route path="/bang-xep-hang" element={<LeaderboardPage />} />
                 <Route path="/nhiem-vu-tuan" element={<WeeklyMissionsPage />} />
                 <Route path="/tu-van-ai" element={<AiAdvisorPage />} />

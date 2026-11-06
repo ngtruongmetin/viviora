@@ -20,6 +20,7 @@ const leaderboard = require('./routes/leaderboard');
 const adminAchievements = require('./routes/adminAchievements');
 const weeklyMissions = require('./routes/weeklyMissions');
 const ai = require('./routes/ai');
+const surveys = require('./routes/surveys');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -75,6 +76,7 @@ app.use('/api/leaderboard', leaderboard);
 app.use('/api/admin/achievements', adminAchievements);
 app.use('/api/weekly-missions', weeklyMissions);
 app.use('/api/ai', ai);
+app.use('/api/surveys', surveys);
 app.get('/api/notifications', async (req, res, next) => {
   try {
     if (!req.session.user)

@@ -12,4 +12,5 @@ export { leaderboardApi } from './leaderboard';
 export { weeklyMissionsApi } from './weeklyMissions';
 export { achievementsApi } from './achievements';
 export { aiApi } from './ai';
+export { surveysApi } from './surveys';
 export type { AiConfig, AiConversation, AiConversationDetail, AiMessage } from './ai';

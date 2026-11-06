@@ -11,6 +11,7 @@ import {
   ClipboardCheck,
   Bot,
   SlidersHorizontal,
+  BarChart3,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
@@ -71,6 +72,11 @@ export function Sidebar() {
           >
             <ListChecks size={21} />
             <span>Quản lý câu hỏi</span>
+          </Link>
+        )}
+        {user?.role === 'ADMIN' && (
+          <Link className={location.pathname.startsWith('/quan-tri/khao-sat') ? 'selected' : ''} to="/quan-tri/khao-sat">
+            <BarChart3 size={21} /><span>Khảo sát sau sử dụng</span>
           </Link>
         )}
         {user?.role === 'ADMIN' && (
