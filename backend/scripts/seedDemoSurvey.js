@@ -255,7 +255,7 @@ async function apply(context, plans) {
           const won = activeGamer || index > 0;
           const sessionId = crypto.randomUUID();
           await client.query(
-            'INSERT INTO game_sessions(id,game_id,user_id,score,total_points,correct_count,total_questions,started_at,completed_at,cup_earned,remaining_lives,outcome) VALUES($1,$2,$3,$4,$5,$6,1,$7,$7,$8,0,$9)',
+            'INSERT INTO game_sessions(id,game_id,user_id,score,total_points,correct_count,total_questions,started_at,completed_at,cup_earned,remaining_lives,outcome) VALUES($1,$2,$3,$4,$5,$6,1,$7,$8,$9,0,$10)',
             [
               sessionId,
               context.game.id,
@@ -265,6 +265,7 @@ async function apply(context, plans) {
               won ? 1 : 0,
               submittedAt,
               won ? submittedAt : null,
+              won && index === 0,
               won ? 'WON' : 'LOST',
             ],
           );
