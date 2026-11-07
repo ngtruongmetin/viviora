@@ -45,4 +45,9 @@ test('demo survey planner produces deterministic 384-account quotas', () => {
   );
   assert.ok(first.every((plan) => plan.answers.Q19.length <= 3));
   assert.ok(first.every((plan) => !plan.answers.Q20.includes(5) || plan.answers.Q20.length === 1));
+  ['Q21', 'Q22', 'Q23'].forEach((code) => {
+    const answers = first.map((plan) => plan.answers[code]);
+    assert.equal(new Set(answers).size, 384);
+    assert.ok(answers.every((answer) => answer.trim().length > 0));
+  });
 });

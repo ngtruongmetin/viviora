@@ -4,7 +4,7 @@ const { pool } = require('../database/db');
 const { readStudentWorkbook } = require('./syncStudentProfiles');
 
 const SAMPLE_SIZE = 384;
-const SEED_VERSION = 'internal-data-v1';
+const SEED_VERSION = 'internal-data-v2';
 const QUOTAS = {
   Q4: [12, 84, 173, 88, 27],
   Q5: [5, 10, 62, 178, 129],
@@ -17,11 +17,103 @@ const QUOTAS = {
   Q17: [269, 115],
 };
 const MATRIX_MEANS = [4.3, 4.1, 4.3, 3.9, 4.3, 4.0, 4.1, 4.0, 4.2, 3.9, 4.1, 4.5, 4.5];
-const TEXT = [
+/* Legacy text samples retained only for history.
   'Em thích các thử thách đọc sách và phần tích điểm.',
   'Em muốn có thêm sách truyện và sách khoa học phù hợp lứa tuổi.',
   'Em mong website có thêm gợi ý sách và hoạt động đọc sách mới.',
-];
+*/
+const TEXT_TEMPLATES = {
+  Q21: {
+    starts: [
+      'Em thích',
+      'Em ấn tượng với',
+      'Em thấy vui khi có',
+      'Em hay dùng',
+      'Em quan tâm đến',
+      'Em thích nhất phần',
+      'Em thấy hữu ích ở',
+      'Em muốn tiếp tục dùng',
+    ],
+    topics: [
+      'các thử thách đọc sách',
+      'mục gợi ý sách',
+      'phần tích điểm',
+      'bảng tin chia sẻ sách',
+      'thư viện trực tuyến',
+      'huy hiệu thành tích',
+      'trò chơi về sách',
+      'bảng xếp hạng',
+    ],
+    endings: [
+      'vì tạo thêm hứng thú đọc sách.',
+      'vì dễ tìm nội dung phù hợp.',
+      'vì giúp việc đọc sách đều hơn.',
+      'vì có nhiều điều mới để khám phá.',
+      'vì giao diện rõ ràng và dễ dùng.',
+      'vì giúp em biết thêm sách hay.',
+    ],
+  },
+  Q22: {
+    starts: [
+      'Em mong',
+      'Em muốn',
+      'Sẽ tốt hơn nếu',
+      'Em đề nghị',
+      'Em hy vọng',
+      'Em nghĩ nên',
+      'Em muốn có thêm',
+      'Em thấy cần',
+    ],
+    topics: [
+      'bổ sung thêm gợi ý theo sở thích',
+      'cải thiện tốc độ tải trang',
+      'có nhiều thử thách mới',
+      'làm phần tìm sách thuận tiện hơn',
+      'thêm hướng dẫn ngắn cho từng mục',
+      'cập nhật bảng tin thường xuyên hơn',
+      'có thêm cách theo dõi tiến độ đọc',
+      'bổ sung thêm hoạt động đọc sách',
+    ],
+    endings: [
+      'để sử dụng thuận tiện hơn.',
+      'để việc đọc sách thú vị hơn.',
+      'để dễ chọn sách phù hợp.',
+      'để trải nghiệm rõ ràng hơn.',
+      'để có thêm động lực tham gia.',
+      'để mọi nội dung dễ tìm hơn.',
+    ],
+  },
+  Q23: {
+    starts: [
+      'Em muốn thư viện có thêm',
+      'Em mong có thêm',
+      'Em hy vọng thư viện bổ sung',
+      'Em muốn được đọc thêm',
+      'Em quan tâm đến',
+      'Em thích tìm',
+      'Em đề xuất thêm',
+      'Em muốn khám phá',
+    ],
+    topics: [
+      'truyện phiêu lưu',
+      'sách khoa học vui',
+      'truyện lịch sử',
+      'sách về thiên nhiên',
+      'truyện trinh thám',
+      'sách kỹ năng sống',
+      'truyện dân gian',
+      'sách khám phá vũ trụ',
+    ],
+    endings: [
+      'với nội dung dễ hiểu.',
+      'phù hợp để đọc trong thời gian ngắn.',
+      'có nhiều hình minh họa.',
+      'được cập nhật thường xuyên.',
+      'có nhiều câu chuyện thú vị.',
+      'để tìm hiểu thêm mỗi ngày.',
+    ],
+  },
+};
 
 function value(flag, fallback) {
   const index = process.argv.indexOf(flag);
@@ -83,6 +175,23 @@ function ensureMultipleAnswer(plans, code, fallbackOption) {
     if (!(plan.answers[code] || []).length) plan.answers[code] = [fallbackOption];
   }
 }
+function buildUniqueTextAnswers(code, count) {
+  const template = TEXT_TEMPLATES[code];
+  const answers = template.starts.flatMap((start) =>
+    template.topics.flatMap((topic) =>
+      template.endings.map((ending) => `${start} ${topic} ${ending}`),
+    ),
+  );
+  if (answers.length < count || new Set(answers).size !== answers.length)
+    throw new Error(`${code} does not have enough unique text answers.`);
+  return answers;
+}
+function assignUniqueText(plans, code) {
+  const answers = buildUniqueTextAnswers(code, plans.length);
+  for (const [index, plan] of ordered(plans, code).entries()) plan.answers[code] = answers[index];
+  if (new Set(plans.map((plan) => plan.answers[code])).size !== plans.length)
+    throw new Error(`${code} contains duplicate text answers.`);
+}
 function buildPlan(students, sourceUsernames) {
   if (students.length !== SAMPLE_SIZE || sourceUsernames.length !== 358)
     throw new Error('Cần đúng 384 STUDENT và 358 username từ dshsv3.xlsx.');
@@ -130,10 +239,8 @@ function buildPlan(students, sourceUsernames) {
   const matrix = MATRIX_MEANS.map((mean, index) => likert(plans, mean, `Q18:${index}`));
   for (const plan of plans) {
     plan.answers.Q18 = matrix.map((values) => values.get(plan.username));
-    plan.answers.Q21 = TEXT[hash(`Q21:${plan.username}`) % TEXT.length];
-    plan.answers.Q22 = TEXT[hash(`Q22:${plan.username}`) % TEXT.length];
-    plan.answers.Q23 = TEXT[hash(`Q23:${plan.username}`) % TEXT.length];
   }
+  ['Q21', 'Q22', 'Q23'].forEach((code) => assignUniqueText(plans, code));
   return plans;
 }
 function report(plans) {
@@ -371,4 +478,4 @@ if (require.main === module)
       process.exitCode = 1;
     })
     .finally(() => pool.end());
-module.exports = { SAMPLE_SIZE, QUOTAS, buildPlan, report };
+module.exports = { SAMPLE_SIZE, QUOTAS, buildPlan, buildUniqueTextAnswers, report };
