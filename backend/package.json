@@ -10,7 +10,7 @@
     "db:seed": "node scripts/seed.js",
     "students:import": "node scripts/importStudents.js",
     "students:sync-profile": "node scripts/syncStudentProfiles.js",
-    "survey:seed-demo": "node scripts/seedDemoSurvey.js",
+    "survey:seed-internal": "node scripts/seedDemoSurvey.js",
     "students:delete": "node scripts/deleteStudents.js",
     "achievements:recalculate": "node scripts/recalculateAchievements.js",
     "test": "node --test test/*.test.js",

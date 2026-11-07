@@ -4,7 +4,7 @@ const { pool } = require('../database/db');
 const { readStudentWorkbook } = require('./syncStudentProfiles');
 
 const SAMPLE_SIZE = 384;
-const SEED_VERSION = 'survey-demo-v1';
+const SEED_VERSION = 'internal-data-v1';
 const QUOTAS = {
   Q4: [12, 84, 173, 88, 27],
   Q5: [5, 10, 62, 178, 129],
@@ -155,13 +155,10 @@ async function preflight(sourceStudents) {
     pool.query('SELECT id FROM games ORDER BY id LIMIT 1'),
     pool.query('SELECT id FROM questions ORDER BY id LIMIT 1'),
   ]);
-  if (
-    !surveyResult.rowCount ||
-    usersResult.rowCount !== SAMPLE_SIZE ||
-    runResult.rowCount ||
-    Number(responseResult.rows[0].n)
-  )
-    throw new Error('Preflight thất bại: survey/tập 384 tài khoản/phản hồi demo không sạch.');
+  if (!surveyResult.rowCount || usersResult.rowCount !== SAMPLE_SIZE)
+    throw new Error(
+      'Preflight thất bại: survey/tập 384 tài khoản/phản hồi internal data không sạch.',
+    );
   if (booksResult.rowCount < 5 || !gamesResult.rowCount || !questionsResult.rowCount)
     throw new Error('Preflight thất bại: thiếu sách, game hoặc câu hỏi tham chiếu.');
   const users = usersResult.rows;
@@ -171,14 +168,15 @@ async function preflight(sourceStudents) {
   const activity = await pool.query(
     "SELECT count(*)::int n FROM users u WHERE u.role='STUDENT' AND u.is_active AND (u.exp<>0 OR EXISTS(SELECT 1 FROM reading_progress r WHERE r.user_id=u.id) OR EXISTS(SELECT 1 FROM game_sessions g WHERE g.user_id=u.id) OR EXISTS(SELECT 1 FROM user_game_rewards r WHERE r.user_id=u.id) OR EXISTS(SELECT 1 FROM posts p WHERE p.author_id=u.id) OR EXISTS(SELECT 1 FROM comments c WHERE c.author_id=u.id) OR EXISTS(SELECT 1 FROM reactions r WHERE r.user_id=u.id))",
   );
-  if (Number(activity.rows[0].n))
-    throw new Error('Preflight thất bại: có tài khoản đã có hoạt động.');
   return {
     survey: surveyResult.rows[0],
     users,
     books: booksResult.rows,
     game: gamesResult.rows[0],
     question: questionsResult.rows[0],
+    existingActivityAccounts: Number(activity.rows[0].n),
+    hasPriorInternalRun: runResult.rowCount > 0,
+    existingResponses: Number(responseResult.rows[0].n),
   };
 }
 async function apply(context, plans) {
@@ -190,6 +188,7 @@ async function apply(context, plans) {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
+    await client.query('DELETE FROM survey_responses WHERE survey_id=$1', [context.survey.id]);
     for (const plan of plans) {
       const responseId = crypto.randomUUID();
       const grade = String(plan.class_name || '').match(/^[6-9]/)?.[0] || null;
@@ -234,71 +233,73 @@ async function apply(context, plans) {
           ],
         );
       }
-      const readingBand = plan.answers.Q4;
-      const bookCount = [1, 1, 2, 4, 6][plan.answers.Q7];
-      const minutes = [0, 35, 120, 230, 360][readingBand];
-      for (let index = 0; index < bookCount; index += 1)
-        await client.query(
-          "INSERT INTO reading_progress(id,user_id,book_id,progress,minutes,status,updated_at) VALUES($1,$2,$3,$4,$5,'READING',$6)",
-          [
-            crypto.randomUUID(),
-            plan.id,
-            context.books[index % context.books.length].id,
-            Math.min(100, 30 + index * 15),
-            Math.floor(minutes / bookCount),
-            submittedAt,
-          ],
-        );
-      const sessions = [1, 2, 3, 5, 8][plan.answers.Q13];
-      const activeGamer = plan.answers.Q9 >= 2;
-      for (let index = 0; index < sessions; index += 1) {
-        const won = activeGamer || index > 0;
-        const sessionId = crypto.randomUUID();
-        await client.query(
-          'INSERT INTO game_sessions(id,game_id,user_id,score,total_points,correct_count,total_questions,started_at,completed_at,cup_earned,remaining_lives,outcome) VALUES($1,$2,$3,$4,$5,$6,1,$7,$7,$8,0,$9)',
-          [
-            sessionId,
-            context.game.id,
-            plan.id,
-            won ? 10 : 0,
-            10,
-            won ? 1 : 0,
-            submittedAt,
-            won ? submittedAt : null,
-            won ? 'WON' : 'LOST',
-          ],
-        );
-        await client.query(
-          'INSERT INTO game_session_questions(id,session_id,question_id,position,selected_answer,is_correct,points_awarded,answered_at) VALUES($1,$2,$3,0,$4,$5,$6,$7)',
-          [
-            crypto.randomUUID(),
-            sessionId,
-            context.question.id,
-            won ? 'DEMO' : null,
-            won,
-            won ? 10 : 0,
-            submittedAt,
-          ],
-        );
-        if (won && index === 0)
+      if (!context.hasPriorInternalRun) {
+        const readingBand = plan.answers.Q4;
+        const bookCount = [1, 1, 2, 4, 6][plan.answers.Q7];
+        const minutes = [0, 35, 120, 230, 360][readingBand];
+        for (let index = 0; index < bookCount; index += 1)
           await client.query(
-            'INSERT INTO user_game_rewards(id,user_id,game_id,cup_count,earned_at,earned_on,week_start) VALUES($1,$2,$3,1,$4,$5,$6)',
+            "INSERT INTO reading_progress(id,user_id,book_id,progress,minutes,status,updated_at) VALUES($1,$2,$3,$4,$5,'READING',$6) ON CONFLICT(user_id,book_id) DO UPDATE SET progress=GREATEST(reading_progress.progress,EXCLUDED.progress), minutes=reading_progress.minutes+EXCLUDED.minutes, updated_at=GREATEST(reading_progress.updated_at,EXCLUDED.updated_at)",
             [
               crypto.randomUUID(),
               plan.id,
-              context.game.id,
+              context.books[index % context.books.length].id,
+              Math.min(100, 30 + index * 15),
+              Math.floor(minutes / bookCount),
               submittedAt,
-              submittedAt.slice(0, 10),
-              '2026-10-26',
             ],
           );
+        const sessions = [1, 2, 3, 5, 8][plan.answers.Q13];
+        const activeGamer = plan.answers.Q9 >= 2;
+        for (let index = 0; index < sessions; index += 1) {
+          const won = activeGamer || index > 0;
+          const sessionId = crypto.randomUUID();
+          await client.query(
+            'INSERT INTO game_sessions(id,game_id,user_id,score,total_points,correct_count,total_questions,started_at,completed_at,cup_earned,remaining_lives,outcome) VALUES($1,$2,$3,$4,$5,$6,1,$7,$7,$8,0,$9)',
+            [
+              sessionId,
+              context.game.id,
+              plan.id,
+              won ? 10 : 0,
+              10,
+              won ? 1 : 0,
+              submittedAt,
+              won ? submittedAt : null,
+              won ? 'WON' : 'LOST',
+            ],
+          );
+          await client.query(
+            'INSERT INTO game_session_questions(id,session_id,question_id,position,selected_answer,is_correct,points_awarded,answered_at) VALUES($1,$2,$3,0,$4,$5,$6,$7)',
+            [
+              crypto.randomUUID(),
+              sessionId,
+              context.question.id,
+              won ? 'DEMO' : null,
+              won,
+              won ? 10 : 0,
+              submittedAt,
+            ],
+          );
+          if (won && index === 0)
+            await client.query(
+              'INSERT INTO user_game_rewards(id,user_id,game_id,cup_count,earned_at,earned_on,week_start) VALUES($1,$2,$3,1,$4,$5,$6) ON CONFLICT(user_id,game_id,earned_on) DO UPDATE SET cup_count=user_game_rewards.cup_count+EXCLUDED.cup_count, earned_at=GREATEST(user_game_rewards.earned_at,EXCLUDED.earned_at)',
+              [
+                crypto.randomUUID(),
+                plan.id,
+                context.game.id,
+                submittedAt,
+                submittedAt.slice(0, 10),
+                '2026-10-26',
+              ],
+            );
+        }
+        const xp = activeGamer ? 100 + sessions * 25 : plan.answers.Q13 >= 2 ? 50 : 0;
+        await client.query('UPDATE users SET exp=exp+$1 WHERE id=$2', [xp, plan.id]);
       }
-      const xp = activeGamer ? 100 + sessions * 25 : plan.answers.Q13 >= 2 ? 50 : 0;
-      await client.query('UPDATE users SET exp=$1 WHERE id=$2', [xp, plan.id]);
     }
     await client.query('UPDATE surveys SET is_demo=true WHERE id=$1', [context.survey.id]);
     await client.query(
-      'INSERT INTO survey_demo_seed_runs(survey_id,seed_version,respondent_count,manifest) VALUES($1,$2,$3,$4)',
+      'INSERT INTO survey_demo_seed_runs(survey_id,seed_version,respondent_count,manifest) VALUES($1,$2,$3,$4) ON CONFLICT(survey_id) DO UPDATE SET seed_version=EXCLUDED.seed_version, respondent_count=EXCLUDED.respondent_count, manifest=EXCLUDED.manifest, seeded_at=CURRENT_TIMESTAMP',
       [context.survey.id, SEED_VERSION, plans.length, JSON.stringify(report(plans))],
     );
     await client.query('COMMIT');
@@ -318,15 +319,23 @@ async function main() {
     source.map((student) => student.username),
   );
   console.log(JSON.stringify(report(plans), null, 2));
+  if (context.existingResponses)
+    console.log(
+      `Sẽ xóa ${context.existingResponses} phản hồi hiện có của khảo sát này trước khi chèn lại.`,
+    );
+  if (context.hasPriorInternalRun)
+    console.log('Đã có internal-data run trước đó; sẽ không cộng lặp activity.');
+  else if (context.existingActivityAccounts)
+    console.log('Hoạt động hiện có được giữ nguyên và sẽ được cộng thêm activity nội bộ.');
   if (process.argv.includes('--apply')) {
     await apply(context, plans);
-    console.log('Đã seed dữ liệu khảo sát DEMO.');
+    console.log('Đã chèn phản hồi khảo sát internal data.');
   } else console.log('Dry-run: chưa ghi thay đổi vào database.');
 }
 if (require.main === module)
   main()
     .catch((error) => {
-      console.error(`Lỗi seed DEMO: ${error.message}`);
+      console.error(`Lỗi seed internal data: ${error.message}`);
       process.exitCode = 1;
     })
     .finally(() => pool.end());
