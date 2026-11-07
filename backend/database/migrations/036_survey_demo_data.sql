@@ -1,0 +1,9 @@
+ALTER TABLE surveys ADD COLUMN IF NOT EXISTS is_demo BOOLEAN NOT NULL DEFAULT FALSE;
+
+CREATE TABLE IF NOT EXISTS survey_demo_seed_runs (
+  survey_id TEXT PRIMARY KEY REFERENCES surveys(id) ON DELETE CASCADE,
+  seed_version TEXT NOT NULL,
+  respondent_count INTEGER NOT NULL CHECK (respondent_count > 0),
+  manifest JSONB NOT NULL,
+  seeded_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
