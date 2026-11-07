@@ -92,6 +92,9 @@ export function AdminSurveyPage() {
           <a className="button secondary" href={`/api/surveys/admin/${survey.id}/export`}>
             <Download size={17} /> XUẤT CSV
           </a>
+          <a className="button secondary" href={`/api/surveys/admin/${survey.id}/export.xlsx`}>
+            <Download size={17} /> XUẤT EXCEL
+          </a>
         </div>
       </header>
       {survey.is_demo && (
