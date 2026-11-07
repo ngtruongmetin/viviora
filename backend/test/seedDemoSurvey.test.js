@@ -38,6 +38,11 @@ test('demo survey planner produces deterministic 384-account quotas', () => {
     [0, 1, 2, 3, 4, 6].map((option) => count(first, 'Q20', option)),
     [38, 20, 38, 38, 29, 5],
   );
+  assert.ok(
+    first.every((plan) =>
+      ['Q8', 'Q14', 'Q19', 'Q20'].every((code) => plan.answers[code].length > 0),
+    ),
+  );
   assert.ok(first.every((plan) => plan.answers.Q19.length <= 3));
   assert.ok(first.every((plan) => !plan.answers.Q20.includes(5) || plan.answers.Q20.length === 1));
 });

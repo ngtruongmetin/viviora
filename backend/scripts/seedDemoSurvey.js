@@ -78,6 +78,11 @@ function chooseMultiple(plans, code, counts, maxChoices = Infinity) {
       }),
   );
 }
+function ensureMultipleAnswer(plans, code, fallbackOption) {
+  for (const plan of plans) {
+    if (!(plan.answers[code] || []).length) plan.answers[code] = [fallbackOption];
+  }
+}
 function buildPlan(students, sourceUsernames) {
   if (students.length !== SAMPLE_SIZE || sourceUsernames.length !== 358)
     throw new Error('Cần đúng 384 STUDENT và 358 username từ dshsv3.xlsx.');
@@ -100,14 +105,24 @@ function buildPlan(students, sourceUsernames) {
   chooseMultiple(plans, 'Q19', [288, 250, 112, 54, 86, 51, 38, 145, 27, 70], 3);
   for (const plan of plans) plan.answers.Q20 = [];
   for (const plan of ordered(plans, 'Q20:none').slice(0, 230)) plan.answers.Q20 = [5];
-  [38, 20, 38, 38, 29, 5].forEach((count, index) =>
-    ordered(
-      plans.filter((plan) => !plan.answers.Q20.includes(5)),
-      `Q20:${index}`,
-    )
-      .slice(0, count)
-      .forEach((plan) => plan.answers.Q20.push(index < 5 ? index : 6)),
+  const q20Affected = ordered(
+    plans.filter((plan) => !plan.answers.Q20.includes(5)),
+    'Q20:affected',
   );
+  const q20Options = [
+    ...Array(38).fill(0),
+    ...Array(20).fill(1),
+    ...Array(38).fill(2),
+    ...Array(38).fill(3),
+    ...Array(29).fill(4),
+    ...Array(5).fill(6),
+  ];
+  q20Options.forEach((option, index) =>
+    q20Affected[index % q20Affected.length].answers.Q20.push(option),
+  );
+  ensureMultipleAnswer(plans, 'Q8', 5);
+  ensureMultipleAnswer(plans, 'Q14', 0);
+  ensureMultipleAnswer(plans, 'Q19', 0);
   [4.1, 4.1, 4.5].forEach((mean, index) => {
     const values = likert(plans, mean, `Q${index + 10}`);
     for (const plan of plans) plan.answers[`Q${index + 10}`] = values.get(plan.username);
