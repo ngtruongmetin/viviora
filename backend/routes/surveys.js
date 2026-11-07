@@ -97,7 +97,7 @@ router.get('/admin/:id/export', async (req, res, next) => {
 router.get('/admin/:id/export.xlsx', async (req, res, next) => {
   try {
     const rows = await all(
-      `SELECT sr.id response_id,sr.user_id,u.username,sr.submitted_at,sr.grade_snapshot,sr.gender_snapshot,sa.question_snapshot,sa.answer FROM survey_responses sr JOIN users u ON u.id=sr.user_id JOIN survey_answers sa ON sa.response_id=sr.id WHERE sr.survey_id=? ORDER BY sr.submitted_at,sr.id`,
+      `SELECT sr.id response_id,sr.user_id,u.name full_name,sr.submitted_at,sr.grade_snapshot,sr.gender_snapshot,sa.question_snapshot,sa.answer FROM survey_responses sr JOIN users u ON u.id=sr.user_id JOIN survey_answers sa ON sa.response_id=sr.id WHERE sr.survey_id=? ORDER BY sr.submitted_at,sr.id`,
       [req.params.id],
     );
     const workbook = await buildWorkbook(rows);

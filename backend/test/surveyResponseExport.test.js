@@ -11,7 +11,7 @@ const {
 const common = {
   response_id: 'response-1',
   user_id: 'user-1',
-  username: 'student.one',
+  full_name: 'Nguyễn Minh An',
   submitted_at: '2026-11-07T10:00:00.000Z',
   grade_snapshot: '8',
   gender_snapshot: 'Nữ',
@@ -47,7 +47,7 @@ test('response export uses a fixed Vietnamese Q1-Q23 schema and separate Q18 col
   }
   assert.equal(headers.filter((header) => header.startsWith('Q18.')).length, 13);
   assert.equal(at('User ID'), 'user-1');
-  assert.equal(at('Username'), 'student.one');
+  assert.equal(at('Họ và tên'), 'Nguyễn Minh An');
   assert.equal(at(`Q8. ${QUESTION_LABELS.Q8}`), 'Không có thời gian | Khác');
   assert.equal(at(`Q18.1. ${Q18_ROWS[0]}`), 5);
   assert.equal(at(`Q18.13. ${Q18_ROWS[12]}`), 4);

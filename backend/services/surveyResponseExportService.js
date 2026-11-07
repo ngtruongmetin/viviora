@@ -3,7 +3,7 @@ const ExcelJS = require('exceljs');
 const BASE_COLUMNS = [
   ['response_id', 'Response ID'],
   ['user_id', 'User ID'],
-  ['username', 'Username'],
+  ['full_name', 'Họ và tên'],
   ['submitted_at', 'Submitted at'],
   ['grade', 'Grade'],
   ['gender', 'Gender'],
@@ -87,7 +87,7 @@ function buildRows(answerRows) {
       responses.set(row.response_id, {
         response_id: row.response_id,
         user_id: row.user_id,
-        username: row.username,
+        full_name: row.full_name,
         submitted_at: row.submitted_at,
         grade: row.grade_snapshot || '',
         gender: row.gender_snapshot || '',
