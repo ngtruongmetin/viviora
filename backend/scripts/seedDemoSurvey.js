@@ -97,7 +97,7 @@ function buildPlan(students, sourceUsernames) {
   for (const [code, quota] of Object.entries(QUOTAS)) setOption(plans, code, quota);
   chooseMultiple(plans, 'Q8', [115, 137, 92, 45, 109, 64, 12], 3);
   chooseMultiple(plans, 'Q14', [305, 300, 154], 3);
-  chooseMultiple(plans, 'Q19', [288, 250, 112, 54, 86, 51, 38, 145, 27, 70, 4], 3);
+  chooseMultiple(plans, 'Q19', [288, 250, 112, 54, 86, 51, 38, 145, 27, 70], 3);
   for (const plan of plans) plan.answers.Q20 = [];
   for (const plan of ordered(plans, 'Q20:none').slice(0, 230)) plan.answers.Q20 = [5];
   [38, 20, 38, 38, 29, 5].forEach((count, index) =>
@@ -202,6 +202,22 @@ async function apply(context, plans) {
       );
       for (const question of byCode.values()) {
         const option = plan.answers[question.code];
+        if (
+          question.type === 'MULTIPLE' &&
+          Array.isArray(option) &&
+          option.some((index) => !question.options[index])
+        ) {
+          throw new Error(`${question.code} có lựa chọn không tồn tại.`);
+        }
+        if (
+          question.options.length &&
+          !Array.isArray(option) &&
+          question.type !== 'SYSTEM' &&
+          question.type !== 'TEXT' &&
+          !question.options[option]
+        ) {
+          throw new Error(`${question.code} có lựa chọn không tồn tại.`);
+        }
         const answer =
           question.type === 'SYSTEM'
             ? question.code === 'Q1'
